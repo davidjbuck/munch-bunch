@@ -1,52 +1,145 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using TMPro;
 using UnityEngine;
-using static UnityEditor.Progress;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+    //creates the list for the inventory
     public List<Item> inventoryList = new List<Item>();
-    Item tempItem;
+    
+    //creates the list for the button text
+    public List<TextMeshProUGUI> buttonList = new List<TextMeshProUGUI>();
+
+    //the object that stores all inventory UI, and bool for if it is active or not
+    public GameObject inventoryParent;
+    bool inventoryOpen = true;
+
+    //the text objects for the inventory display text
+    public TextMeshProUGUI ITDName;
+    public TextMeshProUGUI ITDType;
+    public TextMeshProUGUI ITDFlavorText;
+
+    //string for selected item
+    string selectedItem;
+
+
+    private void Start()
+    {
+        //sets all button texts to null
+        foreach (TextMeshProUGUI tmpu in buttonList)
+        {
+            tmpu.text = "";
+        }
+    }
+
+
+    private void Update()
+    {
+        //on hitting inventory button ("i"), fills the button texts with items,
+        //activates UI object, and switches the toggle
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            fillGUIButtons();
+            inventoryParent.SetActive(inventoryOpen);
+            inventoryOpen = !inventoryOpen;
+        }
+    }
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if the collided object is an item, add it to the inventory
+        //makes sure the collided object is an item
         if (collision.gameObject.tag == "item")
         {
-            tempItem = collision.gameObject.GetComponent<Item>();
-            addToInventory(tempItem);
-            displayInventory();
-        }
-        else
-        {
-            //do not
-        }
-    }
+            //gets the item info from the object
+            Item tempItem = collision.gameObject.GetComponent<Item>();
 
-    private void addToInventory(Item i)
-    {
-        bool addToList = true;
-        foreach(Item item in inventoryList)
-        {
-            if(item.name == i.name)
+            //if the item is found already in the list, add another one
+            bool itemFound = false;
+            foreach (Item item in inventoryList)
             {
-                item.amount++;
-                addToList = false;
+                if (tempItem.itemName == item.itemName)
+                {
+                    item.amount += tempItem.amount;
+                    itemFound = true;
+                }
+            }
+
+            //otherwise add it to the list
+            if (!itemFound)
+            {
+                inventoryList.Add(tempItem);
             }
         }
-        if(addToList)
-        {
-            inventoryList.Add(tempItem);
-        }
     }
 
-    private void displayInventory()
+    //for now takes in item name, can also change to take in an item parameter
+    private void removeItem(string s)
     {
         foreach (Item item in inventoryList)
         {
-            //Debug.Log(item.name);
+            if (item.itemName == s)
+            {
+                inventoryList.Remove(item);
+            }
+        }
+    }
+
+
+    //sorts the list by the item type, then reprogpogates the list
+    public void sortList()
+    {
+        inventoryList.Sort((x, y) => x.itemType.CompareTo(y.itemType));
+        fillGUIButtons();
+    }
+
+
+    //fills text for the buttons with inventory items
+    private void fillGUIButtons()
+    {
+        for (int x = 0; x < inventoryList.Count; x++)
+        {
+            buttonList[x].text = inventoryList[x].itemName + " (" + inventoryList[x].amount + ")";
+        }
+    }
+
+
+    //fills the item display text from the currently selected item for the inventory UI
+    public void displayText()
+    {
+        Item tempItem = null;
+        foreach (Item item in inventoryList)
+        {
+            if (item.itemName == selectedItem)
+            {
+                tempItem = item;
+            }
+        }
+        ITDName.text = tempItem.itemName;
+        ITDType.text = tempItem.itemType.ToString();
+        ITDFlavorText.text = tempItem.flavorText;
+
+        selectedItem = "";
+    }
+
+
+    //gets the text from the currently selected item
+    public void currentlySelected()
+    {
+        string tempString = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text;
+        foreach (char a in tempString)
+        {
+            if (a == ' ')
+            {
+                break;
+            }
+            else
+            {
+                selectedItem += a;
+            }
         }
     }
 }
