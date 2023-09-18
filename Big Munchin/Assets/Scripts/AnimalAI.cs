@@ -44,7 +44,7 @@ public class AnimalAI : MonoBehaviour
 	public int curWaypoint = 0;
 	bool ReversePath = false;
 	//Camera maincamera;
-	//public int health = 100;
+	public int health = 100;
 	//GameObject enemyObj;
 	//public GameObject bones;
 	public PlayerMover p1;
@@ -133,9 +133,11 @@ public class AnimalAI : MonoBehaviour
 
 
 				//THERE IS A TOGGLE FOR THIS, DEPENDING ON WHICH TYPE OF ANIMAL/ENEMY WE ARE USING
-				if (aggressive)
+				//if the enemy is at 20% health run away
+				if (aggressive && health > 20)
 				{
 					GuardSearchForTarget();
+
 				}
 				else
 				{
