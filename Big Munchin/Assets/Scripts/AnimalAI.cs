@@ -47,7 +47,7 @@ public class AnimalAI : MonoBehaviour
 	public int health = 100;
 	//GameObject enemyObj;
 	//public GameObject bones;
-	public PlayerMover p1;
+	public ThirdPersonController p1;
 	//public GameObject enemy;
 	//public GameObject healthText;
 	#region Behaviors
@@ -160,24 +160,13 @@ public class AnimalAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			if (isInRange)
+			if (Distance < 5f)
 			{
-				if (FightsRanged)
-				{
-					if (rAttackTimer > 200)
-					{
-						RangedAttack();
-						rAttackTimer = 0;
-					}
-				}
-				else
-				{
-					if (mAttackTimer > 800)
-					{
-						MeleeAttack();
-						mAttackTimer = 0;
-					}
-				}
+				Debug.Log("ATTACKED PLAYER");
+				p1.SetStunned(true);
+				//GetComponent<Animation>().Play("attack");
+				Destination = transform.position;
+				//	pstat.removeHealth(30);
 			}
 			else
 			{
@@ -227,6 +216,12 @@ public class AnimalAI : MonoBehaviour
 		{
 			if (Distance < 40f)
 			{
+				if(Distance < 5f)
+                {
+					Debug.Log("COMBAT");
+					Combat();
+                }
+
 				/*
 				if (Distance < 2f)
 				{
@@ -436,25 +431,11 @@ public class AnimalAI : MonoBehaviour
 	}
 	void RangedAttack()
 	{
-		if (dead == false)
-		{
 
-			/*
-			//GetComponent<Animation>().Play("attack");
-			GameObject newProjectile;
-			newProjectile = Instantiate(Projectile, transform.position, this.transform.rotation) as GameObject;
-			Destroy(newProjectile, 5);
-			*/
-		}
 	}
 	void MeleeAttack()
 	{
-		if (dead == false)
-		{
-			//GetComponent<Animation>().Play("attack");
 
-			//	pstat.removeHealth(30);
-		}
 	}
 	#endregion
 
