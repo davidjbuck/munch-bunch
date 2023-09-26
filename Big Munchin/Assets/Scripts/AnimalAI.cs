@@ -160,6 +160,7 @@ public class AnimalAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
+<<<<<<< Updated upstream
 			if (Distance < 5f)
 			{
 				Debug.Log("ATTACKED PLAYER");
@@ -167,6 +168,15 @@ public class AnimalAI : MonoBehaviour
 				//GetComponent<Animation>().Play("attack");
 				Destination = transform.position;
 				//	pstat.removeHealth(30);
+=======
+			if (Distance < 5)
+			{
+				Debug.Log("STUN PLAYER");
+				p1.SetStunned(true);
+				Destination = transform.position;
+				navAgent.SetDestination(Destination);
+
+>>>>>>> Stashed changes
 			}
 			else
 			{
@@ -216,6 +226,7 @@ public class AnimalAI : MonoBehaviour
 		{
 			if (Distance < 40f)
 			{
+<<<<<<< Updated upstream
 				if(Distance < 5f)
                 {
 					Debug.Log("COMBAT");
@@ -246,7 +257,13 @@ public class AnimalAI : MonoBehaviour
 					//GetComponent<Animation>().Play("run");
 				}
 				*/
+=======
+>>>>>>> Stashed changes
 				navAgent.SetDestination(Destination);
+				if(Distance < 5)
+                {
+					Combat();
+                }
 			}
 			else
 			{
@@ -429,6 +446,7 @@ public class AnimalAI : MonoBehaviour
 			}
 		}
 	}
+<<<<<<< Updated upstream
 	void RangedAttack()
 	{
 
@@ -437,6 +455,9 @@ public class AnimalAI : MonoBehaviour
 	{
 
 	}
+=======
+
+>>>>>>> Stashed changes
 	#endregion
 
 
