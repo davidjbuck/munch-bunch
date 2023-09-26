@@ -43,6 +43,7 @@ public class AnimalAI : MonoBehaviour
 	public Transform[] Waypoints;
 	public int curWaypoint = 0;
 	bool ReversePath = false;
+	public float eHealth;
 	//Camera maincamera;
 	public int health = 100;
 	//GameObject enemyObj;
@@ -161,6 +162,7 @@ public class AnimalAI : MonoBehaviour
 		if (dead == false)
 		{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 			if (Distance < 5f)
 			{
 				Debug.Log("ATTACKED PLAYER");
@@ -176,6 +178,13 @@ public class AnimalAI : MonoBehaviour
 				Destination = transform.position;
 				navAgent.SetDestination(Destination);
 
+>>>>>>> Stashed changes
+=======
+			if (Distance < 3f)
+			{
+				//p1.SetStunned(true);
+				Destination = this.transform.position;
+				navAgent.SetDestination(Destination);
 >>>>>>> Stashed changes
 			}
 			else
@@ -227,6 +236,7 @@ public class AnimalAI : MonoBehaviour
 			if (Distance < 40f)
 			{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 				if(Distance < 5f)
                 {
 					Debug.Log("COMBAT");
@@ -261,6 +271,11 @@ public class AnimalAI : MonoBehaviour
 >>>>>>> Stashed changes
 				navAgent.SetDestination(Destination);
 				if(Distance < 5)
+=======
+
+				navAgent.SetDestination(Destination);
+				if(Distance < 2f)
+>>>>>>> Stashed changes
                 {
 					Combat();
                 }
@@ -447,6 +462,7 @@ public class AnimalAI : MonoBehaviour
 		}
 	}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	void RangedAttack()
 	{
 
@@ -455,6 +471,9 @@ public class AnimalAI : MonoBehaviour
 	{
 
 	}
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -467,10 +486,14 @@ public class AnimalAI : MonoBehaviour
 		health = health - rHealth;
 	}
 	*/
-	void OnCollisionEnter(Collision col)
+	void OnTriggerEnter(Collider col)
 	{
 
-
+        if (col.gameObject.tag == "Hitbox")
+        {
+			Debug.Log("ENEMY HIT");
+			//eHealth = eHealth - col.gameObject.GetAttackDamage();
+        }
 		/*
 
 				if (col.gameObject.tag == "bullet")
@@ -510,6 +533,7 @@ public class AnimalAI : MonoBehaviour
 
 
 	}
+
 	void death()
 	{
 		/*
