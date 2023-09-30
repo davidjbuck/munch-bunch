@@ -158,24 +158,10 @@ public class AnimalAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			if (isInRange)
+			if (Distance < 5)
 			{
-				if (FightsRanged)
-				{
-					if (rAttackTimer > 200)
-					{
-						RangedAttack();
-						rAttackTimer = 0;
-					}
-				}
-				else
-				{
-					if (mAttackTimer > 800)
-					{
-						MeleeAttack();
-						mAttackTimer = 0;
-					}
-				}
+				Destination = this.transform.position;
+				navAgent.SetDestination(Destination);
 			}
 			else
 			{
@@ -225,30 +211,10 @@ public class AnimalAI : MonoBehaviour
 		{
 			if (Distance < 40f)
 			{
-				/*
-				if (Distance < 2f)
-				{
-					if (mAttackTimer > 200)
-					{
-						//	GetComponent<Animation>().Play("attack");
-						//pstat.removeHealth(15);
-						mAttackTimer = 0;
-					}
-					navAgent.SetDestination(this.transform.position);
-					navAgent.isStopped = true;
-
-					//navAgent.Stop();
-
-				}
-				else
-				{
-					navAgent.isStopped = false;
-					//navAgent.Resume();
-					navAgent.SetDestination(Destination);
-
-					//GetComponent<Animation>().Play("run");
-				}
-				*/
+				if(Distance < 5f)
+                {
+					Combat();
+                }
 				navAgent.SetDestination(Destination);
 			}
 			else
@@ -432,28 +398,15 @@ public class AnimalAI : MonoBehaviour
 			}
 		}
 	}
+
+	/*
 	void RangedAttack()
 	{
-		if (dead == false)
-		{
-
-			/*
-			//GetComponent<Animation>().Play("attack");
-			GameObject newProjectile;
-			newProjectile = Instantiate(Projectile, transform.position, this.transform.rotation) as GameObject;
-			Destroy(newProjectile, 5);
-			*/
-		}
 	}
 	void MeleeAttack()
 	{
-		if (dead == false)
-		{
-			//GetComponent<Animation>().Play("attack");
-
-			//	pstat.removeHealth(30);
-		}
 	}
+	*/
 	#endregion
 
 
