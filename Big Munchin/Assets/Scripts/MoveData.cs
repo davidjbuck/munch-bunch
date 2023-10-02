@@ -10,6 +10,7 @@ public class MoveData : MonoBehaviour
     public GameObject attackPropertiesHolder;//GameObject with AttackProperties component
     private AttackProperties attackProps;//variable to hold AttackProperties for the move
     private float maxLifespan = 0.0f;
+    public float staminaCost;
     public enum AttackTeam
     {
         Player=0,
@@ -55,5 +56,10 @@ public class MoveData : MonoBehaviour
     public float GetMaxLifespan()
     {
         return maxLifespan;
+    }
+
+    public float GetStaminaCost()
+    {
+        return staminaCost;
     }
 }
