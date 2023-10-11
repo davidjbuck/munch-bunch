@@ -16,6 +16,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 //public enum Behaviors { Idle, Guard, Combat, Flee };
 
@@ -30,8 +31,7 @@ public class AnimalAI : MonoBehaviour
 	public bool isSuspicious = false;
 	public bool isInRange = false;
 	public bool FightsRanged = false;
-	public int rAttackTimer;
-	public int mAttackTimer;
+	public int attackTimer;
 	public bool aggressive;
 	//public GameObject Projectile;
 	public Rigidbody rigidBod;
@@ -50,6 +50,12 @@ public class AnimalAI : MonoBehaviour
 	public PlayerMover p1;
 	//public GameObject enemy;
 	//public GameObject healthText;
+
+
+	public GameObject enemyAttack;
+	public Transform attackSpawn;
+	public Image attackWarning;
+
 	#region Behaviors
 	void RunBehaviors()
 	{
@@ -160,6 +166,24 @@ public class AnimalAI : MonoBehaviour
 		{
 			if (Distance < 5)
 			{
+				//navAgent.LookAt(GameObject.FindGameObjectWithTag("Player").transform.position);
+				Vector3 playerPosition = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
+				this.transform.LookAt(playerPosition);
+				if(attackTimer > 300)
+                {
+					attackWarning.enabled = true;
+                } else
+                {
+					attackWarning.enabled = false;
+				}
+				if (attackTimer > 500)
+				{
+					GameObject w = Instantiate(enemyAttack, attackSpawn.position, attackSpawn.rotation) as GameObject;
+					Destroy(w, 0.2f);
+
+					attackTimer = 0;
+					Debug.Log("ATTACK");
+				}
 				Destination = this.transform.position;
 				navAgent.SetDestination(Destination);
 			}
@@ -233,40 +257,6 @@ public class AnimalAI : MonoBehaviour
 			{
 				rigidBod.constraints = RigidbodyConstraints.None;
 
-				if (Distance < 5f)
-				{
-					if (rAttackTimer > 200)
-					{
-						//	GetComponent<Animation>().Play("attack");
-						Debug.Log("Enemy Fire");
-
-						/*
-						GameObject newProjectile;
-						newProjectile = Instantiate(Projectile, shotSpawn.position, shotSpawn.rotation) as GameObject;
-						Destroy(newProjectile, 3);
-
-						GameObject newProjectile1;
-						newProjectile1 = Instantiate(Projectile, shotSpawn1.position, shotSpawn1.rotation) as GameObject;
-						Destroy(newProjectile1, 3);
-						rAttackTimer = 0;
-						*/
-					}
-					//navAgent.LookAt(Destination);
-					//navAgent.isStopped = true;
-
-					//navAgent.Stop();
-
-				}
-				else
-				{
-					navAgent.isStopped = false;
-
-					//navAgent.Resume();
-					navAgent.SetDestination(Destination);
-
-					//GetComponent<Animation>().Play("run");
-				}
-				//	GetComponent<Animation>().Play("run");
 
 				navAgent.SetDestination(Destination);
 
@@ -418,46 +408,6 @@ public class AnimalAI : MonoBehaviour
 	*/
 	void OnCollisionEnter(Collision col)
 	{
-
-
-		/*
-
-				if (col.gameObject.tag == "bullet")
-				{
-					Destroy(col.gameObject);
-					health = health - 20;
-					Debug.Log("ENEMY HIT: " + health);
-					rigidBod.constraints = RigidbodyConstraints.None;
-
-					//removeHealth(20);
-					//  Camera.main.SendMessage("stat_hit", 1);
-					//  Camera.main.SendMessage("stat_health", -10);
-				}
-				if (col.gameObject.tag == "Bullet2")
-				{
-					Destroy(col.gameObject);
-					health = health - 20;
-					Debug.Log("ENEMY HIT: " + health);
-					rigidBod.constraints = RigidbodyConstraints.None;
-
-					//removeHealth(20);
-					//  Camera.main.SendMessage("stat_hit", 1);
-					//  Camera.main.SendMessage("stat_health", -10);
-				}
-				if (col.gameObject.tag == "Spear")
-				{
-					Destroy(col.gameObject);
-					health = health - 100;
-					Debug.Log("ENEMY HIT: " + health);
-					//removeHealth(20);
-					//  Camera.main.SendMessage("stat_hit", 1);
-					//  Camera.main.SendMessage("stat_health", -10);
-				}
-			}
-			*/
-
-
-
 	}
 	void death()
 	{
@@ -489,7 +439,10 @@ public class AnimalAI : MonoBehaviour
 
 	void Update()
 	{
-
+		if(attackTimer < 550)
+        {
+			attackTimer++;
+        }
 		/*
 		healthText.GetComponent<TextMeshProUGUI>().text = "Enemy Health: " + health;
 		if (health <= 0)

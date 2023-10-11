@@ -34,7 +34,9 @@ public class EnemyHealth : MonoBehaviour
         if (col.gameObject.tag == "Hitbox") 
         {
             //attackProps = CollisionManager.GetComponent<CollisionManager>();
-            removeHealth(1);
+            float damage = col.GetComponent<CollisionManager>().GetAttackDamage();
+            Debug.Log(damage);
+            removeHealth(damage);
         }
     }
 
