@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour
+public class EnemyAtkHitBox : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -13,10 +13,13 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 1000 * Time.deltaTime, 0); //rotates 25 degrees per second around y axis
-        if(this.transform.rotation.z > 60)
-        {
-            Destroy(this.gameObject);
-        }
+        
     }
+    public void OnCollisionEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Player")
+        {
+            Debug.Log("Hit Player");
+        }
+    } 
 }
