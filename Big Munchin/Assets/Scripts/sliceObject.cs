@@ -7,21 +7,15 @@ using UnityEngine.EventSystems;
 public class sliceObject : MonoBehaviour
 {
     Transform planeObject;
-    public Transform planeObjectSmall;
-    public Transform planeObjectMed;
-    public Transform planeObjectLarge;
+    public GameObject planeObjectSmall;
+    public GameObject planeObjectMed;
+    public GameObject planeObjectLarge;
     public GameObject sliceO;
+    public GameObject sliceButtonHolder;
+
     public Material middleGuts;
     string sliceOName;
     int meatAmount = 0;
-
-    private void Update()
-    {
-         //if (Input.GetKeyDown(KeyCode.Space))
-         //{
-         //    Slice(sliceO);
-         //}
-    }
 
     public void getSliceObject(string foodName)
     {
@@ -31,26 +25,30 @@ public class sliceObject : MonoBehaviour
 
     public void slicePortionSmall()
     {
-        Debug.Log("clicked");
-        planeObject = planeObjectSmall;
+        planeObject = planeObjectSmall.transform;
         meatAmount = 1;
         Slice(sliceO);
     }
     public void slicePortionMed()
     {
-        planeObject = planeObjectMed;
+        planeObject = planeObjectMed.transform;
         meatAmount = 2;
         Slice(sliceO);
     }
     public void slicePortionLarge()
     {
-        planeObject = planeObjectLarge;
+        planeObject = planeObjectLarge.transform;
         meatAmount = 3;
         Slice(sliceO);
     }
 
     public void Slice(GameObject o)
     {
+        planeObjectSmall.SetActive(false);
+        planeObjectMed.SetActive(false);
+        planeObjectLarge.SetActive(false);
+        sliceButtonHolder.SetActive(false);
+
         SlicedHull hull = o.Slice(planeObject.position, planeObject.up);
         if (hull != null)
         {
