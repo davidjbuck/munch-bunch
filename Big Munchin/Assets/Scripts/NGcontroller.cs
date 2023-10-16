@@ -35,6 +35,8 @@ public class NGcontroller : MonoBehaviour
     public void switchToCarb()
     {
         currentScreen = 1;
+        Destroy(GameObject.Find("Upper_Hull"));
+        Destroy(GameObject.Find("Lower_Hull"));
         meatParent.SetActive(false);
         carbParent.SetActive(true);
     }

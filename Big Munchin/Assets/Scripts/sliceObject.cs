@@ -13,6 +13,8 @@ public class sliceObject : MonoBehaviour
     public GameObject sliceO;
     public GameObject sliceButtonHolder;
 
+    public GameObject knife;
+
     public Material middleGuts;
     string sliceOName;
     int meatAmount = 0;
@@ -59,6 +61,7 @@ public class sliceObject : MonoBehaviour
 
             Destroy(o);
         }
+        knife.SetActive(false);
     }
 
     public void hullSetups(GameObject o)
