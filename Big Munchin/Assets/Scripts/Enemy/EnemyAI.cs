@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour
 	public bool isSuspicious = false;
 	public bool isInRange = false;
 	public bool FightsRanged = false;
-	public int attackTimer;
+	public float attackTimer;
 	public bool aggressive;
 	//public GameObject Projectile;
 	public Rigidbody rigidBod;
@@ -51,11 +51,15 @@ public class EnemyAI : MonoBehaviour
 	//public GameObject enemy;
 	//public GameObject healthText;
 
-
+	public float attackCooldown;
 	public GameObject enemyAttack;
 	public Transform attackSpawn;
 	public Image attackWarning;
 
+
+
+	public MovesetHolder[] enemyMovesets;
+	MovesetHolder enemyActiveMoveset;
 	#region Behaviors
 	void RunBehaviors()
 	{
@@ -170,22 +174,23 @@ public class EnemyAI : MonoBehaviour
 				//attack timer and warnings
 				Vector3 playerPosition = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
 				this.transform.LookAt(playerPosition);
-				if(attackTimer > 300)
+				if(attackTimer > (attackCooldown-0.5))
                 {
 					attackWarning.enabled = true;
                 } else
                 {
 					attackWarning.enabled = false;
 				}
-				if(attackTimer >= 200)
+				if(attackTimer >= (attackCooldown - 1))
                 {
-					attackTimer++;
+					attackTimer += Time.deltaTime;
                 }
-				if (attackTimer > 500)
+				if (attackTimer > attackCooldown)
 				{
 					//spawns hitbox that attacks
-					GameObject w = Instantiate(enemyAttack, attackSpawn.position, attackSpawn.rotation) as GameObject;
-					Destroy(w, 0.2f);
+					enemyActiveMoveset.LightAttackCombo();
+					//GameObject w = Instantiate(enemyAttack, attackSpawn.position, attackSpawn.rotation) as GameObject;
+					//Destroy(w, 0.2f);
 
 					attackTimer = 0;
 					//Debug.Log("ATTACK");
@@ -218,26 +223,6 @@ public class EnemyAI : MonoBehaviour
 			}
 			Destination = transform.position + (transform.position - GameObject.FindGameObjectWithTag("Player").transform.position);
 			navAgent.SetDestination(Destination);
-
-			//GetComponent<Animation>().Play("run");
-			/*
-			for (int fleePoint = 0; fleePoint < Waypoints.Length; fleePoint++)
-			{
-				Distance = Vector3.Distance(gameObject.transform.position, Waypoints[fleePoint].position);
-				if (Distance > 20.00f)
-				{
-					Destination = Waypoints[curWaypoint].position;
-					navAgent.SetDestination(Destination);
-					break;
-				}
-				else if (Distance < 2.00f)
-				{
-
-					//ChangeBehavior(Behaviors.Idle);
-				}
-			}
-			*/
-
 		}
 	}
 	void GuardSearchForTarget()
@@ -279,94 +264,15 @@ public class EnemyAI : MonoBehaviour
 			{
 				rigidBod.constraints = RigidbodyConstraints.FreezeAll;
 
-				//GetComponent<Animation>().Play("dance");
 
 			}
-			/*
-			if (Distance < 5.00f)
-			{
-				isInRange = true;
-				FightsRanged = true;
-			} else
-			{
-				FightsRanged = false;
-			}4
-			*/
-			/*
-			Destination = GameObject.FindGameObjectWithTag("Player").transform.position;
-			Distance = Vector3.Distance(gameObject.transform.position, Destination);
-			if (Distance < 10.00f)
-			{
-				GetComponent<Animation>().Play("run");
 
-				navAgent.SetDestination(Destination);
-
-				if (Distance < 5.00f)
-				{
-					//ChangeBehavior(Behaviors.Combat);
-					isInRange = true;
-					FightsRanged = true;
-				} else
-				{
-					isInRange = false;
-					FightsRanged = false;
-					//SearchForTarget();
-				}
-			}
-			else
-			{
-				//ChangeBehavior(Behaviors.Idle);
-				navAgent.SetDestination(this.transform.position);
-				Idle();
-				isInRange = false;
-				FightsRanged = false;
-			}
-			*/
-
-
-
-			/*
-			Distance = Vector3.Distance(gameObject.transform.position, Destination);
-			Destination = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-			if (Distance < 10)
-			{
-				//isInRange = false;
-				if (Distance < 5)
-				{
-					isInRange = true;
-					if (Distance < 2)
-					{
-						FightsRanged = false;
-
-					}
-					else
-					{
-						FightsRanged = true;
-					}
-				} else
-				{
-					FightsRanged = false;
-					navAgent.SetDestination(Destination);
-					GetComponent<Animation>().Play("run");
-				}
-			}
-			if(Distance > 10)
-			{
-				FightsRanged = false;
-				isInRange = false;
-				//Combat();
-				Idle();
-				navAgent.SetDestination(this.transform.position);
-			}
-			*/
 		}
 	}
 	void Patrol()
 	{
 		if (dead == false)
 		{
-			//GetComponent<Animation>().Play("run");
 			Distance = Vector3.Distance(gameObject.transform.position, Waypoints[curWaypoint].position);
 			if (Distance > 2.00f)
 			{
@@ -445,6 +351,7 @@ public class EnemyAI : MonoBehaviour
 	}
 	void Start()
 	{
+		enemyActiveMoveset = enemyMovesets[0];
 		navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		//GameObject g1 = GameObject.FindGameObjectWithTag("Player");
 		//	pstat = g1.GetComponent<PlayerStats>();
@@ -453,10 +360,10 @@ public class EnemyAI : MonoBehaviour
 
 	void Update()
 	{
-		if(attackTimer < 200)
+		if(attackTimer < (attackCooldown-1))
         {
-			attackTimer++;
-        }
+			attackTimer += Time.deltaTime;
+		}
 		/*
 		healthText.GetComponent<TextMeshProUGUI>().text = "Enemy Health: " + health;
 		if (health <= 0)
