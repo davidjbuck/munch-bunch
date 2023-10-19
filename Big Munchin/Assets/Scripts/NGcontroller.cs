@@ -17,6 +17,23 @@ public class NGcontroller : MonoBehaviour
     public GameObject carbParent;
     public GameObject vegParent;
 
+    public ParticleSystem ricePour;
+
+
+    private void Update()
+    {
+        //particle system timing
+        if (Input.GetMouseButtonDown(0))
+        {
+            ricePour.Play();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            ricePour.Stop();
+        }
+    }
+
     //gets the name of the selected button and instantiates that object
     public void createObject()
     {
