@@ -137,15 +137,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241227537023659752, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.09853762
+      value: -0.098537624
       objectReference: {fileID: 0}
     - target: {fileID: 241227537023659752, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000004280661
+      value: 0.0000000042806607
       objectReference: {fileID: 0}
     - target: {fileID: 241227537023659752, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.238689e-10
+      value: 4.238689e-10
       objectReference: {fileID: 0}
     - target: {fileID: 1084401164583247934, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1253,6 +1253,7 @@ MonoBehaviour:
   FightsRanged: 0
   attackTimer: 0
   aggressive: 0
+  permAggressive: 0
   rigidBod: {fileID: 1230621026}
   sprintSpeed: 8
   patrolSpeed: 4
@@ -1357,6 +1358,7 @@ MonoBehaviour:
   FightsRanged: 0
   attackTimer: 0
   aggressive: 1
+  permAggressive: 0
   rigidBod: {fileID: 1265755472}
   sprintSpeed: 8
   patrolSpeed: 4
@@ -2491,16 +2493,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 778243946}
     m_Modifications:
     - target: {fileID: 795418164081422651, guid: adce1676510c2b348bcec52cb956a0f0, type: 3}
+      propertyPath: offset.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 795418164081422651, guid: adce1676510c2b348bcec52cb956a0f0, type: 3}
+      propertyPath: offset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 795418164081422651, guid: adce1676510c2b348bcec52cb956a0f0, type: 3}
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 778243946}
+    - target: {fileID: 795418164081422651, guid: adce1676510c2b348bcec52cb956a0f0, type: 3}
+      propertyPath: hitboxCollider
+      value: 
+      objectReference: {fileID: 5350246079755729608, guid: b2758102203e4724abcaaba68fc3cb9f, type: 3}
     - target: {fileID: 5807649630650720693, guid: adce1676510c2b348bcec52cb956a0f0, type: 3}
       propertyPath: m_Name
       value: EnemyTestAttack1
       objectReference: {fileID: 0}
     - target: {fileID: 7609797378611106640, guid: adce1676510c2b348bcec52cb956a0f0, type: 3}
       propertyPath: stunDuration
-      value: 100
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8419445455023143453, guid: adce1676510c2b348bcec52cb956a0f0, type: 3}
       propertyPath: m_LocalPosition.x

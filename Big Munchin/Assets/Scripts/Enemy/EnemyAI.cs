@@ -33,6 +33,7 @@ public class EnemyAI : MonoBehaviour
 	public bool FightsRanged = false;
 	public float attackTimer;
 	public bool aggressive;
+	public bool permAggressive;
 	//public GameObject Projectile;
 	public Rigidbody rigidBod;
 	public float sprintSpeed;
@@ -133,7 +134,11 @@ public class EnemyAI : MonoBehaviour
 			{
 				isSuspicious = true;
 			}
-			if (isSuspicious)
+            if (permAggressive)
+            {
+				GuardSearchForTarget();
+            }
+			else if (isSuspicious)
 			{
 				//INCREASES SPEED TO EITHER ATTACK OR FLEE
 				GetComponent<UnityEngine.AI.NavMeshAgent>().speed = sprintSpeed;
@@ -238,6 +243,10 @@ public class EnemyAI : MonoBehaviour
                 {
 					attackWarning.enabled = false;
 				}
+				navAgent.SetDestination(Destination);
+			}
+			else if (permAggressive)
+            {
 				navAgent.SetDestination(Destination);
 			}
 			else
