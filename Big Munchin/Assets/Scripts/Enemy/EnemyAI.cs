@@ -55,10 +55,11 @@ public class EnemyAI : MonoBehaviour
 	public float attackCooldown;
 	public GameObject enemyAttack;
 	public Transform attackSpawn;
-	public Image attackWarning;
+	public Image lightAttackWarning;
+	public Image heavyAttackWarning;
 
-
-
+	private int randNum;
+	private bool newRand;
 	public MovesetHolder[] enemyMovesets;
 	MovesetHolder enemyActiveMoveset;
 	#region Behaviors
@@ -181,22 +182,56 @@ public class EnemyAI : MonoBehaviour
 				this.transform.LookAt(playerPosition);
 				if(attackTimer > (attackCooldown-0.5))
                 {
-					attackWarning.enabled = true;
+					//chooses random number 0 or 1 to decide which attack is being used (maybe something else in the future depending on health or stamina based)
+					if (!newRand)
+					{
+						randNum = Random.Range(0, 2);
+						//trigger attack warnings for each attack
+						if (randNum == 0)
+						{
+							lightAttackWarning.enabled = true;
+							//Debug.Log("Light");
+						}
+						if (randNum == 1)
+						{
+							//Debug.Log("Heavy");
+							heavyAttackWarning.enabled = true;
+						}
+						//makes sure it doesnt call both constantly, resets once the attack spawns
+						newRand = true;
+					}
                 } else
                 {
-					attackWarning.enabled = false;
+					//disable attack warnings
+					lightAttackWarning.enabled = false;
+					heavyAttackWarning.enabled = false;
 				}
-				if(attackTimer >= (attackCooldown - 1))
+				//continues attack timer since it preloads most of it normally, but needs to be close to the player to finish counting
+				if(attackTimer >= (attackCooldown))
                 {
 					attackTimer += Time.deltaTime;
                 }
+				//attack when timer goes above he cooldown number
 				if (attackTimer > attackCooldown)
 				{
 					//spawns hitbox that attacks
-					enemyActiveMoveset.LightAttackCombo();
+					//light
+					if (randNum == 0)
+					{
+						enemyActiveMoveset.LightAttackCombo();
+					}
+					//heavy
+					if (randNum == 1)
+					{
+						enemyActiveMoveset.HeavyAttackCombo();
+						attackCooldown = attackCooldown - 1;
+					}
+					//old code for temp enemyhitbox
 					//GameObject w = Instantiate(enemyAttack, attackSpawn.position, attackSpawn.rotation) as GameObject;
 					//Destroy(w, 0.2f);
 
+					//reset variables for next attack
+					newRand = false;
 					attackTimer = 0;
 					//Debug.Log("ATTACK");
 				}
@@ -241,7 +276,8 @@ public class EnemyAI : MonoBehaviour
 					Combat();
                 } else
                 {
-					attackWarning.enabled = false;
+					lightAttackWarning.enabled = false;
+					heavyAttackWarning.enabled = false;
 				}
 				navAgent.SetDestination(Destination);
 			}
