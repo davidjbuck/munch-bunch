@@ -51,8 +51,9 @@ public class EnemyAI : MonoBehaviour
 	public PlayerMover p1;
 	//public GameObject enemy;
 	//public GameObject healthText;
-
-	public float attackCooldown;
+	private float attackCooldown = 0;
+	public float lightAttackCooldown;
+	public float heavyAttackCooldown;
 	public GameObject enemyAttack;
 	public Transform attackSpawn;
 	public Image lightAttackWarning;
@@ -180,34 +181,25 @@ public class EnemyAI : MonoBehaviour
 				//attack timer and warnings
 				Vector3 playerPosition = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
 				this.transform.LookAt(playerPosition);
-				if(attackTimer > (attackCooldown-0.5))
+				//chooses random number 0 or 1 to decide which attack is being used (maybe something else in the future depending on health or stamina based)
+				if (attackTimer >= (attackCooldown-1) && randNum == 0)
                 {
-					//chooses random number 0 or 1 to decide which attack is being used (maybe something else in the future depending on health or stamina based)
-					if (!newRand)
-					{
-						randNum = Random.Range(0, 2);
-						//trigger attack warnings for each attack
-						if (randNum == 0)
-						{
-							lightAttackWarning.enabled = true;
-							//Debug.Log("Light");
-						}
-						if (randNum == 1)
-						{
-							//Debug.Log("Heavy");
-							heavyAttackWarning.enabled = true;
-						}
-						//makes sure it doesnt call both constantly, resets once the attack spawns
-						newRand = true;
-					}
-                } else
-                {
+					//light attack warning
+					lightAttackWarning.enabled = true;
+					//Debug.Log("Light");
+				} else if (attackTimer >= (attackCooldown - 2) && randNum == 1)
+				{
+					//heavy attack warning
+					heavyAttackWarning.enabled = true;
+					//Debug.Log("Heavy");
+				}else
+				{
 					//disable attack warnings
 					lightAttackWarning.enabled = false;
 					heavyAttackWarning.enabled = false;
 				}
 				//continues attack timer since it preloads most of it normally, but needs to be close to the player to finish counting
-				if(attackTimer >= (attackCooldown))
+				if(attackTimer <= (attackCooldown))
                 {
 					attackTimer += Time.deltaTime;
                 }
@@ -405,32 +397,32 @@ public class EnemyAI : MonoBehaviour
 
 	void Update()
 	{
-		if(attackTimer < (attackCooldown-1))
+		if (!newRand)
+		{
+			randNum = Random.Range(0, 2);
+			//makes attack cooldown depending on attack and what is put in the inpector
+			if (randNum == 0)
+			{
+				attackCooldown = lightAttackCooldown;
+				//Debug.Log("light cooldown");
+			}
+			if (randNum == 1)
+			{
+				attackCooldown = heavyAttackCooldown;
+				//Debug.Log("heavy cooldown");
+
+			}
+			//makes sure it doesnt call both constantly, resets once the attack spawns
+			newRand = true;
+		}
+		if (attackTimer < (attackCooldown - 1))
         {
 			attackTimer += Time.deltaTime;
+			Debug.Log(attackTimer);
 		}
-		/*
-		healthText.GetComponent<TextMeshProUGUI>().text = "Enemy Health: " + health;
-		if (health <= 0)
-		{
 
-			//this.gameObject.setActive(false);
-			//Destroy(enemy);
-			Destroy(this);
-			Debug.Log("ENEMY KILLED");
-			death();
 
-		}
-		*/
-
-		/*
-		if(Input.GetButtonUp("Fire1"))
-		{
-			//Camera.main.SendMessage("stat_shot", 1);
-			RangedAttack();
-			
-		}
-		*/
+		
 		if (dead == false)
 		{
 			/*

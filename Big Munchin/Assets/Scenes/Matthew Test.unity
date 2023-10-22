@@ -137,15 +137,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241227537023659752, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.09853762
+      value: -0.098537624
       objectReference: {fileID: 0}
     - target: {fileID: 241227537023659752, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000004280661
+      value: 0.0000000042806607
       objectReference: {fileID: 0}
     - target: {fileID: 241227537023659752, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.238689e-10
+      value: 4.238689e-10
       objectReference: {fileID: 0}
     - target: {fileID: 1084401164583247934, guid: 6e55bdc0ec797354781eeaf344be4bf6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -918,7 +918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4709984993272797093, guid: 0bebb7c2394b44447902a2a1abf5cbd8, type: 3}
       propertyPath: lifespan
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4709984993272797093, guid: 0bebb7c2394b44447902a2a1abf5cbd8, type: 3}
       propertyPath: anchorObject
@@ -1412,7 +1412,8 @@ MonoBehaviour:
   - {fileID: 920462349}
   curWaypoint: 0
   p1: {fileID: 0}
-  attackCooldown: 0
+  lightAttackCooldown: 0
+  heavyAttackCooldown: 0
   enemyAttack: {fileID: 0}
   attackSpawn: {fileID: 0}
   lightAttackWarning: {fileID: 0}
@@ -1518,7 +1519,8 @@ MonoBehaviour:
   - {fileID: 920462349}
   curWaypoint: 0
   p1: {fileID: 0}
-  attackCooldown: 2
+  lightAttackCooldown: 3
+  heavyAttackCooldown: 5
   enemyAttack: {fileID: 9156436242558683226, guid: b1050b9cbc9f08b458e9087618f6771a, type: 3}
   attackSpawn: {fileID: 778243946}
   lightAttackWarning: {fileID: 1868949627}
