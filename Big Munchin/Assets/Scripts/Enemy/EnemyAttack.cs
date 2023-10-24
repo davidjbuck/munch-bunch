@@ -13,7 +13,7 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0, 1000 * Time.deltaTime); //rotates 25 degrees per second around y axis
+        transform.Rotate(0, 1000 * Time.deltaTime, 0); //rotates 25 degrees per second around y axis
         if(this.transform.rotation.z > 60)
         {
             Destroy(this.gameObject);

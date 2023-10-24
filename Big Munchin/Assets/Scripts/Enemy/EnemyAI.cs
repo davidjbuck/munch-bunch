@@ -20,7 +20,7 @@ using UnityEngine.UI;
 
 //public enum Behaviors { Idle, Guard, Combat, Flee };
 
-public class AnimalAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
 	//public GameObject healthRect;
 	//public Transform shotSpawn;
@@ -164,9 +164,10 @@ public class AnimalAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			if (Distance < 5)
+			if (Distance < 3)
 			{
-				//navAgent.LookAt(GameObject.FindGameObjectWithTag("Player").transform.position);
+				//attack player if they are within 5 unitys
+				//attack timer and warnings
 				Vector3 playerPosition = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
 				this.transform.LookAt(playerPosition);
 				if(attackTimer > 300)
@@ -176,19 +177,29 @@ public class AnimalAI : MonoBehaviour
                 {
 					attackWarning.enabled = false;
 				}
+				if(attackTimer >= 200)
+                {
+					attackTimer++;
+                }
 				if (attackTimer > 500)
 				{
+					//spawns hitbox that attacks
 					GameObject w = Instantiate(enemyAttack, attackSpawn.position, attackSpawn.rotation) as GameObject;
 					Destroy(w, 0.2f);
 
 					attackTimer = 0;
-					Debug.Log("ATTACK");
+					//Debug.Log("ATTACK");
 				}
 				Destination = this.transform.position;
 				navAgent.SetDestination(Destination);
 			}
+			else if (Distance < 5)
+            {
+				navAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
+            }
 			else
 			{
+				attackTimer = 200;
 				SearchForTarget();
 			}
 		}
@@ -238,7 +249,10 @@ public class AnimalAI : MonoBehaviour
 				if(Distance < 5f)
                 {
 					Combat();
-                }
+                } else
+                {
+					attackWarning.enabled = false;
+				}
 				navAgent.SetDestination(Destination);
 			}
 			else
@@ -439,7 +453,7 @@ public class AnimalAI : MonoBehaviour
 
 	void Update()
 	{
-		if(attackTimer < 550)
+		if(attackTimer < 200)
         {
 			attackTimer++;
         }
