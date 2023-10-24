@@ -34,6 +34,11 @@ public class CollisionManager : MonoBehaviour
         ap = attackProps;
     }
 
+    public void UpdateAttackDamage(float attackDamageChange)
+    {
+        ap.UpdateDamage(attackDamageChange);
+    }
+
     public void PassLifespan(float ls)
     {
         lifespan = ls;
