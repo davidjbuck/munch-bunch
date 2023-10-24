@@ -40,7 +40,7 @@ public class UIPlayerTest : MonoBehaviour
         }
         if (currentStamina < maxStamina)
         {
-            RegenerateStamina(.1f);
+            RegenerateStamina(.03f);
         }
         
         if(Input.GetKeyDown(KeyCode.D))
@@ -68,7 +68,10 @@ public class UIPlayerTest : MonoBehaviour
     void RegenerateStamina(float recover)
     {
         currentStamina += recover;
-
+        if (currentStamina > 100f)
+        {
+            currentStamina = 100f;
+        }
         staminaBar.SetStamina(currentStamina);
     }
 
