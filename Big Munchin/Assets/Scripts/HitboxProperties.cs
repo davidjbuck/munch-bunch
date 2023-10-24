@@ -32,9 +32,24 @@ public class HitboxProperties : MonoBehaviour
         Vector3 rotatedPosition = dir + anchorObject.transform.position;
         GameObject hb = Instantiate(hitboxCollider,rotatedPosition, anchorObject.transform.rotation);//instantiate and store reference to hitbox
         hb.GetComponent<CollisionManager>().PassMoveData(move);//pass move data to hb
-        hb.GetComponent<CollisionManager>().PassAttackProperties(move.GetAttackProperties());//pass attack properties to hb
+        hb.GetComponent<CollisionManager>().PassAttackProperties(move.GetAttackProperties().Clone());//pass attack properties to hb
         hb.GetComponent<CollisionManager>().SetAttackTeam((int)move.team);//pass attackTeam to hb
         hb.GetComponent<CollisionManager>().PassLifespan(lifespan);
+        if (hb.GetComponent<CollisionManager>().GetAttackTeam() == 0)
+        {
+            ThirdPersonController tpc = GameObject.Find("Main Camera").GetComponent<ThirdPersonController>();
+            if (tpc != null)
+            {
+                if (tpc.IsCrit())
+                {
+                    hb.GetComponent<CollisionManager>().UpdateAttackDamage(tpc.GetAttackIncrease());
+                }                
+            }
+            else
+            {
+                Debug.Log("Failed to find Main Camera when instantiating hitbox...");
+            }
+        }
     }
 
     public float GetTimeEnabled()

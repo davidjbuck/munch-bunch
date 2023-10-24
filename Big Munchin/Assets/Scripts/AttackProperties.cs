@@ -28,4 +28,15 @@ public class AttackProperties : MonoBehaviour
     {
         
     }
+
+    public void UpdateDamage(float change)
+    {
+        damage = (int)(damage*change);
+        Debug.Log("Updated Crit Damage is: " + damage);
+    }
+
+    public AttackProperties Clone()
+    {
+        return (AttackProperties)MemberwiseClone();
+    }
 }
