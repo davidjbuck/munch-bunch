@@ -418,7 +418,7 @@ public class EnemyAI : MonoBehaviour
 		if (attackTimer < (attackCooldown - 1))
         {
 			attackTimer += Time.deltaTime;
-			Debug.Log(attackTimer);
+			//Debug.Log(attackTimer);
 		}
 
 

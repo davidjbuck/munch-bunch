@@ -97,7 +97,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   timeEnabled: 0
   lifespan: 0.2
-  hitboxCollider: {fileID: 9156436242558683226, guid: b1050b9cbc9f08b458e9087618f6771a, type: 3}
+  hitboxCollider: {fileID: 7030190084489335180, guid: 3ccb0827743c24d4d88c4a3f2d3af300, type: 3}
 --- !u!1 &5807649630650720693
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 8419445455023143453}
   - component: {fileID: 1672459317528289145}
   m_Layer: 0
-  m_Name: EnemyTestAttack1
+  m_Name: EnemyLightAttack1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
