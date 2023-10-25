@@ -63,4 +63,9 @@ public class CollisionManager : MonoBehaviour
     {
         return ap.knockbackForce;
     }
+
+    public AttackProperties GetAttackProperties()
+    {
+        return ap;
+    }
 }
