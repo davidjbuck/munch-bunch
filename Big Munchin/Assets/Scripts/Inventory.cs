@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -55,7 +56,7 @@ public class Inventory : MonoBehaviour
         if (collision.gameObject.tag == "item")
         {
             //gets the item info from the object
-            Item tempItem = collision.gameObject.GetComponent<Item>();
+            Item tempItem = collision.gameObject.GetComponent<Item>().Clone();
 
             //if the item is found already in the list, add another one
             bool itemFound = false;
@@ -73,6 +74,7 @@ public class Inventory : MonoBehaviour
             {
                 inventoryList.Add(tempItem);
             }
+            fillGUIButtons();
         }
     }
 
@@ -98,11 +100,19 @@ public class Inventory : MonoBehaviour
 
 
     //fills text for the buttons with inventory items
-    private void fillGUIButtons()
+    public void fillGUIButtons()
     {
-        for (int x = 0; x < inventoryList.Count; x++)
+        for (int x = 0; x < buttonList.Count; x++)
         {
-            buttonList[x].text = inventoryList[x].itemName + " (" + inventoryList[x].amount + ")";
+            if (x < inventoryList.Count)
+            {
+                buttonList[x].text = inventoryList[x].itemName + " (" + inventoryList[x].amount + ")";
+            }
+            else
+            {
+                buttonList[x].text = "";
+            }
+            
         }
     }
 
@@ -118,9 +128,19 @@ public class Inventory : MonoBehaviour
                 tempItem = item;
             }
         }
-        ITDName.text = tempItem.itemName;
-        ITDType.text = tempItem.itemType.ToString();
-        ITDFlavorText.text = tempItem.flavorText;
+        if(tempItem != null)
+        {
+            ITDName.text = tempItem.itemName;
+            ITDType.text = tempItem.itemType.ToString();
+            ITDFlavorText.text = tempItem.flavorText;
+        }
+        else
+        {
+            ITDName.text = "";
+            ITDType.text = "";
+            ITDFlavorText.text = "";
+        }
+        
 
         selectedItem = "";
     }
@@ -142,4 +162,34 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public Item UseItem(int index)
+    {
+        int i = 0;
+        foreach (Item item in inventoryList)
+        {
+            if (i == index)
+            {
+                Item temp = item.Clone();
+                item.amount --;
+                if(item.amount == 0)
+                {
+
+                    inventoryList.Remove(item);
+                }                
+                return temp;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        return inventoryList[0];
+    }
+
+    public int GetInventoryCapacity()
+    {
+        return inventoryList.Count;
+    }
+
 }
