@@ -17,8 +17,9 @@ public class NGcontroller : MonoBehaviour
     public GameObject carbParent;
     public GameObject vegParent;
 
+    public GameObject riceParent;
     public ParticleSystem ricePour;
-
+    float fakeWeightCount = 0;
 
     private void Update()
     {
@@ -26,6 +27,8 @@ public class NGcontroller : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ricePour.Play();
+            fakeWeightCount += Time.deltaTime;
+            Debug.Log("time: " + fakeWeightCount);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -35,18 +38,23 @@ public class NGcontroller : MonoBehaviour
     }
 
     //gets the name of the selected button and instantiates that object
-    public void createObject()
+    public void createObjectMeat()
     {
         string foodItem = EventSystem.current.currentSelectedGameObject.name;
         if(foodItem != currentMade)
         {
-            Instantiate(Resources.Load(foodItem), new Vector3(4.105f, 1.181f, 182.282f), Quaternion.identity);
+            Instantiate(Resources.Load(foodItem), new Vector3(-392.68f, 28.9f, 60.76f), Quaternion.identity);
             counter.GetComponent<sliceObject>().getSliceObject(foodItem);
             knife.SetActive(true);
             sliceButtonHolder.SetActive(true);
             slicePlaneHolder.SetActive(true);
             currentMade = foodItem;
         }
+    }
+
+    public void carbActivate()
+    {
+        riceParent.SetActive(true);
     }
 
     public void switchToCarb()
@@ -56,6 +64,13 @@ public class NGcontroller : MonoBehaviour
         Destroy(GameObject.Find("Lower_Hull"));
         meatParent.SetActive(false);
         carbParent.SetActive(true);
+    }
+    public void switchToVeg()
+    {
+        currentScreen = 2;
+        riceParent.SetActive(false);
+        carbParent.SetActive(false);
+        vegParent.SetActive(true);
     }
 
     public void openRecipeBook()
