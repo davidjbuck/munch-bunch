@@ -827,4 +827,39 @@ public class ThirdPersonController : MonoBehaviour
             }            
         }        
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetStamina()
+    {
+        return stamina;
+    }
+
+    public float GetMaxStamina()
+    {
+        return maxStamina;
+    }
+
+    public float GetMaxStaminaChange()
+    {
+        return maxStaminaChange;
+    }
+
+    public bool[] GetItemTypeActive()
+    {
+        return itemTypeActive;
+    }
+
+    public float[] GetItemEffectValues()
+    {
+        return effectValues;
+    }
 }
