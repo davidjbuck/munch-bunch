@@ -15,6 +15,10 @@ public class HitboxProperties : MonoBehaviour
     void Start()
     {
         move = GetComponentInParent<MoveData>();//grab MoveData component from parent MoveData
+        if ((int)move.team == 0)
+        {
+            anchorObject = GameObject.Find("player").transform;
+        }
     }
 
     // Update is called once per frame
