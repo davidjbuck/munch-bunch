@@ -187,7 +187,7 @@ public class EnemyAI : MonoBehaviour
 					//light attack warning
 					lightAttackWarning.enabled = true;
 					//Debug.Log("Light");
-				} else if (attackTimer >= (attackCooldown - 2) && randNum == 1)
+				} else if (attackTimer >= (attackCooldown - 1) && randNum == 1)
 				{
 					//heavy attack warning
 					heavyAttackWarning.enabled = true;
