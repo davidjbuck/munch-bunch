@@ -10,6 +10,15 @@ public class NGcontroller : MonoBehaviour
     public GameObject counter;
     string currentMade;
 
+    float meatWeight;
+    float carbWeight;
+    float vegWeight;
+    float totalWeight;
+    float meatCal;
+    float carbCal;
+    float vegCal;
+    float totalCal;
+
     public GameObject sliceButtonHolder;
     public GameObject slicePlaneHolder;
 
@@ -50,6 +59,12 @@ public class NGcontroller : MonoBehaviour
             slicePlaneHolder.SetActive(true);
             currentMade = foodItem;
         }
+    }
+
+    public void setMeatCounts(float w, float c)
+    {
+        meatWeight = w;
+        meatCal = c;
     }
 
     public void carbActivate()

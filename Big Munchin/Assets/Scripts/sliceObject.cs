@@ -6,6 +6,10 @@ using UnityEngine.EventSystems;
 
 public class sliceObject : MonoBehaviour
 {
+    float tempWeight;
+    float tempCal;
+    public GameObject ngcObject;
+
     Transform planeObject;
     public GameObject planeObjectSmall;
     public GameObject planeObjectMed;
@@ -17,7 +21,6 @@ public class sliceObject : MonoBehaviour
 
     public Material middleGuts;
     string sliceOName;
-    int meatAmount = 0;
 
     public void getSliceObject(string foodName)
     {
@@ -28,19 +31,25 @@ public class sliceObject : MonoBehaviour
     public void slicePortionSmall()
     {
         planeObject = planeObjectSmall.transform;
-        meatAmount = 1;
+        tempWeight = sliceO.GetComponent<IngredientNMG>().weight / 3;
+        tempCal = sliceO.GetComponent<IngredientNMG>().calories / 3;
+        ngcObject.GetComponent<NGcontroller>().setMeatCounts(tempWeight, tempCal);
         Slice(sliceO);
     }
     public void slicePortionMed()
     {
         planeObject = planeObjectMed.transform;
-        meatAmount = 2;
+        tempWeight = sliceO.GetComponent<IngredientNMG>().weight / 2;
+        tempCal = sliceO.GetComponent<IngredientNMG>().calories / 2;
+        ngcObject.GetComponent<NGcontroller>().setMeatCounts(tempWeight, tempCal);
         Slice(sliceO);
     }
     public void slicePortionLarge()
     {
         planeObject = planeObjectLarge.transform;
-        meatAmount = 3;
+        tempWeight = sliceO.GetComponent<IngredientNMG>().weight / 1.5f;
+        tempCal = sliceO.GetComponent<IngredientNMG>().calories / 1.5f;
+        ngcObject.GetComponent<NGcontroller>().setMeatCounts(tempWeight, tempCal);
         Slice(sliceO);
     }
 
@@ -66,7 +75,6 @@ public class sliceObject : MonoBehaviour
 
     public void hullSetups(GameObject o)
     {
-        //Rigidbody rb = o.AddComponent<Rigidbody>();
         o.AddComponent<Rigidbody>();
         MeshCollider collider = o.AddComponent<MeshCollider>();
         collider.convex = true;

@@ -7282,7 +7282,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7003944814298329606}
         m_TargetAssemblyTypeName: NGcontroller, Assembly-CSharp
-        m_MethodName: createObject
+        m_MethodName: createObjectMeat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7366,7 +7366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &4770359427080831079
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8121,6 +8121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333b0939e6f189e4f824a3a77b5b7778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ngcObject: {fileID: 7003944814298329605}
   planeObjectSmall: {fileID: 252343578120692162}
   planeObjectMed: {fileID: 1759512071239823971}
   planeObjectLarge: {fileID: 6724551514775195441}
@@ -8215,7 +8216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &7471428755301021717
 MonoBehaviour:
   m_ObjectHideFlags: 0
