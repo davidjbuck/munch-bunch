@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -29,17 +30,25 @@ public class NGcontroller : MonoBehaviour
     public GameObject riceParent;
     public ParticleSystem ricePour;
     float fakeWeightCount = 0;
+    public TextMeshProUGUI weightTxt;
 
     private void Update()
     {
         //particle system timing
+        if (Input.GetMouseButton(0))
+        {
+            if(riceParent.activeInHierarchy == true)
+            {
+                fakeWeightCount += Time.deltaTime*2;
+                weightTxt.text = ("Weight: " + fakeWeightCount + "lbs");
+            }
+        }
+
+
         if (Input.GetMouseButtonDown(0))
         {
             ricePour.Play();
-            fakeWeightCount += Time.deltaTime;
-            Debug.Log("time: " + fakeWeightCount);
         }
-
         if (Input.GetMouseButtonUp(0))
         {
             ricePour.Stop();
