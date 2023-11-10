@@ -22,6 +22,7 @@ public class ThirdPersonController : MonoBehaviour
     //variables to handle playerState, moves, stun, and health
     private float stunEndTime;
     public int health;
+    public int maxHealth;
     public MovesetHolder[] movesets;
     MovesetHolder activeMoveset;
     public PlayerState currentPlayerState;
@@ -44,6 +45,7 @@ public class ThirdPersonController : MonoBehaviour
     private float lastSearchTime;
     private bool lockOnCandidateFound = false;
     //variables to control dodge
+    public float dodgeInputWindow;
     public float dodgeStaminaCost;
     public float dodgeDuration;
     public float dodgeSpeedMultiplier;
@@ -51,7 +53,12 @@ public class ThirdPersonController : MonoBehaviour
     public float dodgeInvincibilityDuration;
     public float dodgeEndLag;
     public bool invincible;
+    public bool dodgeDown;
     private float dodgeStartTime;
+    private float lastWDownTime;
+    private float lastADownTime;
+    private float lastSDownTime;
+    private float lastDDownTime;
     //variables to control parry and block
     public float parryDuration;
     private float parryStartTime;
@@ -59,6 +66,44 @@ public class ThirdPersonController : MonoBehaviour
 
     public float knockdownDuration;
     private float knockdownStartTime;
+
+    //numOfItemTypes sets size of arrays which handle buff effects and duration
+    //should be entered into editor and updated whenever a new item type is added
+    //and logic to handle buff effects should be added for each new item type
+    public int numOfItemTypes;
+    public Inventory playerInventory;
+    public bool inventoryOpen;
+    private bool[] itemTypeActive;
+    private float[] effectEndTimes;
+    private float[] effectValues;
+    public bool itemBuffActive;
+    public float baseCritRate;
+    public float critRateChange;
+    public float critRateMultiplier;
+    public float maxStaminaChange;
+    public float staminaRegenChange;
+    public float staminaCostChange;
+    public float playerSpeedChange;
+    public float playerHealingPerSecond;
+    private float lastTimeHealed;
+    //when adding a new item, fill which buff types it has
+    //0 = crit chance up, 1 = max stamina up, 2 = stamina regen up, 3 = stamina cost decrease, 
+    //4 = player speed up, 5 = instant healing, 6 = healing per second
+    public bool grounded;
+    public bool jumping;
+    public float drag;
+    public float airSpeed;
+    public float maxAirSpeed;
+    public LayerMask groundedCheck;
+    public float raycastProtrusion;
+    public float jumpForce;
+    public float jumpCooldown;
+    private float lastJumpTime;
+
+    private Animator ani;
+
+    private AudioSource[] audioSources;
+
     public enum PlayerState
     {//enum to hold player state. Determines which actions can be taken,
      //controls much of the flow between different blocks of code
@@ -73,26 +118,52 @@ public class ThirdPersonController : MonoBehaviour
         LockCursor();
         activeMoveset = movesets[0];
         lastSearchTime = Time.time;
+        itemTypeActive = new bool[numOfItemTypes];
+        for (int i = 0; i < itemTypeActive.Length; i++)
+        {
+            itemTypeActive[i] = false;
+        }
+        effectEndTimes = new float[numOfItemTypes];
+        effectValues = new float[numOfItemTypes];
+        ani = playerCollider.GetComponent<Animator>();
+        ani.SetBool("Walking", false);
+        audioSources = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
-    {   //check if stamina should regen
-        if (stamina < maxStamina && (int)currentPlayerState==0)
+    {   
+        //check item durations to disable any item effects whose durations have expired
+        CheckItemDurations();
+
+        //check if regen should happen
+        if (itemTypeActive[6] && (Time.time> lastTimeHealed+1.0f))
+        {
+            health += (int)effectValues[6];
+            lastTimeHealed = Time.time;
+        }
+
+        CheckGrounded();
+
+        //check if stamina should regen
+        if (stamina < (maxStamina+maxStaminaChange) && (int)currentPlayerState==0)
         {
             if (fatigued)//if the player is fatigued
             {
-                stamina += (Time.deltaTime * (staminaRegenSpeed * fatiguedRegenMultiplier));//regen at fatigued speed
-                if (stamina > maxStamina)
+                stamina += (Time.deltaTime * ((staminaRegenSpeed+staminaRegenChange) * fatiguedRegenMultiplier));//regen at fatigued speed
+                if (stamina > (maxStamina+maxStaminaChange))
                 {
-                    stamina = maxStamina;//set stamina to max if it goes over
+                    stamina = (maxStamina+maxStaminaChange);//set stamina to max if it goes over
                     fatigued = false;
                 }
             }
             else//if the player is not fatigued
             {
-                stamina += (Time.deltaTime * staminaRegenSpeed);//regen at normal speed
-                if (stamina > maxStamina) stamina = maxStamina;//set stamina to max if it goes over
+                stamina += (Time.deltaTime * (staminaRegenSpeed + staminaRegenChange));//regen at normal speed
+                if (stamina > (maxStamina + maxStaminaChange))
+                {
+                    stamina = (maxStamina + maxStaminaChange);//set stamina to max if it goes over
+                }
             }
         }else if((int)currentPlayerState==5 && Time.time > stunEndTime)//if the player is stunned and their stun time is over
         {
@@ -137,10 +208,16 @@ public class ThirdPersonController : MonoBehaviour
             UpdateRotation();//rotate model appropriately
             CheckAttacks();
         }
+
+       
     }
 
     private void FixedUpdate()
-    {   //if the player is in neutral, parrying or blocking state
+    {   if(jumping)
+        {
+            Jump();
+        }
+        //if the player is in neutral, parrying or blocking state
         if ((int)currentPlayerState == 0||(int)currentPlayerState == 2 || (int)currentPlayerState == 3)
         {   //if parrying and parry duration is over
             if ((int)currentPlayerState == 2 && Time.time > parryStartTime + parryDuration)
@@ -152,6 +229,10 @@ public class ThirdPersonController : MonoBehaviour
         {
             Dodge();//DODGE
         }
+        if((int)currentPlayerState != 4)
+        {
+            LimitSpeed();
+        }       
     }
 
     //rotates the player collider appropriately depending on their current state and lock on status
@@ -204,6 +285,63 @@ public class ThirdPersonController : MonoBehaviour
 
     //updates the states of input variables
     public void GetInput() {
+        
+        //code to get input for num keys 1-4, and use inventory item in slot 0-3
+        //as temporary testing implementation until adding item to hotbar is implemented
+        if(Input.GetKeyDown(KeyCode.Alpha1)|| Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            Debug.Log("1 pressed");
+            if (playerInventory.GetInventoryCapacity() > 0)
+            {
+                ActivateItem(playerInventory.UseItem(0));
+                //playerInventory.SelectItem(0);
+                playerInventory.displayText();
+                playerInventory.fillGUIButtons();
+                
+            }
+        }else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            if (playerInventory.GetInventoryCapacity() > 1)
+            {
+                ActivateItem(playerInventory.UseItem(1));
+                //playerInventory.SelectItem(1);
+                playerInventory.displayText();
+                playerInventory.fillGUIButtons();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            if (playerInventory.GetInventoryCapacity() > 2)
+            {
+                ActivateItem(playerInventory.UseItem(2));
+                //playerInventory.SelectItem(2);
+                playerInventory.displayText();
+                playerInventory.fillGUIButtons();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            if (playerInventory.GetInventoryCapacity() > 3)
+            {
+                ActivateItem(playerInventory.UseItem(3));
+                //playerInventory.SelectItem(3);
+                playerInventory.displayText();
+                playerInventory.fillGUIButtons();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryOpen = !inventoryOpen;
+            if(inventoryOpen)
+            {
+                UnlockCursor();
+            }
+            else
+            {
+                LockCursor();
+            }
+        }
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         fire1Pressed = Input.GetButtonDown("Fire1");
@@ -215,17 +353,72 @@ public class ThirdPersonController : MonoBehaviour
             //Debug.Log("Middle clicked!");
             ToggleLockOn();
         }
-        if (Input.GetButtonDown("Dodge")&& stamina>= dodgeStaminaCost - fatigueAllowance && ((int)currentPlayerState==0|| (int)currentPlayerState == 2|| (int)currentPlayerState == 3))
+
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            if (Time.time < lastWDownTime + dodgeInputWindow&&grounded)
+            {
+                dodgeDown = true;
+            }
+            else
+            {
+                lastWDownTime = Time.time;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (Time.time < lastADownTime + dodgeInputWindow && grounded)
+            {
+                dodgeDown = true;
+            }
+            else
+            {
+                lastADownTime = Time.time;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (Time.time < lastSDownTime + dodgeInputWindow && grounded)
+            {
+                dodgeDown = true;
+            }
+            else
+            {
+                lastSDownTime = Time.time;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (Time.time < lastDDownTime + dodgeInputWindow && grounded)
+            {
+                dodgeDown = true;
+            }
+            else
+            {
+                lastDDownTime = Time.time;
+            }
+        }
+
+        if (Input.GetButton("Jump") && grounded && Time.time>lastJumpTime+jumpCooldown && (currentPlayerState==PlayerState.Neutral||currentPlayerState == PlayerState.Parrying||currentPlayerState==PlayerState.Blocking))
+        {
+            jumping = true;
+            lastJumpTime = Time.time;
+            ani.SetBool("Walking", false);
+            audioSources[0].Stop();
+        }
+        else
+        {
+            jumping = false;
+        }
+
+        if (dodgeDown && grounded && stamina>= dodgeStaminaCost - fatigueAllowance && ((int)currentPlayerState==0|| (int)currentPlayerState == 2|| (int)currentPlayerState == 3))
         {//if the space bar is pressed, the player has enough stamina, and the player is in neutral/parrying/blocking state
             LoseStamina(dodgeStaminaCost, 0, 0.0f);//pay the stamina cost
             dodgeStartTime = Time.time;//record the dodge start time
             Debug.Log("DODGE");
+            ani.SetBool("Walking", false);
+            audioSources[0].Stop();
             currentPlayerState = PlayerState.Dodge;//change player state to dodging
-            if(Mathf.Abs(verticalInput)<0.1 && Mathf.Abs(horizontalInput) < 0.1)
-            {
-                verticalInput = -1.0f;
-                horizontalInput = 0.0f;
-            }
             if (!lockedOn)//if the player is not locked on
             {//use input and set move direction relative to the orientationRefObject
                 movementDirection = orientationRefObj.forward * verticalInput + orientationRefObj.right * horizontalInput;
@@ -246,6 +439,7 @@ public class ThirdPersonController : MonoBehaviour
         {//if the player has let go of the block button and they are in parrying or blocking mode
             currentPlayerState = PlayerState.Neutral;
         }
+        dodgeDown = false;
     }
 
     //checks if the player can attack, has input an attack, and sends appropriate requests if they can
@@ -258,12 +452,14 @@ public class ThirdPersonController : MonoBehaviour
                 //Debug.Log("Fire1 down! Sending Light Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
                 activeMoveset.LightAttackCombo();//send a request to light attack
+                ani.SetBool("Walking", false);
             }
             else if (fire2Pressed && stamina >= activeMoveset.FirstHeavyCost() - fatigueAllowance)//if the player pressed right click
             {
                 //Debug.Log("Fire2 down! Sending Heavy Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
                 activeMoveset.HeavyAttackCombo();//send a request to heavy attack
+                ani.SetBool("Walking", false);
             }
         }       
     }
@@ -273,7 +469,9 @@ public class ThirdPersonController : MonoBehaviour
     {   //if the player is in neutral, parrying or blocking state
         if ((int)currentPlayerState==0 || (int)currentPlayerState == 2 || (int)currentPlayerState == 3)
         {
-            if(!lockedOn)//if the player is not locked on
+            
+            
+            if (!lockedOn)//if the player is not locked on
             {//use input and set move direction relative to the orientationRefObject
                 movementDirection = orientationRefObj.forward * verticalInput + orientationRefObj.right * horizontalInput;
             }
@@ -284,12 +482,37 @@ public class ThirdPersonController : MonoBehaviour
             
             if (movementDirection.magnitude != 0)//if there is movement input and the player is not attacking
             {
-                rb.isKinematic = false;//enable physics to move the player
-                rb.AddForce(10f * movementSpeed * movementDirection.normalized, ForceMode.Force);//add force to rb to move
+                
+                //rb.isKinematic = false;//enable physics to move the player
+                if (grounded)
+                {
+                    ani.SetBool("Walking", true);
+                    if (!audioSources[0].isPlaying)
+                    {
+                        audioSources[0].pitch = 0.85f;
+                        audioSources[0].Play();
+                    }
+                    rb.AddForce(10f * (movementSpeed + playerSpeedChange) * movementDirection.normalized, ForceMode.Force);//add force to rb to move                    
+                }
+                else
+                {
+                    rb.AddForce(10f * (airSpeed + playerSpeedChange) * movementDirection.normalized, ForceMode.Force);//add force to rb to move
+                    ani.SetBool("Walking", false);
+                    if (audioSources[0].isPlaying)
+                    {
+                        audioSources[0].Stop();
+                    }
+                }
+                
             }
             else//if there is no movement input or the player is attacking
             {
-                rb.isKinematic = true;//set rb to kinematic to stop sliding
+                //rb.isKinematic = true;//set rb to kinematic to stop sliding
+                ani.SetBool("Walking", false);
+                if (audioSources[0].isPlaying)
+                {                    
+                    audioSources[0].Stop();
+                }
             }           
         }        
     }
@@ -299,7 +522,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         health -= damageVal;//decrease health by damage value
         currentPlayerState = PlayerState.Stun;//set the player to stunned
-        rb.isKinematic = true;//set rb to kinematic to stop sliding
+        //rb.isKinematic = true;//set rb to kinematic to stop sliding
         stunEndTime = Time.time+stunTime;//set stun end time
         if(health<=0)
         {
@@ -321,7 +544,7 @@ public class ThirdPersonController : MonoBehaviour
     //if a trigger enters the player
     public void ResolveTriggerCollision(Collider other)
     {
-        Debug.Log("Trigger detected");
+        //Debug.Log("Trigger detected");
         if (other.gameObject.CompareTag("Hitbox") && !invincible)//if the trigger is a hitbox, and the player is not invincible
         {
             CollisionManager cm = other.gameObject.GetComponent<CollisionManager>();//get the collision manager
@@ -378,9 +601,22 @@ public class ThirdPersonController : MonoBehaviour
     //whether they should take damage if they are blocking, and ends combos when stamina runs out
     public void LoseStamina(float staminaCost, int damage, float stun)
     {
+        if((int)currentPlayerState == 1)
+        {
+            if (fire2Pressed)
+            {
+                audioSources[1].pitch = 1.4f + Random.Range(0.0f, 0.2f);
+                audioSources[1].Play();
+            }
+            else
+            {
+                audioSources[1].pitch = 1.6f + Random.Range(0.0f, 0.2f);
+                audioSources[1].Play();
+            }
+        }
         if ((int)currentPlayerState == 3)//if the player is blocking
         {
-            stamina -= staminaCost;
+            stamina -= (staminaCost-staminaCostChange);
             if (stamina < 0.0f)
             {
                 TakeDamage(damage, stun);
@@ -389,7 +625,7 @@ public class ThirdPersonController : MonoBehaviour
         }
         else
         {
-            stamina -= staminaCost;
+            stamina -= (staminaCost - staminaCostChange);
             if (stamina < 0.0f)
             {
                 fatigued = true;
@@ -461,8 +697,8 @@ public class ThirdPersonController : MonoBehaviour
         if (t < dodgeStartTime+dodgeDuration)
         {
 
-            rb.isKinematic = false;//enable physics to move the player
-            rb.AddForce(10f * movementSpeed * dodgeSpeedMultiplier * movementDirection.normalized, ForceMode.Force);//add force to rb to move
+            //rb.isKinematic = false;//enable physics to move the player
+            rb.AddForce(10f * (movementSpeed+playerSpeedChange) * dodgeSpeedMultiplier * movementDirection.normalized, ForceMode.Force);//add force to rb to move
 
             if (t>dodgeStartTime+dodgeInvincibilityStart && t<dodgeStartTime+ dodgeInvincibilityStart + dodgeInvincibilityDuration)
             {
@@ -482,4 +718,203 @@ public class ThirdPersonController : MonoBehaviour
             currentPlayerState = PlayerState.Neutral;
         }
     }//why do I hear Piccolo noises
+
+    //set a given item type to active for the purpose of checking whether its buff is active
+    //then use its item values to set buff
+    public void ActivateItem(Item i)
+    {
+        for(int j = 0; j<i.itemBuffTypes.Length; j++)
+        {
+            itemTypeActive[i.itemBuffTypes[j]] = true;
+            effectEndTimes[i.itemBuffTypes[j]] = Time.time + i.effectDuration[j];
+            effectValues[i.itemBuffTypes[j]] = i.effectValue[j];
+            ApplyBuffEffects(i.itemBuffTypes[j]);
+        }
+        
+    }
+
+    //check item durations and disable items whose durations have expired
+    public void CheckItemDurations()
+    {
+        for(int i = 0; i < itemTypeActive.Length; i++)
+        {
+            if (itemTypeActive[i] && Time.time > effectEndTimes[i])
+            {
+                itemTypeActive[i] = false;
+                switch(i)
+                {
+                    case 0://crit chance
+                        critRateChange = 0.0f;
+                        break;
+                    case 1://max stam
+                        maxStaminaChange = 0.0f;
+                        if (stamina > maxStamina)
+                        {
+                            stamina = maxStamina;
+                        }
+                        break;
+                    case 2://stam charge speed
+                        staminaRegenChange = 0.0f;
+                        break;
+                    case 3://stam cost decrease
+                        staminaCostChange = 0.0f;
+                        break;
+                    case 4://player speed up
+                        playerSpeedChange = 0.0f;
+                        break;
+                    case 5://instant healing so do nothing
+                        
+                        break;
+                    case 6://healing per second
+                        playerHealingPerSecond = 0.0f;
+                        break;
+
+                }
+            }
+        }
+    }
+
+    public void ApplyBuffEffects(int buffType)
+    {
+        switch (buffType)
+        {
+            case 0://crit chance
+                critRateChange = effectValues[buffType];
+                break;
+            case 1://max stam
+                maxStaminaChange = effectValues[buffType];
+                break;
+            case 2://stam charge speed
+                staminaRegenSpeed = effectValues[buffType];
+                break;
+            case 3://stam cost decrease
+                staminaCostChange = effectValues[buffType];
+                break;
+            case 4://player speed up
+                playerSpeedChange = effectValues[buffType];
+                break;
+            case 5://instant healing, so heal!
+                health += (int)effectValues[buffType];
+                if (health > maxHealth)
+                {
+                    health = maxHealth;
+                }
+                break;
+            case 6://healing per second
+                playerHealingPerSecond = effectValues[buffType];
+                lastTimeHealed = Time.time;
+                break;
+
+        }
+    }
+
+    public float GetAttackIncrease()
+    {
+        return critRateMultiplier;
+    }
+
+    public float GetCritRate()
+    {
+        return baseCritRate+critRateChange;
+    }
+
+    public bool IsCrit()
+    {
+        float roll = Random.Range(0.0f, 1.0f);
+        if(roll < (baseCritRate + critRateChange))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void CheckGrounded()
+    {
+        Vector3 pt = new Vector3(playerCollider.transform.position.x, playerCollider.transform.position.y+ (playerCollider.GetComponent<CapsuleCollider>().height * 0.5f), playerCollider.transform.position.z);
+        Debug.DrawLine(pt, new Vector3(pt.x, pt.y - (playerCollider.GetComponent<CapsuleCollider>().height * 0.5f + raycastProtrusion), pt.z), Color.red, Time.deltaTime);
+        bool wasGrounded = grounded;
+        grounded = Physics.Raycast(pt, Vector3.down, playerCollider.GetComponent<CapsuleCollider>().height*0.5f + raycastProtrusion, groundedCheck);
+        if(grounded)
+        {
+            if(!wasGrounded)
+            {
+                audioSources[2].pitch = 1.4f;
+                audioSources[2].Play();
+            }
+            rb.drag = drag;
+        }
+        else
+        {
+            rb.drag = 0.0f;
+        }
+    }
+
+    public void Jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
+        rb.AddForce(playerCollider.transform.up * jumpForce, ForceMode.Impulse);
+        jumping = false;
+        audioSources[2].pitch = 0.8f;
+        audioSources[2].Play();
+    }
+
+    public void LimitSpeed()
+    {
+        Vector3 vel = new Vector3(rb.velocity.x, 0.0f,rb.velocity.z);
+        
+        if (grounded)
+        {
+            if(vel.magnitude>movementSpeed+playerSpeedChange)
+            {
+                Debug.Log("Limiting ground speed");
+                Vector3 newVel = vel.normalized * (movementSpeed+playerSpeedChange);
+                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+            }            
+        }
+        else
+        {
+            if(vel.magnitude>airSpeed+playerSpeedChange)
+            {
+                Debug.Log("Limiting air speed");
+                Vector3 newVel = vel.normalized * (maxAirSpeed+playerSpeedChange);
+                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+            }            
+        }        
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetStamina()
+    {
+        return stamina;
+    }
+
+    public float GetMaxStamina()
+    {
+        return maxStamina;
+    }
+
+    public float GetMaxStaminaChange()
+    {
+        return maxStaminaChange;
+    }
+
+    public bool[] GetItemTypeActive()
+    {
+        return itemTypeActive;
+    }
+
+    public float[] GetItemEffectValues()
+    {
+        return effectValues;
+    }
+
 }
