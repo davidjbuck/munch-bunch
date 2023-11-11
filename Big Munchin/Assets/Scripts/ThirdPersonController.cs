@@ -99,7 +99,10 @@ public class ThirdPersonController : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     private float lastJumpTime;
-    
+
+    private Animator ani;
+
+    private AudioSource[] audioSources;
 
     public enum PlayerState
     {//enum to hold player state. Determines which actions can be taken,
@@ -122,6 +125,9 @@ public class ThirdPersonController : MonoBehaviour
         }
         effectEndTimes = new float[numOfItemTypes];
         effectValues = new float[numOfItemTypes];
+        ani = playerCollider.GetComponent<Animator>();
+        ani.SetBool("Walking", false);
+        audioSources = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -202,6 +208,8 @@ public class ThirdPersonController : MonoBehaviour
             UpdateRotation();//rotate model appropriately
             CheckAttacks();
         }
+
+       
     }
 
     private void FixedUpdate()
@@ -395,6 +403,8 @@ public class ThirdPersonController : MonoBehaviour
         {
             jumping = true;
             lastJumpTime = Time.time;
+            ani.SetBool("Walking", false);
+            audioSources[0].Stop();
         }
         else
         {
@@ -406,6 +416,8 @@ public class ThirdPersonController : MonoBehaviour
             LoseStamina(dodgeStaminaCost, 0, 0.0f);//pay the stamina cost
             dodgeStartTime = Time.time;//record the dodge start time
             Debug.Log("DODGE");
+            ani.SetBool("Walking", false);
+            audioSources[0].Stop();
             currentPlayerState = PlayerState.Dodge;//change player state to dodging
             if (!lockedOn)//if the player is not locked on
             {//use input and set move direction relative to the orientationRefObject
@@ -440,12 +452,14 @@ public class ThirdPersonController : MonoBehaviour
                 //Debug.Log("Fire1 down! Sending Light Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
                 activeMoveset.LightAttackCombo();//send a request to light attack
+                ani.SetBool("Walking", false);
             }
             else if (fire2Pressed && stamina >= activeMoveset.FirstHeavyCost() - fatigueAllowance)//if the player pressed right click
             {
                 //Debug.Log("Fire2 down! Sending Heavy Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
                 activeMoveset.HeavyAttackCombo();//send a request to heavy attack
+                ani.SetBool("Walking", false);
             }
         }       
     }
@@ -455,7 +469,9 @@ public class ThirdPersonController : MonoBehaviour
     {   //if the player is in neutral, parrying or blocking state
         if ((int)currentPlayerState==0 || (int)currentPlayerState == 2 || (int)currentPlayerState == 3)
         {
-            if(!lockedOn)//if the player is not locked on
+            
+            
+            if (!lockedOn)//if the player is not locked on
             {//use input and set move direction relative to the orientationRefObject
                 movementDirection = orientationRefObj.forward * verticalInput + orientationRefObj.right * horizontalInput;
             }
@@ -466,20 +482,37 @@ public class ThirdPersonController : MonoBehaviour
             
             if (movementDirection.magnitude != 0)//if there is movement input and the player is not attacking
             {
+                
                 //rb.isKinematic = false;//enable physics to move the player
-                if(grounded)
+                if (grounded)
                 {
-                    rb.AddForce(10f * (movementSpeed + playerSpeedChange) * movementDirection.normalized, ForceMode.Force);//add force to rb to move
+                    ani.SetBool("Walking", true);
+                    if (!audioSources[0].isPlaying)
+                    {
+                        audioSources[0].pitch = 0.85f;
+                        audioSources[0].Play();
+                    }
+                    rb.AddForce(10f * (movementSpeed + playerSpeedChange) * movementDirection.normalized, ForceMode.Force);//add force to rb to move                    
                 }
                 else
                 {
                     rb.AddForce(10f * (airSpeed + playerSpeedChange) * movementDirection.normalized, ForceMode.Force);//add force to rb to move
+                    ani.SetBool("Walking", false);
+                    if (audioSources[0].isPlaying)
+                    {
+                        audioSources[0].Stop();
+                    }
                 }
                 
             }
-            else if(!grounded)//if there is no movement input or the player is attacking
+            else//if there is no movement input or the player is attacking
             {
                 //rb.isKinematic = true;//set rb to kinematic to stop sliding
+                ani.SetBool("Walking", false);
+                if (audioSources[0].isPlaying)
+                {                    
+                    audioSources[0].Stop();
+                }
             }           
         }        
     }
@@ -568,6 +601,19 @@ public class ThirdPersonController : MonoBehaviour
     //whether they should take damage if they are blocking, and ends combos when stamina runs out
     public void LoseStamina(float staminaCost, int damage, float stun)
     {
+        if((int)currentPlayerState == 1)
+        {
+            if (fire2Pressed)
+            {
+                audioSources[1].pitch = 1.4f + Random.Range(0.0f, 0.2f);
+                audioSources[1].Play();
+            }
+            else
+            {
+                audioSources[1].pitch = 1.6f + Random.Range(0.0f, 0.2f);
+                audioSources[1].Play();
+            }
+        }
         if ((int)currentPlayerState == 3)//if the player is blocking
         {
             stamina -= (staminaCost-staminaCostChange);
@@ -786,9 +832,15 @@ public class ThirdPersonController : MonoBehaviour
     {
         Vector3 pt = new Vector3(playerCollider.transform.position.x, playerCollider.transform.position.y+ (playerCollider.GetComponent<CapsuleCollider>().height * 0.5f), playerCollider.transform.position.z);
         Debug.DrawLine(pt, new Vector3(pt.x, pt.y - (playerCollider.GetComponent<CapsuleCollider>().height * 0.5f + raycastProtrusion), pt.z), Color.red, Time.deltaTime);
+        bool wasGrounded = grounded;
         grounded = Physics.Raycast(pt, Vector3.down, playerCollider.GetComponent<CapsuleCollider>().height*0.5f + raycastProtrusion, groundedCheck);
         if(grounded)
         {
+            if(!wasGrounded)
+            {
+                audioSources[2].pitch = 1.4f;
+                audioSources[2].Play();
+            }
             rb.drag = drag;
         }
         else
@@ -802,6 +854,8 @@ public class ThirdPersonController : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
         rb.AddForce(playerCollider.transform.up * jumpForce, ForceMode.Impulse);
         jumping = false;
+        audioSources[2].pitch = 0.8f;
+        audioSources[2].Play();
     }
 
     public void LimitSpeed()
@@ -827,4 +881,40 @@ public class ThirdPersonController : MonoBehaviour
             }            
         }        
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetStamina()
+    {
+        return stamina;
+    }
+
+    public float GetMaxStamina()
+    {
+        return maxStamina;
+    }
+
+    public float GetMaxStaminaChange()
+    {
+        return maxStaminaChange;
+    }
+
+    public bool[] GetItemTypeActive()
+    {
+        return itemTypeActive;
+    }
+
+    public float[] GetItemEffectValues()
+    {
+        return effectValues;
+    }
+
 }
