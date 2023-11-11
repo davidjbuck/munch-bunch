@@ -23,6 +23,9 @@ public class Friendly_AI : MonoBehaviour
 {
 
 	public Behaviors aiBehaviors = Behaviors.Idle;
+	public bool interactable;
+
+
 	public bool nearPlayer;
 	public bool interacting;
 	public Rigidbody rigidBod;
@@ -36,37 +39,47 @@ public class Friendly_AI : MonoBehaviour
 	public Transform[] Waypoints;
 	public int curWaypoint = 0;
 	bool ReversePath = false;
-	public TMP_Text allyInteract;
-
+	//public TMP_Text allyInteract;
+	public Image notification;
 	public PlayerMover p1;
+	//public TMP_Text allyTextBox;
+	//public GameObject allyText;
+	//public GameObject interactPrompt;
 
 	#region Behaviors
-
 	void TalkToNPC()
     {
+		//allyText.SetActive(true);
+		//allyTextBox.enabled = true;
 		Debug.Log("INTERACT WITH NPC");
-    }
+		interacting = true;
+		//interactPrompt.SetActive(false);
+	}
 	void Patrol()
 	{
 		playerDestination = GameObject.FindGameObjectWithTag("Player").transform.position;
 		playerDistance = Vector3.Distance(gameObject.transform.position, playerDestination);
 		//playerDistance = Vector3.Distance(gameObject.transform.position, this.transform.position);
-		if(playerDistance < 5f)
+		if(playerDistance < 5f && interactable && !interacting)
         {
 			nearPlayer = true;
 			Vector3 playerPosition = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
-			allyInteract.enabled = true;
-
 			this.transform.LookAt(playerPosition);
-			Destination = this.transform.position;
-			navAgent.SetDestination(Destination);
+			//allyInteract.enabled = true;
+			//interactPrompt.SetActive(true);
+			navAgent.isStopped = true;
+			/*
 			if (nearPlayer && Input.GetKeyDown(KeyCode.E))
 			{
 				TalkToNPC();
 			}
+			*/
 		} else
         {
-			allyInteract.enabled = false;
+			//allyInteract.enabled = false;
+			//interactPrompt.SetActive(false);
+			navAgent.isStopped = false;
+
 			nearPlayer = false;
         }
 		Distance = Vector3.Distance(gameObject.transform.position, Waypoints[curWaypoint].position);
@@ -112,14 +125,40 @@ public class Friendly_AI : MonoBehaviour
 
 
 
-
 	void Start()
 	{
 		navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+		if (interactable)
+		{
+			notification.enabled = true;
+		}
+		else
+		{
+			notification.enabled = false;
+		}
+	}
+
+	void finishedInteraction()
+    {
+		//allyText.SetActive(false);
+
+		notification.enabled = false;
+		interactable = false;
+		interacting = false;
 	}
 
 	void Update()
 	{
 		Patrol();
+		if(interacting)
+        {
+			navAgent.isStopped = true;
+
+			if (Input.GetKeyDown(KeyCode.R))
+			{
+				finishedInteraction();
+			}
+        }
+
 	}
 }
