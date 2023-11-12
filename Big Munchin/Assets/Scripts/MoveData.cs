@@ -22,9 +22,9 @@ public class MoveData : MonoBehaviour
         hitboxData = new HitboxProperties[hitboxPropertyCollection.Length];//initialize array to match size
         for(int i = 0;i< hitboxPropertyCollection.Length;i++) { 
             hitboxData[i] = hitboxPropertyCollection[i].GetComponent<HitboxProperties>();
-            if (hitboxPropertyCollection[i].GetComponent<HitboxProperties>().GetTimeDisabled() > maxLifespan)
+            if (hitboxPropertyCollection[i].GetComponent<HitboxProperties>().GetTimeDisabled() + hitboxPropertyCollection[i].GetComponent<HitboxProperties>().GetTimeEnabled() > maxLifespan)
             {
-                maxLifespan = hitboxPropertyCollection[i].GetComponent<HitboxProperties>().GetTimeDisabled();
+                maxLifespan = hitboxPropertyCollection[i].GetComponent<HitboxProperties>().GetTimeDisabled() + hitboxPropertyCollection[i].GetComponent<HitboxProperties>().GetTimeEnabled();
                 //Debug.Log(hitboxData[i].GetTimeDisabled());
             }
         }//and then copy over each HitboxProperties component to the hitboxData array
