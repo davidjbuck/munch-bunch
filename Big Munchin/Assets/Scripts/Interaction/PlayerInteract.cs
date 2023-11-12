@@ -42,7 +42,7 @@ public class PlayerInteract : MonoBehaviour
     public IInteractable GetInteractableObject()
     {
         List<IInteractable> interactableList = new List<IInteractable>();
-        float interactRange = 4f;
+        float interactRange = 5f;
         Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
         foreach (Collider collider in colliderArray)
         {
@@ -63,6 +63,7 @@ public class PlayerInteract : MonoBehaviour
                 if(Vector3.Distance(transform.position,interactable.GetTransform().position)<
                     Vector3.Distance(transform.position, closestInteractable.GetTransform().position))
                 {
+                    //closestInteractable.hideText();
                     closestInteractable = interactable;
                 }
             }

@@ -26,5 +26,6 @@ public class PlayerInteractUI : MonoBehaviour
     private void Hide()
     {
         allyInteractContainer.SetActive(false);
+
     }
 }

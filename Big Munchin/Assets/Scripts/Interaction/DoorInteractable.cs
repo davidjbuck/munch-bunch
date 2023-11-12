@@ -32,4 +32,5 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     {
         return transform;
     }
+    public void hideText() { }
 }
