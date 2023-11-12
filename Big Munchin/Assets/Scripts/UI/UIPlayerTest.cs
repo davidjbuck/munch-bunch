@@ -5,9 +5,11 @@ public class UIPlayerTest : MonoBehaviour
 
     public int maxHealth = 100;
     public int currentHealth;
+    public bool isHealthRegenerating = false;
 
     public float maxStamina = 100f;
     public float currentStamina;
+    public float staminaRegen = .03f;
 
     public float maxHunger = 100f;
     public float currentHunger;
@@ -16,22 +18,30 @@ public class UIPlayerTest : MonoBehaviour
     public StatusBars staminaBar;
     public StatusBars hungerBar;
 
-    void Start()
-    {
-        currentHealth = maxHealth;
-        currentStamina = maxStamina;
-        currentHunger = maxHunger;
-        healthBar.SetMaxHealth(maxHealth);
-        staminaBar.SetMaxStamina(maxStamina);
-        hungerBar.SetMaxHunger(maxHunger);
-    }
+        void Start()
+        {
+            currentHealth = maxHealth;
+            currentStamina = maxStamina;
+            currentHunger = maxHunger;
+            healthBar.SetMaxHealth(maxHealth);
+            staminaBar.SetMaxStamina(maxStamina);
+            hungerBar.SetMaxHunger(maxHunger);
+        }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(new Vector3(0,0,3) * Time.deltaTime);
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             PlayerDamage(15);
+        }
+        if(currentHealth < maxHealth && isHealthRegenerating)
+        {
+            RegenerateHealth(1/33);
         }
 
         if(Input.GetKeyDown(KeyCode.S))
@@ -40,7 +50,7 @@ public class UIPlayerTest : MonoBehaviour
         }
         if (currentStamina < maxStamina)
         {
-            RegenerateStamina(.03f);
+            RegenerateStamina(staminaRegen);
         }
         
         if(Input.GetKeyDown(KeyCode.D))
@@ -58,6 +68,15 @@ public class UIPlayerTest : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
+    void RegenerateHealth(int recover)
+    {
+        currentHealth += recover;
+        if (currentHealth > 100)
+        {
+            currentHealth = 100;
+        }
+        healthBar.SetHealth(currentHealth);
+    }
     void DrainStamina(float drain)
     {
         currentStamina -= drain;
