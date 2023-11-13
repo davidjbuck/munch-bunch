@@ -449,17 +449,29 @@ public class ThirdPersonController : MonoBehaviour
         {
             if (fire1Pressed && stamina >= activeMoveset.FirstLightCost() -fatigueAllowance)//if the player pressed left click
             {
+                if ((int)currentPlayerState != 1)
+                {
+                    audioSources[1].pitch = 1.6f + Random.Range(0.0f, 0.2f);
+                    audioSources[1].Play();
+                }
                 //Debug.Log("Fire1 down! Sending Light Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
                 activeMoveset.LightAttackCombo();//send a request to light attack
                 ani.SetBool("Walking", false);
+                audioSources[0].Stop();
             }
             else if (fire2Pressed && stamina >= activeMoveset.FirstHeavyCost() - fatigueAllowance)//if the player pressed right click
             {
+                if ((int)currentPlayerState != 1)
+                {
+                    audioSources[1].pitch = 1.6f + Random.Range(0.0f, 0.2f);
+                    audioSources[1].Play();
+                }
                 //Debug.Log("Fire2 down! Sending Heavy Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
                 activeMoveset.HeavyAttackCombo();//send a request to heavy attack
                 ani.SetBool("Walking", false);
+                audioSources[0].Stop();
             }
         }       
     }
