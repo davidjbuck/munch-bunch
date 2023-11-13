@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class NGcontroller : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class NGcontroller : MonoBehaviour
     //holds the variables for the calories and weights of each object (and total)
     float meatWeight;
     float carbWeight;
-    float vegWeight;
+    float vegWeight = 0;
     float totalWeight;
     float meatCal;
     float carbCal;
@@ -49,11 +51,16 @@ public class NGcontroller : MonoBehaviour
     public TextMeshProUGUI carbSumTXT;
     public TextMeshProUGUI vegSumTXT;
     public TextMeshProUGUI calSumTXT;
+    public GameObject star;
+    public GameObject star1;
+    public GameObject star2;
+    public TextMeshProUGUI cityHealthTXT;
+    int cityHealth = 0;
 
     private void Update()
     {
         //if we're on the carb screen
-        if(currentScreen == 1)
+        if (currentScreen == 1)
         {
             //particle system timing
             if (Input.GetMouseButton(0))
@@ -74,21 +81,6 @@ public class NGcontroller : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 ricePour.Stop();
-            }
-        }
-
-        //if on the vegetable screen, creates the vegetable object on click
-        //updates and displays the vegetable weight
-        else if (currentScreen == 2)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if(vegParent != null)
-                {
-                    Instantiate(Resources.Load(vegName), new Vector3(-397.18f, 31.625f, 60.49f), Quaternion.identity);
-                    vegWeight++;
-                    vegWeightTxt.text = "Vegetable Weight: " + vegWeight;
-                }
             }
         }
 
@@ -159,16 +151,52 @@ public class NGcontroller : MonoBehaviour
         vegParent.SetActive(false);
         sumParent.SetActive(true);
 
-        meatSumTXT.text = "Meat Weight: " + meatWeight + "      Desired Weight: " + 1;
-        carbSumTXT.text = "Carb Weight: " + carbWeight + "      Desired Weight: " + 2;
-        vegSumTXT.text = "Vegetable Weight: " + vegWeight + "      Desired Weight: " + 3;
-        calSumTXT.text = "Total Calories: " + meatCal + carbCal + vegWeight;
+        //displays all the values for summary
+        meatSumTXT.text = "Meat Calories: " + meatCal + "      Desired Calories: " + 230;
+        carbSumTXT.text = "Carb Calories: " + carbCal.ToString("F2") + "      Desired Calories: " + 4;
+        vegSumTXT.text = "Vegetable Calories: " + vegWeight + "      Desired Calories: " + (meatWeight + carbWeight).ToString("F2");
+        calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegWeight).ToString("F2");
+
+        //activates stars depending how well the numbers are balanced
+        if (Math.Abs((230 - meatCal)) <= 10)
+        {
+            star.SetActive(true);
+            cityHealth += 10;
+        }
+        if (Math.Abs((4 - carbCal)) <= 1)
+        {
+            star1.SetActive(true);
+            cityHealth += 10;
+        }
+        if (Math.Abs(((meatWeight + carbWeight) - vegWeight)) <= 1)
+        {
+            star2.SetActive(true);
+            cityHealth += 10;
+        }
+
+        cityHealthTXT.text = "City Health Increased by " + cityHealth;
     }
 
-    //gets the veg name from currently selected button
-    public void setVegName()
+    public void createObjectVeg()
     {
-        vegName = EventSystem.current.currentSelectedGameObject.name;
+        //gets string of current button and compares it against "currentMade" to make sure its not the same
+        string foodItem = EventSystem.current.currentSelectedGameObject.name;
+        if (foodItem != currentMade)
+        {
+            Instantiate(Resources.Load(foodItem), new Vector3(-402.3f, 28.9f, 64.88f), Quaternion.identity);
+            currentMade = foodItem;
+        }
+    }
+
+    public void getVegWeight(float w)
+    {
+        vegWeight = w;
+        vegWeightTxt.text = vegWeight.ToString("F2");
+    }
+
+    public float setVegWeight()
+    {
+        return vegWeight;
     }
 
     public void openRecipeBook()
