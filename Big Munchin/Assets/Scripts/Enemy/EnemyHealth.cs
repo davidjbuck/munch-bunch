@@ -7,12 +7,14 @@ public class EnemyHealth : MonoBehaviour
 {
     public float enemyMaxHP;
     public float enemyHP;
+    public bool enemyAlive;
     [SerializeField] private Slider hSlider;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyHP = enemyMaxHP;
+        enemyAlive = true;
     }
     void removeHealth(float damage)
     {
@@ -20,8 +22,8 @@ public class EnemyHealth : MonoBehaviour
         updateEnemyHealthBar(enemyHP, enemyMaxHP);
         if(enemyHP < 0)
         {
-            Debug.Log("ENEMY DEAD");
-            Destroy(this.gameObject);
+            enemyAlive = false;
+            EnemyDead();
         }
     }
     public void updateEnemyHealthBar(float hp, float maxHealth)
@@ -31,7 +33,7 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Hitbox") 
+        if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0) 
         {
             //attackProps = CollisionManager.GetComponent<CollisionManager>();
             float damage = col.GetComponent<CollisionManager>().GetAttackDamage();
@@ -39,7 +41,11 @@ public class EnemyHealth : MonoBehaviour
             removeHealth(damage);
         }
     }
+    public void EnemyDead()
+    {
+        Destroy(this.gameObject);
 
+    }
     void Update()
     {
         
