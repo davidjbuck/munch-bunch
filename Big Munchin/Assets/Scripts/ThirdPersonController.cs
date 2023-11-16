@@ -405,6 +405,7 @@ public class ThirdPersonController : MonoBehaviour
             lastJumpTime = Time.time;
             ani.SetBool("Walking", false);
             audioSources[0].Stop();
+            ani.SetBool("Airborne", true);
         }
         else
         {
@@ -850,6 +851,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             if(!wasGrounded)
             {
+                ani.SetBool("Airborne", false);
                 audioSources[2].pitch = 1.4f;
                 audioSources[2].Play();
             }
