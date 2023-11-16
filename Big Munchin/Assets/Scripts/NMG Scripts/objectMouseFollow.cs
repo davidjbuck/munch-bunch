@@ -8,6 +8,6 @@ public class objectMouseFollow : MonoBehaviour
 
     private void Update()
     {
-        transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
+        transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 30));
     }
 }
