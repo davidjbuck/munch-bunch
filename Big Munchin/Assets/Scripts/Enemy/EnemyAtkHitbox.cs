@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//NOT USED ANYMORE
 public class EnemyAtkHitBox : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -15,11 +17,21 @@ public class EnemyAtkHitBox : MonoBehaviour
     {
         
     }
-    public void OnCollisionEnter(Collider col)
+    
+    void OnCollisionEnter(Collision col)
     {
         if(col.gameObject.tag == "Player")
         {
             Debug.Log("Hit Player");
         }
-    } 
+    }
+    /*
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            Debug.Log("Hit Player");
+        }
+    }
+    */
 }
