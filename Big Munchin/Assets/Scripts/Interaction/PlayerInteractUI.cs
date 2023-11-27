@@ -8,12 +8,18 @@ public class PlayerInteractUI : MonoBehaviour
     [SerializeField] private GameObject allyInteractContainer;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private TMP_Text interactTextMeshProUGUI;
+    private int counter;
     private void Update()
     {
         if(playerInteract.GetInteractableObject() != null)
         {
             Show(playerInteract.GetInteractableObject());
-        } else
+            counter = 0;
+        } else if (counter < 100)
+        {
+            counter++;
+        }
+        if(counter >= 100)
         {
             Hide();
         }
