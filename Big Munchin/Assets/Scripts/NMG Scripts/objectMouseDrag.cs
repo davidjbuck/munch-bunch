@@ -13,7 +13,7 @@ public class objectMouseDrag : MonoBehaviour
     private void OnMouseDrag()
     {
         cam = GameObject.Find("Camera").GetComponent<Camera>();
-        transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, zpos));
+        transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y+10, zpos));
     }
 
     private void OnCollisionEnter(Collision collision)
