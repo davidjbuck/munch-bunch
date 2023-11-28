@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class ThirdPersonController : MonoBehaviour
 {   //variables to handle orientation and movement
@@ -66,6 +68,7 @@ public class ThirdPersonController : MonoBehaviour
 
     public float knockdownDuration;
     private float knockdownStartTime;
+    public Vector3 kbVector;
 
     //numOfItemTypes sets size of arrays which handle buff effects and duration
     //should be entered into editor and updated whenever a new item type is added
@@ -103,7 +106,9 @@ public class ThirdPersonController : MonoBehaviour
     private Animator ani;
 
     private AudioSource[] audioSources;
+    public AudioMixer mix;
 
+    public bool playerHasControl;
     public enum PlayerState
     {//enum to hold player state. Determines which actions can be taken,
      //controls much of the flow between different blocks of code
@@ -168,10 +173,15 @@ public class ThirdPersonController : MonoBehaviour
         }else if((int)currentPlayerState==5 && Time.time > stunEndTime)//if the player is stunned and their stun time is over
         {
             currentPlayerState = PlayerState.Neutral;//set them back to neutral state
-            //Debug.Log("Ending stun");
-        }else if((int)currentPlayerState == 6 && Time.time > knockdownStartTime + knockdownDuration)
+            Debug.Log("Ending stun");
+        }else if((int)currentPlayerState == 6)
         {
-            currentPlayerState = PlayerState.Neutral;//set the player back to neutral once the knockdown ends
+            if(Time.time > knockdownStartTime + knockdownDuration)
+            {
+                currentPlayerState = PlayerState.Neutral;//set the player back to neutral once the knockdown ends
+                Debug.Log("Ending knockback time.");
+            }
+            
         }
         if(lockedOn)//if the player is already locked on
         {            
@@ -202,7 +212,7 @@ public class ThirdPersonController : MonoBehaviour
             }
             
         }
-        if ((int)currentPlayerState != 7 && (int)currentPlayerState !=4)
+        if ((int)currentPlayerState != 7 && (int)currentPlayerState !=4 &&playerHasControl)
         {
             GetInput();//update player input variables
             UpdateRotation();//rotate model appropriately
@@ -213,7 +223,13 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {   if(jumping)
+    {   
+        if(currentPlayerState==PlayerState.Knockdown)
+        {
+            rb.AddForce(kbVector);
+            Debug.Log(kbVector);
+        }
+        if(jumping)
         {
             Jump();
         }
@@ -229,7 +245,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             Dodge();//DODGE
         }
-        if((int)currentPlayerState != 4)
+        if((int)currentPlayerState != 4 && currentPlayerState!=PlayerState.Knockdown)
         {
             LimitSpeed();
         }       
@@ -405,6 +421,7 @@ public class ThirdPersonController : MonoBehaviour
             lastJumpTime = Time.time;
             ani.SetBool("Walking", false);
             audioSources[0].Stop();
+            ani.SetBool("Airborne", true);
         }
         else
         {
@@ -533,12 +550,16 @@ public class ThirdPersonController : MonoBehaviour
     public void TakeDamage(int damageVal, float stunTime)
     {
         health -= damageVal;//decrease health by damage value
-        currentPlayerState = PlayerState.Stun;//set the player to stunned
+        if(currentPlayerState!=PlayerState.Knockdown)
+        {
+            currentPlayerState = PlayerState.Stun;//set the player to stunned
+        }        
         //rb.isKinematic = true;//set rb to kinematic to stop sliding
         stunEndTime = Time.time+stunTime;//set stun end time
         if(health<=0)
         {
             currentPlayerState = PlayerState.GameOver;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         activeMoveset.StopAttacking();//stop any further attacks from coming out
         //Debug.Log("Taking Damage: " + damageVal + ", and Stun: " + stunTime);
@@ -588,7 +609,15 @@ public class ThirdPersonController : MonoBehaviour
                         case 4://heavy finisher
                             TakeDamage(cm.GetAttackDamage(), cm.GetAttackStun());
                             currentPlayerState = PlayerState.Knockdown;
-                            //don't forget to actually add code here later to make knockback happen
+                            knockdownStartTime = Time.time;
+                            knockdownDuration = cm.GetAttackStun()*2.0f;
+                            Debug.Log("Should be taking knockback now.");
+                            Vector3 offset = player.transform.position - cm.gameObject.transform.position;
+                            offset = offset.normalized;
+                            offset = offset * cm.GetKnockbackForce();
+                            kbVector = offset;
+                            Debug.Log(offset);
+                            rb.AddForce(offset);
                             break;
                     }
                 }
@@ -598,11 +627,20 @@ public class ThirdPersonController : MonoBehaviour
                     {
                         TakeDamage(cm.GetAttackDamage(), cm.GetAttackStun());
                         currentPlayerState = PlayerState.Knockdown;
-                        //don't forget to actually add code here later to make knockback happen
+                        knockdownStartTime = Time.time;
+                        knockdownDuration = cm.GetAttackStun() * 2.0f;
+                        Debug.Log("Should be taking knockback now.");
+                        Vector3 offset = player.transform.position- cm.gameObject.transform.position;
+                        offset = offset.normalized;
+                        offset = offset * cm.GetKnockbackForce();
+                        kbVector = offset;
+                        Debug.Log(offset);
+                        rb.AddForce(offset);
                     }
                     else
                     {
                         TakeDamage(cm.GetAttackDamage(), cm.GetAttackStun());//call take damage
+                        Debug.Log("else got called...");
                     }                    
                 }                               
             }
@@ -850,6 +888,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             if(!wasGrounded)
             {
+                ani.SetBool("Airborne", false);
                 audioSources[2].pitch = 1.4f;
                 audioSources[2].Play();
             }
@@ -873,25 +912,28 @@ public class ThirdPersonController : MonoBehaviour
     public void LimitSpeed()
     {
         Vector3 vel = new Vector3(rb.velocity.x, 0.0f,rb.velocity.z);
-        
-        if (grounded)
+        if(currentPlayerState!=PlayerState.Knockdown)
         {
-            if(vel.magnitude>movementSpeed+playerSpeedChange)
+            if (grounded)
             {
-                Debug.Log("Limiting ground speed");
-                Vector3 newVel = vel.normalized * (movementSpeed+playerSpeedChange);
-                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
-            }            
+                if (vel.magnitude > movementSpeed + playerSpeedChange)
+                {
+                    Debug.Log("Limiting ground speed");
+                    Vector3 newVel = vel.normalized * (movementSpeed + playerSpeedChange);
+                    rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+                }
+            }
+            else
+            {
+                if (vel.magnitude > airSpeed + playerSpeedChange)
+                {
+                    Debug.Log("Limiting air speed");
+                    Vector3 newVel = vel.normalized * (maxAirSpeed + playerSpeedChange);
+                    rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+                }
+            }
         }
-        else
-        {
-            if(vel.magnitude>airSpeed+playerSpeedChange)
-            {
-                Debug.Log("Limiting air speed");
-                Vector3 newVel = vel.normalized * (maxAirSpeed+playerSpeedChange);
-                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
-            }            
-        }        
+                
     }
 
     public int GetHealth()
@@ -927,6 +969,31 @@ public class ThirdPersonController : MonoBehaviour
     public float[] GetItemEffectValues()
     {
         return effectValues;
+    }
+
+    //sets volume of the specified group to a decibel value(which should be kept between -80 and 0)
+    public void ChangeAudioMixerGroupVolume(int group, float volume)
+    {
+        switch(group)
+        {
+            case 0://master
+                mix.SetFloat("MasterVol", volume);
+                break;
+            case 1://voices
+                mix.SetFloat("VoicesVol", volume);
+                break;
+            case 2://music
+                mix.SetFloat("MusicVol", volume);
+                break;
+            case 3://sfx
+                mix.SetFloat("SFXVol", volume);
+                break;
+        }
+    }
+
+    public void TogglePlayerControl()
+    {
+        playerHasControl = !playerHasControl;
     }
 
 }

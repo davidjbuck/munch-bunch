@@ -31,8 +31,9 @@ public class EnemyAI : MonoBehaviour
 	public bool isSuspicious = false;
 	public bool isInRange = false;
 	public bool FightsRanged = false;
-	public int attackTimer;
+	public float attackTimer;
 	public bool aggressive;
+	public bool permAggressive;
 	//public GameObject Projectile;
 	public Rigidbody rigidBod;
 	public float sprintSpeed;
@@ -50,12 +51,18 @@ public class EnemyAI : MonoBehaviour
 	public PlayerMover p1;
 	//public GameObject enemy;
 	//public GameObject healthText;
-
-
+	private float attackCooldown = 0;
+	public float lightAttackCooldown;
+	public float heavyAttackCooldown;
 	public GameObject enemyAttack;
 	public Transform attackSpawn;
-	public Image attackWarning;
+	public Image lightAttackWarning;
+	public Image heavyAttackWarning;
 
+	private int randNum;
+	private bool newRand;
+	public MovesetHolder[] enemyMovesets;
+	MovesetHolder enemyActiveMoveset;
 	#region Behaviors
 	void RunBehaviors()
 	{
@@ -129,7 +136,11 @@ public class EnemyAI : MonoBehaviour
 			{
 				isSuspicious = true;
 			}
-			if (isSuspicious)
+            if (permAggressive)
+            {
+				GuardSearchForTarget();
+            }
+			else if (isSuspicious)
 			{
 				//INCREASES SPEED TO EITHER ATTACK OR FLEE
 				GetComponent<UnityEngine.AI.NavMeshAgent>().speed = sprintSpeed;
@@ -170,23 +181,49 @@ public class EnemyAI : MonoBehaviour
 				//attack timer and warnings
 				Vector3 playerPosition = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
 				this.transform.LookAt(playerPosition);
-				if(attackTimer > 300)
+				//chooses random number 0 or 1 to decide which attack is being used (maybe something else in the future depending on health or stamina based)
+				if (attackTimer >= (attackCooldown-1) && randNum == 0)
                 {
-					attackWarning.enabled = true;
-                } else
-                {
-					attackWarning.enabled = false;
+					//light attack warning
+					lightAttackWarning.enabled = true;
+					//Debug.Log("Light");
+				} else if (attackTimer >= (attackCooldown - 1) && randNum == 1)
+				{
+					//heavy attack warning
+					heavyAttackWarning.enabled = true;
+					//Debug.Log("Heavy");
+				}else
+				{
+					//disable attack warnings
+					lightAttackWarning.enabled = false;
+					heavyAttackWarning.enabled = false;
 				}
-				if(attackTimer >= 200)
+				//continues attack timer since it preloads most of it normally, but needs to be close to the player to finish counting
+				if(attackTimer <= (attackCooldown))
                 {
-					attackTimer++;
+					attackTimer += Time.deltaTime;
                 }
-				if (attackTimer > 500)
+				//attack when timer goes above he cooldown number
+				if (attackTimer > attackCooldown)
 				{
 					//spawns hitbox that attacks
-					GameObject w = Instantiate(enemyAttack, attackSpawn.position, attackSpawn.rotation) as GameObject;
-					Destroy(w, 0.2f);
+					//light
+					if (randNum == 0)
+					{
+						enemyActiveMoveset.LightAttackCombo();
+					}
+					//heavy
+					if (randNum == 1)
+					{
+						enemyActiveMoveset.HeavyAttackCombo();
+						attackCooldown = attackCooldown - 1;
+					}
+					//old code for temp enemyhitbox
+					//GameObject w = Instantiate(enemyAttack, attackSpawn.position, attackSpawn.rotation) as GameObject;
+					//Destroy(w, 0.2f);
 
+					//reset variables for next attack
+					newRand = false;
 					attackTimer = 0;
 					//Debug.Log("ATTACK");
 				}
@@ -218,26 +255,6 @@ public class EnemyAI : MonoBehaviour
 			}
 			Destination = transform.position + (transform.position - GameObject.FindGameObjectWithTag("Player").transform.position);
 			navAgent.SetDestination(Destination);
-
-			//GetComponent<Animation>().Play("run");
-			/*
-			for (int fleePoint = 0; fleePoint < Waypoints.Length; fleePoint++)
-			{
-				Distance = Vector3.Distance(gameObject.transform.position, Waypoints[fleePoint].position);
-				if (Distance > 20.00f)
-				{
-					Destination = Waypoints[curWaypoint].position;
-					navAgent.SetDestination(Destination);
-					break;
-				}
-				else if (Distance < 2.00f)
-				{
-
-					//ChangeBehavior(Behaviors.Idle);
-				}
-			}
-			*/
-
 		}
 	}
 	void GuardSearchForTarget()
@@ -251,8 +268,13 @@ public class EnemyAI : MonoBehaviour
 					Combat();
                 } else
                 {
-					attackWarning.enabled = false;
+					lightAttackWarning.enabled = false;
+					heavyAttackWarning.enabled = false;
 				}
+				navAgent.SetDestination(Destination);
+			}
+			else if (permAggressive)
+            {
 				navAgent.SetDestination(Destination);
 			}
 			else
@@ -279,94 +301,15 @@ public class EnemyAI : MonoBehaviour
 			{
 				rigidBod.constraints = RigidbodyConstraints.FreezeAll;
 
-				//GetComponent<Animation>().Play("dance");
 
 			}
-			/*
-			if (Distance < 5.00f)
-			{
-				isInRange = true;
-				FightsRanged = true;
-			} else
-			{
-				FightsRanged = false;
-			}4
-			*/
-			/*
-			Destination = GameObject.FindGameObjectWithTag("Player").transform.position;
-			Distance = Vector3.Distance(gameObject.transform.position, Destination);
-			if (Distance < 10.00f)
-			{
-				GetComponent<Animation>().Play("run");
 
-				navAgent.SetDestination(Destination);
-
-				if (Distance < 5.00f)
-				{
-					//ChangeBehavior(Behaviors.Combat);
-					isInRange = true;
-					FightsRanged = true;
-				} else
-				{
-					isInRange = false;
-					FightsRanged = false;
-					//SearchForTarget();
-				}
-			}
-			else
-			{
-				//ChangeBehavior(Behaviors.Idle);
-				navAgent.SetDestination(this.transform.position);
-				Idle();
-				isInRange = false;
-				FightsRanged = false;
-			}
-			*/
-
-
-
-			/*
-			Distance = Vector3.Distance(gameObject.transform.position, Destination);
-			Destination = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-			if (Distance < 10)
-			{
-				//isInRange = false;
-				if (Distance < 5)
-				{
-					isInRange = true;
-					if (Distance < 2)
-					{
-						FightsRanged = false;
-
-					}
-					else
-					{
-						FightsRanged = true;
-					}
-				} else
-				{
-					FightsRanged = false;
-					navAgent.SetDestination(Destination);
-					GetComponent<Animation>().Play("run");
-				}
-			}
-			if(Distance > 10)
-			{
-				FightsRanged = false;
-				isInRange = false;
-				//Combat();
-				Idle();
-				navAgent.SetDestination(this.transform.position);
-			}
-			*/
 		}
 	}
 	void Patrol()
 	{
 		if (dead == false)
 		{
-			//GetComponent<Animation>().Play("run");
 			Distance = Vector3.Distance(gameObject.transform.position, Waypoints[curWaypoint].position);
 			if (Distance > 2.00f)
 			{
@@ -445,6 +388,7 @@ public class EnemyAI : MonoBehaviour
 	}
 	void Start()
 	{
+		enemyActiveMoveset = enemyMovesets[0];
 		navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		//GameObject g1 = GameObject.FindGameObjectWithTag("Player");
 		//	pstat = g1.GetComponent<PlayerStats>();
@@ -453,32 +397,32 @@ public class EnemyAI : MonoBehaviour
 
 	void Update()
 	{
-		if(attackTimer < 200)
+		if (!newRand)
+		{
+			randNum = Random.Range(0, 2);
+			//makes attack cooldown depending on attack and what is put in the inpector
+			if (randNum == 0)
+			{
+				attackCooldown = lightAttackCooldown;
+				//Debug.Log("light cooldown");
+			}
+			if (randNum == 1)
+			{
+				attackCooldown = heavyAttackCooldown;
+				//Debug.Log("heavy cooldown");
+
+			}
+			//makes sure it doesnt call both constantly, resets once the attack spawns
+			newRand = true;
+		}
+		if (attackTimer < (attackCooldown - 1))
         {
-			attackTimer++;
-        }
-		/*
-		healthText.GetComponent<TextMeshProUGUI>().text = "Enemy Health: " + health;
-		if (health <= 0)
-		{
-
-			//this.gameObject.setActive(false);
-			//Destroy(enemy);
-			Destroy(this);
-			Debug.Log("ENEMY KILLED");
-			death();
-
+			attackTimer += Time.deltaTime;
+			//Debug.Log(attackTimer);
 		}
-		*/
 
-		/*
-		if(Input.GetButtonUp("Fire1"))
-		{
-			//Camera.main.SendMessage("stat_shot", 1);
-			RangedAttack();
-			
-		}
-		*/
+
+		
 		if (dead == false)
 		{
 			/*

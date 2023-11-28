@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6093297386952695143}
   - component: {fileID: 1196338087992581247}
   - component: {fileID: 2871610118649706761}
+  - component: {fileID: 1649187679648111905}
   m_Layer: 0
   m_Name: fish
   m_TagString: Untagged
@@ -105,3 +106,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1649187679648111905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967573716141491346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f342ce1ef3ebe429e45e2b384987dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 0.5
+  calories: 460

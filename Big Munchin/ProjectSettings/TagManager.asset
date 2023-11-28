@@ -7,8 +7,7 @@ TagManager:
   - item
   - Hitbox
   - LockOnTarget
-  - staminaregen
-  - healthregen
+  - scale
   layers:
   - Default
   - TransparentFX
@@ -21,7 +20,7 @@ TagManager:
   - Item
   - 
   - Ground
-  - 
+  - AttackWarning
   - 
   - 
   - 
