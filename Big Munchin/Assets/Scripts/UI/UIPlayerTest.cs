@@ -2,61 +2,79 @@ using UnityEngine;
 
 public class UIPlayerTest : MonoBehaviour
 {
-
-    public int maxHealth = 100;
+    public ThirdPersonController player;
+    public int maxHP;
     public int currentHealth;
     public bool isHealthRegenerating = false;
 
-    public float maxStamina = 100f;
+    public float maxStam;
     public float currentStamina;
-    public float staminaRegen = .03f;
+    public float staminaRegen = .05f;
 
-    public float maxHunger = 100f;
+    public float maxHunger;
     public float currentHunger;
 
     public StatusBars healthBar; //Slider value 
     public StatusBars staminaBar;
     public StatusBars hungerBar;
+    public GameObject staminaBarLength;
 
+    private Vector3 barLengthIncrease = new Vector3(1.2f, 0.7f, 1.0f);
         void Start()
         {
-            currentHealth = maxHealth;
-            currentStamina = maxStamina;
+            maxHP = player.maxHealth;
+            maxStam = player.maxStamina;
+
+            currentHealth = maxHP;
+            currentStamina = maxStam;
             currentHunger = maxHunger;
-            healthBar.SetMaxHealth(maxHealth);
-            staminaBar.SetMaxStamina(maxStamina);
+
+            healthBar.SetMaxHealth(maxHP);
+            staminaBar.SetMaxStamina(maxStam);
             hungerBar.SetMaxHunger(maxHunger);
         }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        currentHealth = player.health;
+        currentStamina = player.stamina;
+        maxStam = player.maxStamina;
+        maxHP = player.maxHealth;
+
+        print(player.maxStamina);
+
+        if (player.stamina > 100f)
         {
-            transform.Translate(new Vector3(0,0,3) * Time.deltaTime);
+            staminaBarLength.transform.localScale = barLengthIncrease;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             PlayerDamage(15);
-        }
-        if(currentHealth < maxHealth && isHealthRegenerating)
+        }*/
+        if (currentHealth < maxHP && isHealthRegenerating)
         {
             RegenerateHealth(1/33);
         }
 
-        if(Input.GetKeyDown(KeyCode.S))
+        /*if(Input.GetKeyDown(KeyCode.S))
         {
             DrainStamina(25f);
-        }
-        if (currentStamina < maxStamina)
+        }*/
+        if (currentStamina < maxStam)
         {
             RegenerateStamina(staminaRegen);
         }
+
+        if (currentStamina <= 0f)
+        {
+            currentStamina = 0f;
+        }
         
-        if(Input.GetKeyDown(KeyCode.D))
+/*        if(Input.GetKeyDown(KeyCode.D))
         {
             DrainHunger(20f);
-        }
+        }*/
 
         DegenerateHunger(.0005f);
     }

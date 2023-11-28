@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BuffIcons : MonoBehaviour
 {
+    //Script is placed on the PlayerPlaceholder component of the player character
 
     List<GameObject> items;
     public GameObject iconSpawner;
@@ -27,12 +28,12 @@ public class BuffIcons : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnCollisionEnter(Collision col)
     { 
         //Checks if collided object is an item and then adds item to List items
-        if(col.CompareTag("healthregen") || col.CompareTag("staminaregen") || col.CompareTag("item") && !items.Contains(col.gameObject))
+        if(col.gameObject.CompareTag("healthregen") || col.gameObject.CompareTag("staminaregen") || col.gameObject.CompareTag("item") && !items.Contains(col.gameObject))
         {
-            if (col.CompareTag("healthregen"))
+            if (col.gameObject.CompareTag("healthregen"))
             {
                 // Tells health animator to begin the flashing animation, and then stop after 30 seconds
                 healthAnimator.SetBool("isBuffActive", true);
@@ -41,7 +42,7 @@ public class BuffIcons : MonoBehaviour
                 //player.isHealthRegenerating = true;
             }
 
-            if (col.CompareTag("staminaregen"))
+            if (col.gameObject.CompareTag("staminaregen"))
             {
                 // Tells stamina animator to begin the flashing animation, and then stop after 30 seconds
                 staminaAnimator.SetBool("isBuffActive", true);
@@ -51,7 +52,7 @@ public class BuffIcons : MonoBehaviour
             }
 
             items.Add(col.gameObject);
-            col.gameObject.transform.position = new Vector3(100, 100, 100);
+            //col.gameObject.transform.position = new Vector3(100, 100, 100);
 
             //Set index of item that determines its position on the HUD
             int index = items.IndexOf(col.gameObject);
@@ -63,7 +64,7 @@ public class BuffIcons : MonoBehaviour
 
             //Removes buff from list and then destroys its clone
             RemoveBuff(10.0f, index);
-            Destroy(clone, 10.0f);
+            Destroy(clone, 45.0f);
             
             //Note: The objects do not move left when other buff is removed, adjust later on
         }
