@@ -1,23 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Cutscene
 {
     public Operation[] csOps;
     public bool[] operationsFinished;
     public int currentOperation;
     public struct Operation
-    {
-        public int numOpsPerformed;
-        public OperationType opType;
-        public TerminationType termType;
+    {   //indices below show position each should occupy in the split string array(length 9) when saving/loading to/from text file, with each line containing an operation
+        //will be processed as a 2D array, with each row containing an operation and each column containing a field of that operation, splitStrings[operationO, fieldF]
+        public int numOpsPerformed;//index 0
+        public OperationType opType;//index 1
+        public TerminationType termType;//index 2   
+        public float speed;//index 3
+        public float opStartTime;//index 4
+        public Vector3[] targets;//index 5-8
     }
 
     public enum OperationType {CutTo = 0, LerpTo = 1, BezierCurve = 2, PanTo = 3};
-    public enum TerminationType {Dialogue = 0, Timed = 1, Destination = 2};
+    public enum TerminationType {Dialogue = 0, Timed = 1};
 
-    public Cutscene(Operation[] cutsceneOperations) 
+    public Cutscene(Operation[] cutsceneOperations)
     {
         currentOperation = 0;
         csOps = (Operation[])cutsceneOperations.Clone();
@@ -38,6 +42,15 @@ public class Cutscene
         if (csOps[currentOperation].numOpsPerformed == 1)
         {
             currentOperation++;
+            float t = Time.time;
+            if(currentOperation != csOps.Length)
+            {
+                for (int i = currentOperation; i < currentOperation + csOps[currentOperation].numOpsPerformed; i++)
+                {
+                    csOps[i].opStartTime = t;
+                }
+            }
+                      
         }
         else
         {
@@ -52,6 +65,14 @@ public class Cutscene
             if(opsDone)
             {
                 currentOperation += csOps[currentOperation].numOpsPerformed;
+                float t = Time.time;
+                if (currentOperation != csOps.Length)
+                {
+                    for (int i = currentOperation; i < currentOperation + csOps[currentOperation].numOpsPerformed; i++)
+                    {
+                        csOps[i].opStartTime = t;
+                    }
+                }
             }
         }
     }
