@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 706
-    y: 303
+    x: 528
+    y: 196
     width: 1206
     height: 715
   m_ShowMode: 4
@@ -395,8 +395,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 706
-    y: 333
+    x: 528
+    y: 226
     width: 165
     height: 472
   m_SerializedDataModeController:
@@ -414,7 +414,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 6cadffff2af0ffff2cf0ffff6af1fffffa690000
+      m_ExpandedIDs: 08b3ffffb6b4ffff64b5fffffcb5ffff94b6ffff38b9ffff08bbffff0cbbffff10bbffff14bbffff18bbffff1cbbfffffcc1fffffcc3ffff3ac4ffff42cbffff58e5ffff64e7ffff38e9ffffd4f2ffff2cf9fffffcfaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -458,8 +458,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 872
-    y: 333
+    x: 694
+    y: 226
     width: 711
     height: 472
   m_SerializedDataModeController:
@@ -833,9 +833,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -381.17792, y: -53.220795, z: 140.32297}
+    m_Target: {x: -449.8739, y: -3.9591885, z: 18.196404}
     speed: 2
-    m_Value: {x: -381.17792, y: -53.220795, z: 140.32297}
+    m_Value: {x: -449.8739, y: -3.9591885, z: 18.196404}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -881,13 +881,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.23550731, y: 0.57340854, z: -0.17662689, w: 0.76455146}
+    m_Target: {x: 0.04918336, y: 0.93797106, z: -0.14926104, w: 0.30906355}
     speed: 2
-    m_Value: {x: 0.23638773, y: 0.57428944, z: -0.17784186, w: 0.7633379}
+    m_Value: {x: 0.049407005, y: 0.93750274, z: -0.14918652, w: 0.31046894}
   m_Size:
-    m_Target: 105.67049
+    m_Target: 52.697884
     speed: 2
-    m_Value: 105.67049
+    m_Value: 50.428596
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1002,8 +1002,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 706
-    y: 826
+    x: 528
+    y: 719
     width: 878
     height: 151
   m_SerializedDataModeController:
@@ -1027,7 +1027,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Environments
+    - Assets
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1035,16 +1035,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Environments
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Nicho\Documents\GitHub\munch-bunch\Big Munchin
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 155}
-    m_SelectedIDs: 526c0000
-    m_LastClickedID: 27730
-    m_ExpandedIDs: 00000000f06800000069000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 95}
+    m_SelectedIDs: 28600000
+    m_LastClickedID: 24616
+    m_ExpandedIDs: 00000000286000002a6000004c6000005660000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f0680000
+    m_ExpandedIDs: 00000000286000002a600000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1124,7 +1124,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 10}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 149
@@ -1182,8 +1182,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1585
-    y: 333
+    x: 1407
+    y: 226
     width: 326
     height: 644
   m_SerializedDataModeController:
