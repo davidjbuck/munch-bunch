@@ -34,6 +34,7 @@ public class NGcontroller : MonoBehaviour
     public TextMeshProUGUI meatTutorialTXT;
     public TextMeshProUGUI carbTutorialTXT;
     public TextMeshProUGUI vegTutorialTXT;
+    
 
     //objects for the meat screen
     public GameObject knife;
@@ -169,13 +170,14 @@ public class NGcontroller : MonoBehaviour
         bowl.SetActive(false);
         vegParent.SetActive(false);
         sumParent.SetActive(true);
+        
 
         //displays all the values for summary
         meatSumTXT.text = "Meat Calories: " + meatCal + "      Desired Calories: " + 230;
         carbSumTXT.text = "Carb Calories: " + carbCal.ToString("F2") + "      Desired Calories: " + 4;
         vegSumTXT.text = "Vegetable Calories: " + vegWeight + "      Desired Calories: " + (meatWeight + carbWeight).ToString("F2");
         calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegWeight).ToString("F2");
-
+         
         //activates stars depending how well the numbers are balanced
         if (Math.Abs((230 - meatCal)) <= 10)
         {
