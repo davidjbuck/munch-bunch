@@ -17,6 +17,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void ResumeGame()
@@ -24,11 +26,13 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
     }
 
     public void LoadMenu()
     {
-        Debug.Log("Loading Menu...");
+
     }
 
     public void QuitGame()
@@ -44,11 +48,13 @@ public class PauseMenu : MonoBehaviour
             if(isPaused)
             {
                 ResumeGame();
+                Debug.Log("Is Paused: " + isPaused);
             }
 
             else
             {
                 PauseGame();
+                Debug.Log("Is Paused: " + isPaused);
             }
         }
     }
