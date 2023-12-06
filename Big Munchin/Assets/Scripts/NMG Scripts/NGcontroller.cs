@@ -24,10 +24,17 @@ public class NGcontroller : MonoBehaviour
     float totalCal;
 
     //objects for each screen parent
+    public GameObject tutorialParent;
     public GameObject meatParent;
     public GameObject carbParent;
     public GameObject vegParent;
     public GameObject sumParent;
+
+    //texts for tutorial tips
+    public TextMeshProUGUI meatTutorialTXT;
+    public TextMeshProUGUI carbTutorialTXT;
+    public TextMeshProUGUI vegTutorialTXT;
+    
 
     //objects for the meat screen
     public GameObject knife;
@@ -43,6 +50,7 @@ public class NGcontroller : MonoBehaviour
 
     //objects for the veg screen
     string vegName;
+    public GameObject bowl;
     public TextMeshProUGUI mostPlateWeightTxt;
     public TextMeshProUGUI vegWeightTxt;
 
@@ -94,6 +102,7 @@ public class NGcontroller : MonoBehaviour
     //gets the name of the selected button and instantiates that object
     public void createObjectMeat()
     {
+        meatTutorialTXT.text = "Next, choose your portion by selecting the buttons under the food (in general, half of the meat is a good portion). Once satisfied, hit next";
         //gets string of current button and compares it against "currentMade" to make sure its not the same
         string foodItem = EventSystem.current.currentSelectedGameObject.name;
         if(foodItem != currentMade)
@@ -117,12 +126,21 @@ public class NGcontroller : MonoBehaviour
     //activates the PS from the rice button
     public void carbActivate()
     {
+        carbTutorialTXT.text = "Now hold down to pour the rice. Continue pouring to desired amount (around 100g of carbs are recommended). Once satisfied, hit next";
         riceParent.SetActive(true);
+    }
+
+    public void switchToMeat()
+    {
+        currentScreen = 0;
+        tutorialParent.SetActive(false);
+        meatParent.SetActive(true);
     }
 
     //switches screens from meat to carb (and activates/deactivates respective objects)
     public void switchToCarb()
     {
+        carbTutorialTXT.text = "Same as last, select your carb from the buttons on the left";
         currentScreen = 1;
         Destroy(GameObject.Find("Upper_Hull"));
         Destroy(GameObject.Find("Lower_Hull"));
@@ -138,6 +156,7 @@ public class NGcontroller : MonoBehaviour
         carbCal = fakeWeightCount * 2;
         currentScreen = 2;
         mostPlateWeightTxt.text = "Current Weight: " + (meatWeight + carbWeight);
+        bowl.SetActive(true);
         riceParent.SetActive(false);
         carbParent.SetActive(false);
         vegParent.SetActive(true);
@@ -148,15 +167,17 @@ public class NGcontroller : MonoBehaviour
     {
         currentScreen = 3;
         scaleObject.SetActive(false);
+        bowl.SetActive(false);
         vegParent.SetActive(false);
         sumParent.SetActive(true);
+        
 
         //displays all the values for summary
         meatSumTXT.text = "Meat Calories: " + meatCal + "      Desired Calories: " + 230;
         carbSumTXT.text = "Carb Calories: " + carbCal.ToString("F2") + "      Desired Calories: " + 4;
         vegSumTXT.text = "Vegetable Calories: " + vegWeight + "      Desired Calories: " + (meatWeight + carbWeight).ToString("F2");
         calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegWeight).ToString("F2");
-
+         
         //activates stars depending how well the numbers are balanced
         if (Math.Abs((230 - meatCal)) <= 10)
         {
@@ -177,13 +198,16 @@ public class NGcontroller : MonoBehaviour
         cityHealthTXT.text = "City Health Increased by " + cityHealth;
     }
 
+
     public void createObjectVeg()
     {
+        vegTutorialTXT.text = "Now, drag the desired amount of the vegetable to the scale (the vegetables should match the weight of the rest of the meal). Once satisfied, hit next ";
+        
         //gets string of current button and compares it against "currentMade" to make sure its not the same
         string foodItem = EventSystem.current.currentSelectedGameObject.name;
         if (foodItem != currentMade)
         {
-            Instantiate(Resources.Load(foodItem), new Vector3(-402.3f, 28.9f, 64.88f), Quaternion.identity);
+            Instantiate(Resources.Load(foodItem), new Vector3(-402.3f, 30f, 64.88f), Quaternion.identity);
             currentMade = foodItem;
         }
     }
