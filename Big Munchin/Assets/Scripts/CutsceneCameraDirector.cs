@@ -7,6 +7,7 @@ public class CutsceneCameraDirector : MonoBehaviour
 {
     Camera cam;
     Camera mc;
+    ThirdPersonController controller;
     Cutscene cs;
     public bool cutsceneOngoing = false;
     public bool testing = false;
@@ -17,12 +18,17 @@ public class CutsceneCameraDirector : MonoBehaviour
     public Cutscene.TerminationType[] termTypes;//termination type of the operation, should run parallel to the other single capacity arrays, with as amny as there are operations
     public float[] operationDurations;//how long each operation should take. Ignored if dialog triggers progression. Corresponds to the speed field of the Cutscene class
     public Vector3[] targetVectors;//does not run parallel to the others. Each operation gets 4 target Vector3 allocations, even though most only use 2, so it should be exactly 4 times the length of numOperations
-
+    public bool loadIntoCutscene;
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
         mc = GameObject.Find("Main Camera").GetComponent<Camera>();
+        controller = mc.gameObject.GetComponent<ThirdPersonController>();
+        if(loadIntoCutscene)
+        {
+            Setup("not test");
+        }
     }
 
     // Update is called once per frame
@@ -38,7 +44,6 @@ public class CutsceneCameraDirector : MonoBehaviour
             {
                 Setup("TEST");
             }
-            Setup("TEST");
             testing = false;
         }
         if (cutsceneOngoing && cs.currentOperation < cs.csOps.Length)
@@ -85,13 +90,14 @@ public class CutsceneCameraDirector : MonoBehaviour
         {
             LoadCutscene("TEST");
         }
-        
+        controller.TogglePlayerControl();
     }
 
     public void Cleanup()
     {
         cam.enabled = false;
         mc.enabled = true;
+        controller.TogglePlayerControl();
     }
 
 
