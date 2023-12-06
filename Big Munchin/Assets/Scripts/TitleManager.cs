@@ -13,16 +13,9 @@ using TMPro;
 
 public class TitleManager : MonoBehaviour
 {
-    //for in-game
-    //public GameObject mButton;
-    //public GameObject menuPanel;
-    //public float enemySoundVal = 1;
-
-    //for pre-game
     public GameObject buttonsHolder;
     public GameObject optionsHolder;
 
-    //for both i guess
     public AudioSource ambientSound;
 
     Resolution[] resolutions;
@@ -65,29 +58,6 @@ public class TitleManager : MonoBehaviour
         resolutionDropdown.value = currentRes;
         resolutionDropdown.RefreshShownValue();
     }
-
-    //public void menuButton()
-    //{
-    //    Time.timeScale = 0;
-    //    menuPanel.SetActive(true);
-    //    mButton.SetActive(false);
-    //}
-    //public void menuClose()
-    //{
-    //    Time.timeScale = 1;
-    //    menuPanel.SetActive(false);
-    //    mButton.SetActive(true);
-    //}
-    //public void settingsMenu()
-    //{
-    //    menuPanel.SetActive(false);
-    //    settingsPanel.SetActive(true);
-    //}
-    //public void settingsClose()
-    //{
-    //    menuPanel.SetActive(true);
-    //    settingsPanel.SetActive(false);
-    //}
 
     public void optionsMenu()
     {

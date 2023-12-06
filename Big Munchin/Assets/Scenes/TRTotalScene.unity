@@ -159,6 +159,9 @@ MonoBehaviour:
   flavorText: Bored? Count these grains.
   amount: 1
   itemType: 0
+  itemBuffTypes: 
+  effectDuration: []
+  effectValue: []
 --- !u!136 &97607105
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2258,6 +2261,9 @@ MonoBehaviour:
   flavorText: You can now say you've got beef
   amount: 1
   itemType: 1
+  itemBuffTypes: 
+  effectDuration: []
+  effectValue: []
 --- !u!136 &1085980287
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2661,6 +2667,9 @@ MonoBehaviour:
   flavorText: Why did the chicken cross the road?
   amount: 1
   itemType: 2
+  itemBuffTypes: 
+  effectDuration: []
+  effectValue: []
 --- !u!136 &1263789971
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4022,6 +4031,9 @@ MonoBehaviour:
   flavorText: Bored? Count these grains.
   amount: 1
   itemType: 0
+  itemBuffTypes: 
+  effectDuration: []
+  effectValue: []
 --- !u!136 &1588981006
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4652,6 +4664,9 @@ MonoBehaviour:
   flavorText: Helps with eyesight. Do you think rabbits have super vision?
   amount: 1
   itemType: 3
+  itemBuffTypes: 
+  effectDuration: []
+  effectValue: []
 --- !u!136 &1690423611
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5544,14 +5559,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d88915d5df65444a53ee0e7f5d0575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knife: {fileID: 1450794219}
   counter: {fileID: 2131889251}
-  sliceButtonHolder: {fileID: 1541017160}
-  slicePlaneHolder: {fileID: 1646048969}
+  tutorialParent: {fileID: 0}
   meatParent: {fileID: 136539414}
   carbParent: {fileID: 664344951}
   vegParent: {fileID: 0}
+  sumParent: {fileID: 0}
+  meatTutorialTXT: {fileID: 0}
+  carbTutorialTXT: {fileID: 0}
+  vegTutorialTXT: {fileID: 0}
+  knife: {fileID: 1450794219}
+  sliceButtonHolder: {fileID: 1541017160}
+  slicePlaneHolder: {fileID: 1646048969}
+  riceParent: {fileID: 0}
   ricePour: {fileID: 409464929}
+  weightTxt: {fileID: 0}
+  scaleObject: {fileID: 0}
+  bowl: {fileID: 0}
+  mostPlateWeightTxt: {fileID: 0}
+  vegWeightTxt: {fileID: 0}
+  meatSumTXT: {fileID: 0}
+  carbSumTXT: {fileID: 0}
+  vegSumTXT: {fileID: 0}
+  calSumTXT: {fileID: 0}
+  star: {fileID: 0}
+  star1: {fileID: 0}
+  star2: {fileID: 0}
+  cityHealthTXT: {fileID: 0}
 --- !u!114 &2131889257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5564,6 +5598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333b0939e6f189e4f824a3a77b5b7778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ngcObject: {fileID: 0}
   planeObjectSmall: {fileID: 1378366665}
   planeObjectMed: {fileID: 1410562136}
   planeObjectLarge: {fileID: 1919137171}
