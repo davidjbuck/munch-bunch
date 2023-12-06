@@ -15,8 +15,8 @@ public class TitleManager : MonoBehaviour
 {
     public GameObject buttonsHolder;
     public GameObject optionsHolder;
-
-    public AudioSource ambientSound;
+    
+    public AudioMixer audioMixer;
 
     Resolution[] resolutions;
     public TMP_Dropdown resolutionDropdown;
@@ -70,11 +70,30 @@ public class TitleManager : MonoBehaviour
         optionsHolder.SetActive(false);
         creditHolder.SetActive(false);
     }
-    public void volumeSlider(float v)
+
+
+    //Volume Changers
+    public void ChangeMasterVolume(float volume)
     {
-        ambientSound.volume = v;
-        volume = v;
+        audioMixer.SetFloat("MasterVol", volume);
     }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        audioMixer.SetFloat("MusicVol", volume);
+    }
+
+    public void ChangeSFXVolume(float volume)
+    {
+        audioMixer.SetFloat("SFXVol", volume);
+    }
+
+    public void ChangeVoiceVolume(float volume)
+    {
+        audioMixer.SetFloat("VoicesVol", volume);
+    }
+
+
     public void graphicsDrop(int g)
     {
         QualitySettings.SetQualityLevel(g);
@@ -108,6 +127,8 @@ public class TitleManager : MonoBehaviour
             shadowVal = 2;
         }
     }
+
+
     public void newGame()
     {
         Debug.Log("whoooooooa (scene change here)");
