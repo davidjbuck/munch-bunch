@@ -113,7 +113,10 @@ public class ThirdPersonController : MonoBehaviour
 
     public bool testingKitchenMode;
     public GameObject freelook;
-    public GameObject kitchenFreelook;
+    public Vector3 fixedCameraPosition;
+    public Vector3 fixedCameraRotation;
+    public GameObject fixedCamera;
+    private bool fixedCam;
     public enum PlayerState
     {//enum to hold player state. Determines which actions can be taken,
      //controls much of the flow between different blocks of code
@@ -142,11 +145,19 @@ public class ThirdPersonController : MonoBehaviour
         {
             player.localScale = new Vector3(15f, 15f, 15f);
             freelook.gameObject.SetActive(false);
-            kitchenFreelook.gameObject.SetActive(true);
             movementSpeed *= 7.5f;
             maxAirSpeed *= 7.5f;
             jumpForce *= 7.5f;
             Physics.gravity *= 7.5f;
+            cam.enabled = false;
+            fixedCamera.SetActive(true);
+            fixedCamera.transform.position = fixedCameraPosition;
+            fixedCamera.transform.rotation = Quaternion.Euler(fixedCameraRotation);
+            fixedCam = true;
+        }
+        else
+        {
+            fixedCam = false;
         }
     }
 
@@ -236,7 +247,12 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {   
+    {
+        if (fixedCam)
+        {
+            fixedCamera.transform.position = fixedCameraPosition;
+            fixedCamera.transform.rotation = Quaternion.Euler(fixedCameraRotation);
+        }
         if(currentPlayerState==PlayerState.Knockdown)
         {
             rb.AddForce(kbVector);
@@ -271,8 +287,16 @@ public class ThirdPersonController : MonoBehaviour
 
         if(!lockedOn)
         {//if not locked on, do vector math to determine proper orientation relative to camera
-            viewAngle = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-            orientationRefObj.forward = viewAngle.normalized;
+            if(fixedCam)
+            {
+                viewAngle = player.position - new Vector3(fixedCamera.transform.position.x, player.position.y, fixedCamera.transform.position.z);
+                orientationRefObj.forward = viewAngle.normalized;
+            }
+            else
+            {
+                viewAngle = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+                orientationRefObj.forward = viewAngle.normalized;
+            }            
         }
         else
         {//if locked on, do vector math to determine proper orientation relative to lock on target
