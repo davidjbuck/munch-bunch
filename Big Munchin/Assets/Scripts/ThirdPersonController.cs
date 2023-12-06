@@ -109,6 +109,11 @@ public class ThirdPersonController : MonoBehaviour
     public AudioMixer mix;
 
     public bool playerHasControl;
+    public bool inCombatMode = false;
+
+    public bool testingKitchenMode;
+    public GameObject freelook;
+    public GameObject kitchenFreelook;
     public enum PlayerState
     {//enum to hold player state. Determines which actions can be taken,
      //controls much of the flow between different blocks of code
@@ -133,11 +138,21 @@ public class ThirdPersonController : MonoBehaviour
         ani = playerCollider.GetComponent<Animator>();
         ani.SetBool("Walking", false);
         audioSources = GetComponents<AudioSource>();
+        if(SceneManager.GetActiveScene().name == "KitchenScene" || testingKitchenMode)
+        {
+            player.localScale = new Vector3(15f, 15f, 15f);
+            freelook.gameObject.SetActive(false);
+            kitchenFreelook.gameObject.SetActive(true);
+            movementSpeed *= 7.5f;
+            maxAirSpeed *= 7.5f;
+            jumpForce *= 7.5f;
+            Physics.gravity *= 7.5f;
+        }
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         //check item durations to disable any item effects whose durations have expired
         CheckItemDurations();
 
@@ -173,13 +188,13 @@ public class ThirdPersonController : MonoBehaviour
         }else if((int)currentPlayerState==5 && Time.time > stunEndTime)//if the player is stunned and their stun time is over
         {
             currentPlayerState = PlayerState.Neutral;//set them back to neutral state
-            Debug.Log("Ending stun");
+            //Debug.Log("Ending stun");
         }else if((int)currentPlayerState == 6)
         {
             if(Time.time > knockdownStartTime + knockdownDuration)
             {
                 currentPlayerState = PlayerState.Neutral;//set the player back to neutral once the knockdown ends
-                Debug.Log("Ending knockback time.");
+                //Debug.Log("Ending knockback time.");
             }
             
         }
@@ -218,8 +233,6 @@ public class ThirdPersonController : MonoBehaviour
             UpdateRotation();//rotate model appropriately
             CheckAttacks();
         }
-
-       
     }
 
     private void FixedUpdate()
@@ -227,7 +240,7 @@ public class ThirdPersonController : MonoBehaviour
         if(currentPlayerState==PlayerState.Knockdown)
         {
             rb.AddForce(kbVector);
-            Debug.Log(kbVector);
+            //Debug.Log(kbVector);
         }
         if(jumping)
         {
@@ -306,7 +319,7 @@ public class ThirdPersonController : MonoBehaviour
         //as temporary testing implementation until adding item to hotbar is implemented
         if(Input.GetKeyDown(KeyCode.Alpha1)|| Input.GetKeyDown(KeyCode.Keypad1))
         {
-            Debug.Log("1 pressed");
+            //Debug.Log("1 pressed");
             if (playerInventory.GetInventoryCapacity() > 0)
             {
                 ActivateItem(playerInventory.UseItem(0));
@@ -432,7 +445,7 @@ public class ThirdPersonController : MonoBehaviour
         {//if the space bar is pressed, the player has enough stamina, and the player is in neutral/parrying/blocking state
             LoseStamina(dodgeStaminaCost, 0, 0.0f);//pay the stamina cost
             dodgeStartTime = Time.time;//record the dodge start time
-            Debug.Log("DODGE");
+            //Debug.Log("DODGE");
             ani.SetBool("Walking", false);
             audioSources[0].Stop();
             currentPlayerState = PlayerState.Dodge;//change player state to dodging
@@ -464,12 +477,15 @@ public class ThirdPersonController : MonoBehaviour
     {
         if ((int)currentPlayerState<4)//if the player is in state that they can attack out of, with 0-3 all qualifying
         {
-            if (fire1Pressed && stamina >= activeMoveset.FirstLightCost() -fatigueAllowance)//if the player pressed left click
+            if (fire1Pressed && stamina >= activeMoveset.FirstLightCost() -fatigueAllowance && grounded && inCombatMode)//if the player pressed left click
             {
                 if ((int)currentPlayerState != 1)
                 {
                     audioSources[1].pitch = 1.6f + Random.Range(0.0f, 0.2f);
                     audioSources[1].Play();
+                    ani.SetBool("BetweenPunches", true);
+                    Invoke("DisableMultiPunch", 0.05f);
+                    ani.SetBool("Punching", true);
                 }
                 //Debug.Log("Fire1 down! Sending Light Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
@@ -477,12 +493,16 @@ public class ThirdPersonController : MonoBehaviour
                 ani.SetBool("Walking", false);
                 audioSources[0].Stop();
             }
-            else if (fire2Pressed && stamina >= activeMoveset.FirstHeavyCost() - fatigueAllowance)//if the player pressed right click
+            else if (fire2Pressed && stamina >= activeMoveset.FirstHeavyCost() - fatigueAllowance && grounded && inCombatMode)//if the player pressed right click
             {
                 if ((int)currentPlayerState != 1)
                 {
                     audioSources[1].pitch = 1.6f + Random.Range(0.0f, 0.2f);
                     audioSources[1].Play();
+                    ani.SetBool("BetweenPunches", true);
+                    Invoke("DisableMultiPunch", 0.05f);
+                    ani.SetBool("Punching", true);
+
                 }
                 //Debug.Log("Fire2 down! Sending Heavy Attack Request!");
                 currentPlayerState = PlayerState.Attacking;//set player state to attacking
@@ -562,6 +582,7 @@ public class ThirdPersonController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         activeMoveset.StopAttacking();//stop any further attacks from coming out
+        ani.SetBool("Punching", false);
         //Debug.Log("Taking Damage: " + damageVal + ", and Stun: " + stunTime);
     }
 
@@ -571,6 +592,7 @@ public class ThirdPersonController : MonoBehaviour
         if((int)currentPlayerState==1)//if the player is attacking
         {
             currentPlayerState = PlayerState.Neutral;//set player back to neutral state
+            ani.SetBool("Punching", false);
         }
     }
 
@@ -611,12 +633,12 @@ public class ThirdPersonController : MonoBehaviour
                             currentPlayerState = PlayerState.Knockdown;
                             knockdownStartTime = Time.time;
                             knockdownDuration = cm.GetAttackStun()*2.0f;
-                            Debug.Log("Should be taking knockback now.");
+                            //Debug.Log("Should be taking knockback now.");
                             Vector3 offset = player.transform.position - cm.gameObject.transform.position;
                             offset = offset.normalized;
                             offset = offset * cm.GetKnockbackForce();
                             kbVector = offset;
-                            Debug.Log(offset);
+                            //Debug.Log(offset);
                             rb.AddForce(offset);
                             break;
                     }
@@ -629,18 +651,18 @@ public class ThirdPersonController : MonoBehaviour
                         currentPlayerState = PlayerState.Knockdown;
                         knockdownStartTime = Time.time;
                         knockdownDuration = cm.GetAttackStun() * 2.0f;
-                        Debug.Log("Should be taking knockback now.");
+                        //Debug.Log("Should be taking knockback now.");
                         Vector3 offset = player.transform.position- cm.gameObject.transform.position;
                         offset = offset.normalized;
                         offset = offset * cm.GetKnockbackForce();
                         kbVector = offset;
-                        Debug.Log(offset);
+                        //Debug.Log(offset);
                         rb.AddForce(offset);
                     }
                     else
                     {
                         TakeDamage(cm.GetAttackDamage(), cm.GetAttackStun());//call take damage
-                        Debug.Log("else got called...");
+                        //Debug.Log("else got called...");
                     }                    
                 }                               
             }
@@ -657,11 +679,17 @@ public class ThirdPersonController : MonoBehaviour
             {
                 audioSources[1].pitch = 1.4f + Random.Range(0.0f, 0.2f);
                 audioSources[1].Play();
+                ani.SetBool("BetweenPunches", true);
+                Invoke("DisableMultiPunch", 0.05f);
+                ani.SetBool("Punching", true);
             }
             else
             {
                 audioSources[1].pitch = 1.6f + Random.Range(0.0f, 0.2f);
                 audioSources[1].Play();
+                ani.SetBool("BetweenPunches", true);
+                Invoke("DisableMultiPunch", 0.05f);
+                ani.SetBool("Punching", true);
             }
         }
         if ((int)currentPlayerState == 3)//if the player is blocking
@@ -682,6 +710,7 @@ public class ThirdPersonController : MonoBehaviour
                 if((int)currentPlayerState == 1)
                 {
                     activeMoveset.StopAttacking();
+                    ani.SetBool("Punching", false);
                     currentPlayerState = PlayerState.Neutral;
                 }
             }
@@ -690,7 +719,6 @@ public class ThirdPersonController : MonoBehaviour
 
     public void ToggleLockOn()
     {
-        //update this method later to check if new targets are in range and switch lock down target when an enemy is defeated
         lockedOn = !lockedOn;
         if(lockedOn)
         {
@@ -720,6 +748,8 @@ public class ThirdPersonController : MonoBehaviour
         {
             lockOnTarget = potentialTargets[currentMinIndex];
             lockOnCandidateFound = true;
+            inCombatMode = true;
+            ani.SetBool("CombatMode", true);
             if(lockedOn)
             {
                 lockedOnIcon.SetActive(true);
@@ -735,6 +765,8 @@ public class ThirdPersonController : MonoBehaviour
         else
         {
             //Debug.Log("No suitable lock on targets found");
+            inCombatMode = false;
+            ani.SetBool("CombatMode", false);
             lockOnCandidateFound = false;
             lockedOnIcon.SetActive(false);
             lockOnCandidateIcon.SetActive(false);
@@ -880,10 +912,11 @@ public class ThirdPersonController : MonoBehaviour
 
     public void CheckGrounded()
     {
-        Vector3 pt = new Vector3(playerCollider.transform.position.x, playerCollider.transform.position.y+ (playerCollider.GetComponent<CapsuleCollider>().height * 0.5f), playerCollider.transform.position.z);
-        Debug.DrawLine(pt, new Vector3(pt.x, pt.y - (playerCollider.GetComponent<CapsuleCollider>().height * 0.5f + raycastProtrusion), pt.z), Color.red, Time.deltaTime);
+        float offset = playerCollider.GetComponent<CapsuleCollider>().height * 0.5f;
+        Vector3 pt = new Vector3(playerCollider.transform.position.x, playerCollider.transform.position.y+ offset, playerCollider.transform.position.z);
+        Debug.DrawLine(pt, new Vector3(pt.x, pt.y - (offset + raycastProtrusion*player.transform.localScale.y/2.0f), pt.z), Color.red, Time.deltaTime);
         bool wasGrounded = grounded;
-        grounded = Physics.Raycast(pt, Vector3.down, playerCollider.GetComponent<CapsuleCollider>().height*0.5f + raycastProtrusion, groundedCheck);
+        grounded = Physics.Raycast(pt, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
         if(grounded)
         {
             if(!wasGrounded)
@@ -918,7 +951,7 @@ public class ThirdPersonController : MonoBehaviour
             {
                 if (vel.magnitude > movementSpeed + playerSpeedChange)
                 {
-                    Debug.Log("Limiting ground speed");
+                    //Debug.Log("Limiting ground speed");
                     Vector3 newVel = vel.normalized * (movementSpeed + playerSpeedChange);
                     rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
                 }
@@ -927,7 +960,7 @@ public class ThirdPersonController : MonoBehaviour
             {
                 if (vel.magnitude > airSpeed + playerSpeedChange)
                 {
-                    Debug.Log("Limiting air speed");
+                    //Debug.Log("Limiting air speed");
                     Vector3 newVel = vel.normalized * (maxAirSpeed + playerSpeedChange);
                     rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
                 }
@@ -994,6 +1027,11 @@ public class ThirdPersonController : MonoBehaviour
     public void TogglePlayerControl()
     {
         playerHasControl = !playerHasControl;
+    }
+
+    private void DisableMultiPunch()
+    {
+        ani.SetBool("BetweenPunches", false);
     }
 
 }
