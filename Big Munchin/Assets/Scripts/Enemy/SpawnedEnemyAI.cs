@@ -175,7 +175,7 @@ public class SpawnedEnemyAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			if (Distance < 3)
+			if (Distance < 2)
 			{
 				//attack player if they are within 5 unitys
 				//attack timer and warnings
@@ -265,7 +265,7 @@ public class SpawnedEnemyAI : MonoBehaviour
 		{
 			if (Distance < 40f)
 			{
-				if (Distance < 5f)
+				if (Distance < 3f)
 				{
 					Combat();
 				}

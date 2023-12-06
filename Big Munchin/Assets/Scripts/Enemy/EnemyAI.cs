@@ -63,6 +63,8 @@ public class EnemyAI : MonoBehaviour
 	private bool newRand;
 	public MovesetHolder[] enemyMovesets;
 	MovesetHolder enemyActiveMoveset;
+	GameObject player;
+
 	#region Behaviors
 	void RunBehaviors()
 	{
@@ -130,7 +132,7 @@ public class EnemyAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			Destination = GameObject.FindGameObjectWithTag("Player").transform.position;
+			Destination = player.transform.position;
 			Distance = Vector3.Distance(gameObject.transform.position, Destination);
 			if (Distance < 20f)
 			{
@@ -175,11 +177,11 @@ public class EnemyAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			if (Distance < 3)
+			if (Distance < 2)
 			{
 				//attack player if they are within 5 unitys
 				//attack timer and warnings
-				Vector3 playerPosition = new Vector3(GameObject.FindGameObjectWithTag("Player").transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
+				Vector3 playerPosition = new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z);
 				this.transform.LookAt(playerPosition);
 				//chooses random number 0 or 1 to decide which attack is being used (maybe something else in the future depending on health or stamina based)
 				if (attackTimer >= (attackCooldown-1) && randNum == 0)
@@ -232,7 +234,7 @@ public class EnemyAI : MonoBehaviour
 			}
 			else if (Distance < 5)
             {
-				navAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
+				navAgent.SetDestination(player.transform.position);
             }
 			else
 			{
@@ -246,14 +248,14 @@ public class EnemyAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			Destination = GameObject.FindGameObjectWithTag("Player").transform.position;
+			Destination = player.transform.position;
 			Distance = Vector3.Distance(gameObject.transform.position, Destination);
 			if (Distance > 20f)
 			{
 				isSuspicious = false;
 				Guard();
 			}
-			Destination = transform.position + (transform.position - GameObject.FindGameObjectWithTag("Player").transform.position);
+			Destination = transform.position + (transform.position - player.transform.position);
 			navAgent.SetDestination(Destination);
 		}
 	}
@@ -263,7 +265,7 @@ public class EnemyAI : MonoBehaviour
 		{
 			if (Distance < 40f)
 			{
-				if(Distance < 5f)
+				if(Distance < 3f)
                 {
 					Combat();
                 } else
@@ -287,7 +289,7 @@ public class EnemyAI : MonoBehaviour
 	{
 		if (dead == false)
 		{
-			Destination = GameObject.FindGameObjectWithTag("Player").transform.position;
+			Destination = player.transform.position;
 			Distance = Vector3.Distance(gameObject.transform.position, Destination);
 			if (Distance < 10f)
 			{
@@ -393,7 +395,8 @@ public class EnemyAI : MonoBehaviour
 	{
 		enemyActiveMoveset = enemyMovesets[0];
 		navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-		//GameObject g1 = GameObject.FindGameObjectWithTag("Player");
+		player = GameObject.FindGameObjectWithTag("Player");
+		Destination = player.transform.position;
 		//	pstat = g1.GetComponent<PlayerStats>();
 		//p1 = g1.GetComponent<PlayerMover>();
 	}
