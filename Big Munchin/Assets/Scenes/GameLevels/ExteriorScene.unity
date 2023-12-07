@@ -186,6 +186,11 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 6d3c2fc384399694c8e98a524ed03aea, type: 2}
   m_BuildHeightMesh: 0
+--- !u!4 &95823115 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b750a96a071ea9748a2fca2854a791d8, type: 3}
+  m_PrefabInstance: {fileID: 1167604856}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &114354937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 90902822671689914, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
@@ -328,6 +333,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.02007226, y: 2, z: 0.023740446}
   m_Center: {x: 0.00003613112, y: -0.9, z: 0.0016354091}
+--- !u!1 &263702091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263702092}
+  m_Layer: 0
+  m_Name: TonyWaypoint
+  m_TagString: tonyWaypoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &263702092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263702091}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000003774781, y: 0.0077647516, z: 2.93105e-10, w: 0.99996984}
+  m_LocalPosition: {x: -159.49379, y: 0.8987564, z: -8.130178}
+  m_LocalScale: {x: 56.239956, y: 56.23996, z: 56.239956}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 95823115}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299709160 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2662863343890562149, guid: b750a96a071ea9748a2fca2854a791d8, type: 3}
@@ -626,6 +662,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8634060567236447461, guid: b750a96a071ea9748a2fca2854a791d8, type: 3}
+--- !u!1 &791413358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 791413359}
+  m_Layer: 0
+  m_Name: Tony Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &791413359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791413358}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.92, y: 0, z: -5.207}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1275105737}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947537047 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7088654142443532650, guid: b750a96a071ea9748a2fca2854a791d8, type: 3}
@@ -767,15 +834,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0064830426
+      value: -0.0064830417
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -2.7752082e-17
+      value: 1.6801482e-32
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.2912217e-19
+      value: -1.476696e-33
       objectReference: {fileID: 0}
     - target: {fileID: 7469417238580951095, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_Name
@@ -1009,7 +1076,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: b750a96a071ea9748a2fca2854a791d8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 263702092}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b750a96a071ea9748a2fca2854a791d8, type: 3}
       insertIndex: -1
@@ -1146,6 +1216,11 @@ CapsuleCollider:
   m_Height: 0.5
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.2}
+--- !u!4 &1275105737 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3982946020154841346, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
+  m_PrefabInstance: {fileID: 1334833044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1334833044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1156,7 +1231,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 90902822671689914, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.03
+      value: -8.8
       objectReference: {fileID: 0}
     - target: {fileID: 90902822671689914, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1174,6 +1249,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1311920699634432077, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
+      propertyPath: tonySpawn
+      value: 
+      objectReference: {fileID: 791413359}
+    - target: {fileID: 1311920699634432077, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
+      propertyPath: tonyPrefab
+      value: 
+      objectReference: {fileID: 2638505578213657861, guid: 93acf23644402e148b19997b4fb66a25, type: 3}
     - target: {fileID: 1311920699634432077, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
       propertyPath: wave1SpawnPoints.Array.size
       value: 4
@@ -1256,7 +1339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4812541891472870732, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5096140935139573056, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
       propertyPath: m_IsActive
@@ -1300,7 +1383,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3982946020154841346, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 791413359}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
 --- !u!1 &1395492660

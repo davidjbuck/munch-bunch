@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TonyRunAI : MonoBehaviour
 {
-    public Transform waypoint;
+    Transform waypoint;
     public bool running;
     UnityEngine.AI.NavMeshAgent navAgent;
     Vector3 Destination;
@@ -14,6 +14,7 @@ public class TonyRunAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        waypoint = GameObject.FindGameObjectWithTag("tonyWaypoint").transform;
         navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         speedDecrease = 0.01f;
         startRun();
