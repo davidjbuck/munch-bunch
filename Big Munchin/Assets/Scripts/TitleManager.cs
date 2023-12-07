@@ -13,17 +13,10 @@ using TMPro;
 
 public class TitleManager : MonoBehaviour
 {
-    //for in-game
-    //public GameObject mButton;
-    //public GameObject menuPanel;
-    //public float enemySoundVal = 1;
-
-    //for pre-game
     public GameObject buttonsHolder;
     public GameObject optionsHolder;
-
-    //for both i guess
-    public AudioSource ambientSound;
+    
+    public AudioMixer audioMixer;
 
     Resolution[] resolutions;
     public TMP_Dropdown resolutionDropdown;
@@ -66,29 +59,6 @@ public class TitleManager : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
 
-    //public void menuButton()
-    //{
-    //    Time.timeScale = 0;
-    //    menuPanel.SetActive(true);
-    //    mButton.SetActive(false);
-    //}
-    //public void menuClose()
-    //{
-    //    Time.timeScale = 1;
-    //    menuPanel.SetActive(false);
-    //    mButton.SetActive(true);
-    //}
-    //public void settingsMenu()
-    //{
-    //    menuPanel.SetActive(false);
-    //    settingsPanel.SetActive(true);
-    //}
-    //public void settingsClose()
-    //{
-    //    menuPanel.SetActive(true);
-    //    settingsPanel.SetActive(false);
-    //}
-
     public void optionsMenu()
     {
         buttonsHolder.SetActive(false);
@@ -100,11 +70,30 @@ public class TitleManager : MonoBehaviour
         optionsHolder.SetActive(false);
         creditHolder.SetActive(false);
     }
-    public void volumeSlider(float v)
+
+
+    //Volume Changers
+    public void ChangeMasterVolume(float volume)
     {
-        ambientSound.volume = v;
-        volume = v;
+        audioMixer.SetFloat("MasterVol", volume);
     }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        audioMixer.SetFloat("MusicVol", volume);
+    }
+
+    public void ChangeSFXVolume(float volume)
+    {
+        audioMixer.SetFloat("SFXVol", volume);
+    }
+
+    public void ChangeVoiceVolume(float volume)
+    {
+        audioMixer.SetFloat("VoicesVol", volume);
+    }
+
+
     public void graphicsDrop(int g)
     {
         QualitySettings.SetQualityLevel(g);
@@ -138,6 +127,8 @@ public class TitleManager : MonoBehaviour
             shadowVal = 2;
         }
     }
+
+
     public void newGame()
     {
         Debug.Log("whoooooooa (scene change here)");
