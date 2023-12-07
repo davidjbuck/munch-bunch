@@ -47,6 +47,8 @@ public class NGcontroller : MonoBehaviour
     float fakeWeightCount = 0;
     public TextMeshProUGUI weightTxt;
     public GameObject scaleObject;
+    public GameObject bowlForRice;
+    public GameObject scoopForRice;
 
     //objects for the veg screen
     string vegName;
@@ -128,6 +130,7 @@ public class NGcontroller : MonoBehaviour
     {
         carbTutorialTXT.text = "Now hold down to pour the rice. Continue pouring to desired amount (around 100g of carbs are recommended). Once satisfied, hit next";
         riceParent.SetActive(true);
+        scoopForRice.SetActive(true);
     }
 
     public void switchToMeat()
@@ -145,6 +148,7 @@ public class NGcontroller : MonoBehaviour
         Destroy(GameObject.Find("Upper_Hull"));
         Destroy(GameObject.Find("Lower_Hull"));
         scaleObject.SetActive(true);
+        bowlForRice.SetActive(true);
         meatParent.SetActive(false);
         carbParent.SetActive(true);
     }
@@ -157,6 +161,8 @@ public class NGcontroller : MonoBehaviour
         currentScreen = 2;
         mostPlateWeightTxt.text = "Current Weight: " + (meatWeight + carbWeight);
         bowl.SetActive(true);
+        bowlForRice.SetActive(false);
+        scoopForRice.SetActive(false);
         riceParent.SetActive(false);
         carbParent.SetActive(false);
         vegParent.SetActive(true);
