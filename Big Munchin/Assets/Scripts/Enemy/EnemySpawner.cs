@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
     }
     //SETS SPAWNS WITH NUM ENEMIES, SPAWN TIME, AND SPAWNPOINT
     //CALL IT AFTER WAVE FINISHES
-    public void spawnEnemies(int enemies, float spawnTime, int spawnNum)
+    public void spawnEnemies(int enemies, float spawnTime, int spawnN)
     {
         spawnTimer = spawnTime;
         timer += Time.deltaTime;
@@ -72,21 +72,23 @@ public class EnemySpawner : MonoBehaviour
         totalEnemies = enemies;
         spawnedEnemies = 0;
         //SETS CURRENT WAYPOINTS TO DESIRED SPAWNS
-        if(spawnNum == 1)
+        if(spawnN == 1)
         {
             enemySpawnpoints = wave1SpawnPoints;
         }
-        if(spawnNum == 2)
+        if(spawnN == 2)
         {
             enemySpawnpoints = wave2SpawnPoints;
         }
         //ADD MORE WAVE CHECKS HERE
 
-    }
+    } 
     public void spawn()
     {
-        spawnNum = Random.Range(0, enemySpawnpoints.Length+1);
-       // Debug.Log("SPAWN ENEMY");
+        spawnNum = Random.Range(0, enemySpawnpoints.Length);
+        // Debug.Log("SPAWN ENEMY");
+        Debug.Log(spawnNum);
         Instantiate(enemyPrefab, enemySpawnpoints[spawnNum].position, Quaternion.identity);
     }
 }
+ 

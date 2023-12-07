@@ -482,6 +482,7 @@ GameObject:
   - component: {fileID: 7280427495618553258}
   - component: {fileID: 2846280087657667123}
   - component: {fileID: 8903025017318565179}
+  - component: {fileID: 7671395710895015339}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: LockOnTarget
@@ -577,8 +578,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &1597114340127269832
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -660,8 +661,8 @@ MonoBehaviour:
   - {fileID: 0}
   curWaypoint: 0
   p1: {fileID: 0}
-  lightAttackCooldown: 3
-  heavyAttackCooldown: 5
+  lightAttackCooldown: 5
+  heavyAttackCooldown: 8
   enemyAttack: {fileID: 9156436242558683226, guid: b1050b9cbc9f08b458e9087618f6771a, type: 3}
   attackSpawn: {fileID: 6477489534790612799}
   lightAttackWarning: {fileID: 3861944012071625633}
@@ -684,6 +685,27 @@ MonoBehaviour:
   enemyHP: 50
   enemyAlive: 0
   hSlider: {fileID: 750035116083660614}
+--- !u!135 &7671395710895015339
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6375564693335606037}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &6452027941143174140
 GameObject:
   m_ObjectHideFlags: 0
