@@ -25,7 +25,9 @@ public class EnemySpawner : MonoBehaviour
     {
         //TEMP CALL TO TEST SPAWNER
         //number of enemies - spawn timer - spawner number (for separate spawn locations)
-        //spawnEnemies(3, 1, 2);
+        //spawnEnemies(3, 0, 1);
+        //spawnEnemies(4, 1, 2);
+
         //spawnEnemies(30, 5);
     }
 
