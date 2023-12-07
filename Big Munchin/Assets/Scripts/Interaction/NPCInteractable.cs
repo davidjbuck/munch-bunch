@@ -40,7 +40,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
             float dist = Vector3.Distance(this.GetTransform().position, Player.transform.position);
             Vector3 playerPosition = new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z);
             this.transform.LookAt(playerPosition);
-            Debug.Log(dist);
+            //Debug.Log(dist);
             if (dist > 5.5f)
             {
                 hideText();
