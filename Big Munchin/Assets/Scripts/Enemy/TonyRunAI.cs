@@ -8,7 +8,7 @@ public class TonyRunAI : MonoBehaviour
     public bool running;
     UnityEngine.AI.NavMeshAgent navAgent;
     Vector3 Destination;
-    public GameObject Player;
+    //public GameObject Player;
     float distance;
     float speedDecrease;
     // Start is called before the first frame update

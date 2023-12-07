@@ -25,8 +25,9 @@ public class SpawnTrigger : MonoBehaviour
         
         if (trg.tag == "Player")
         {
-            enemySpawner.spawnEnemies(3, 1, 2);
-            Destroy(this);
+            enemySpawner.spawnEnemies(2, 6, 1);
+            Destroy(this.gameObject);
         }
     }
 }
+ 
