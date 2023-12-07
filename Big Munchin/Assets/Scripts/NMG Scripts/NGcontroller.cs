@@ -67,6 +67,55 @@ public class NGcontroller : MonoBehaviour
     public TextMeshProUGUI cityHealthTXT;
     int cityHealth = 0;
 
+    public GameObject startCanvas;
+    public GameObject NMGCanvas;
+
+    public GameObject player;
+    public GameObject kitchenCam;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            startCanvas.SetActive(true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            startCanvas.SetActive(false);
+        }
+    }
+
+    public void startCooking()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        startCanvas.SetActive(false);
+        NMGCanvas.SetActive(true);
+        player.SetActive(false);
+        kitchenCam.SetActive(true);
+
+        Physics.gravity /= 7.5f;
+    }
+
+    public void stopCooking()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        NMGCanvas.SetActive(false);
+        player.SetActive(true);
+        kitchenCam.SetActive(false);
+
+        Physics.gravity *= 7.5f;
+    }
+    
+
     private void Update()
     {
         //if we're on the carb screen
