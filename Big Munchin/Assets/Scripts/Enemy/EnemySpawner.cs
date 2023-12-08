@@ -18,23 +18,30 @@ public class EnemySpawner : MonoBehaviour
     int spawnNum;
     public GameObject enemyPrefab;
     public GameObject tonyPrefab;
+    public GameObject invWalls;
+    public GameObject wave2Trigger;
     float timer;
     float spawnTimer;
     float totalEnemies;
     int spawnedEnemies;
+    bool wave1 = true;
+    bool wave2 = false;
     int spawner;
     int counter;
+    bool wave1Completed = false;
+    public static int enemyDeathCounter;
+    int wave1Enemies;
     // Start is called before the first frame update
     void Start()
     {
-        counter = 0;
+        enemyDeathCounter = 0;
 
 
         //THESE ARE TEMP CALLS TO TEST SPAWNER FOR EACH SCENARIO (PROBABLY USE ONE SIMILAR FOR FINAL DEMO, BUT CAN HAVE FIRST TWO NUMBERS TWEAKED)
         //number of enemies/spawn timer/spawner number (for separate spawn locations)
 
         //INITIAL ENCOUNTER IS 1
-        //spawnEnemies(3, 0, 1);
+        spawnEnemies(3, 0, 1);
 
         //SECOND ENCOUNTER IS 2 (WHERE THEY COME FROM TONYS SHOP)
         //spawnEnemies(4, 1, 2);
@@ -64,12 +71,23 @@ public class EnemySpawner : MonoBehaviour
                     timer = 0;
                     if (spawnedEnemies == totalEnemies)
                     {
+
+                        counter = 0;
                         spawnActive = false;
 
+                        wave2 = false;
                     }
                 }
             }
-        } 
+
+        }
+        if (wave1Enemies == enemyDeathCounter && !wave1Completed)
+        {
+            Debug.Log("WALLS DOWN");
+            invWalls.SetActive(false);
+            wave2Trigger.SetActive(true);
+            wave1Completed = true;
+        }
         /* TEST TO HAVE CONTINUOUS SPAWNS (but no delay between them)
         else
         {
@@ -91,10 +109,13 @@ public class EnemySpawner : MonoBehaviour
         //SETS CURRENT WAYPOINTS TO DESIRED SPAWNS
         if(spawnN == 1)
         {
+            wave1 = true;
             enemySpawnpoints = wave1SpawnPoints;
+            wave1Enemies = enemies;
         }
         if(spawnN == 2)
         {
+            wave2 = true;
             enemySpawnpoints = wave2SpawnPoints;
         }
 
