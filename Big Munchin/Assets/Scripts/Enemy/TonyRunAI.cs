@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TonyRunAI : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class TonyRunAI : MonoBehaviour
         if(distance <= 10)
         {
             //END GAME HERE
+            SceneManager.LoadScene("End Screen");
         }
         //Debug.Log(distance);
 

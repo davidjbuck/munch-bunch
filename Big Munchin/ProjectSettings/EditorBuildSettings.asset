@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/JacquesTestScene.unity
-    guid: 7ee1ad84ac15f354ebb83a2f755e97ac
+    path: Assets/Scenes/Title Screen.unity
+    guid: e0dc7879c2ceee24baa95f7570362c97
   - enabled: 1
     path: Assets/Scenes/GameLevels/KitchenScene.unity
     guid: eec33f6552ffedc4a9546bbc099becd0
   - enabled: 1
     path: Assets/Scenes/GameLevels/ExteriorScene.unity
     guid: 66fa03c3f0ccc9e41900a5461352aee9
+  - enabled: 1
+    path: Assets/Scenes/End Screen.unity
+    guid: 151b6618db4d71c48ad4d803d0c7833c
+  - enabled: 0
+    path: Assets/Scenes/JacquesTestScene.unity
+    guid: 7ee1ad84ac15f354ebb83a2f755e97ac
   m_configObjects: {}
