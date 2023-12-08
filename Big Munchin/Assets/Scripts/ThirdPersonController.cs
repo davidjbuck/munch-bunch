@@ -150,6 +150,7 @@ public class ThirdPersonController : MonoBehaviour
             jumpForce *= 7.5f;
             Physics.gravity *= 7.5f;
             cam.enabled = false;
+            GetComponent<AudioListener>().enabled = false;
             fixedCamera.SetActive(true);
             fixedCamera.transform.position = fixedCameraPosition;
             fixedCamera.transform.rotation = Quaternion.Euler(fixedCameraRotation);
@@ -158,6 +159,7 @@ public class ThirdPersonController : MonoBehaviour
         else
         {
             fixedCam = false;
+            fixedCamera.GetComponent<AudioListener>().enabled = false;
         }
     }
 

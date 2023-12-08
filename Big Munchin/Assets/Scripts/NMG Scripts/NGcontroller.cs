@@ -97,6 +97,11 @@ public class NGcontroller : MonoBehaviour
 
         startCanvas.SetActive(false);
         NMGCanvas.SetActive(true);
+        AudioListener[] al = player.GetComponentsInChildren<AudioListener>();
+        foreach(AudioListener listener in al)
+        {
+            listener.enabled = false;
+        }
         player.SetActive(false);
         kitchenCam.SetActive(true);
 
@@ -113,6 +118,13 @@ public class NGcontroller : MonoBehaviour
         kitchenCam.SetActive(false);
 
         Physics.gravity *= 7.5f;
+        GameObject cutsceneCamera = GameObject.Find("Cutscene Camera");
+        AudioListener[] al = player.GetComponentsInChildren<AudioListener>();
+        foreach (AudioListener listener in al)
+        {
+            listener.enabled = true;
+        }
+        cutsceneCamera.GetComponent<CutsceneCameraDirector>().Setup("not test");
     }
     
 

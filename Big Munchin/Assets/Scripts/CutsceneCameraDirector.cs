@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CutsceneCameraDirector : MonoBehaviour
 {
     Camera cam;
     Camera mc;
+    Camera fc;
+    AudioListener mcListener;
+    AudioListener fcListener;
     ThirdPersonController controller;
     Cutscene cs;
     public bool cutsceneOngoing = false;
@@ -19,15 +23,38 @@ public class CutsceneCameraDirector : MonoBehaviour
     public float[] operationDurations;//how long each operation should take. Ignored if dialog triggers progression. Corresponds to the speed field of the Cutscene class
     public Vector3[] targetVectors;//does not run parallel to the others. Each operation gets 4 target Vector3 allocations, even though most only use 2, so it should be exactly 4 times the length of numOperations
     public bool loadIntoCutscene;
+    public bool fixedCamera;
+    public bool hasAudio;
+    AudioSource[] sfx;
+    public int[] soundQueue;//during which operation in the queue the sound should play
+    bool[] soundPlayed;
+    public bool loadSceneUponEnding;
+    public String sceneName;
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
         mc = GameObject.Find("Main Camera").GetComponent<Camera>();
+        mcListener = GameObject.Find("Main Camera").GetComponent<AudioListener>();
         controller = mc.gameObject.GetComponent<ThirdPersonController>();
-        if(loadIntoCutscene)
+        if (fixedCamera)
+        {
+            fc = GameObject.Find("Fixed Camera").GetComponent<Camera>();
+            fcListener = GameObject.Find("Fixed Camera").GetComponent<AudioListener>();
+
+        }
+        if (loadIntoCutscene)
         {
             Setup("not test");
+        }        
+        if(hasAudio)
+        {
+            sfx = GetComponentsInChildren<AudioSource>();
+            soundPlayed = new bool[soundQueue.Length];
+            for(int i=0; i < sfx.Length; i++)
+            {
+                soundPlayed[i] = false;
+            }
         }
     }
 
@@ -48,13 +75,19 @@ public class CutsceneCameraDirector : MonoBehaviour
         }
         if (cutsceneOngoing && cs.currentOperation < cs.csOps.Length)
         {
+            Debug.Log(cs.currentOperation);
             if (cs.csOps[cs.currentOperation].numOpsPerformed == 1)
             {
                 PerformOperation(cs.currentOperation);
                 if (cs.currentOperation >= cs.csOps.Length)
                 {
+                    if(loadSceneUponEnding)
+                    {
+                        SceneManager.LoadScene(sceneName);
+                    }
                     cutsceneOngoing = false;
                     Cleanup();
+                    Debug.Log("Cleanup");
                     return;
                 }
             }
@@ -67,6 +100,10 @@ public class CutsceneCameraDirector : MonoBehaviour
                         PerformOperation(i);
                         if (cs.currentOperation >= cs.csOps.Length)
                         {
+                            if (loadSceneUponEnding)
+                            {
+                                SceneManager.LoadScene(sceneName);
+                            }
                             cutsceneOngoing = false;
                             Cleanup();
                             return;
@@ -80,7 +117,14 @@ public class CutsceneCameraDirector : MonoBehaviour
     public void Setup(String cutsceneName)
     {
         cam.enabled = true;
+        GetComponent<AudioListener>().enabled = true;
         mc.enabled = false;
+        mcListener.enabled = false;
+        if(fixedCamera)
+        {
+            fc.enabled = false;
+            fcListener.enabled = false;
+        }
         cutsceneOngoing = true;
         if(cutsceneName == "TEST") 
         {
@@ -95,8 +139,19 @@ public class CutsceneCameraDirector : MonoBehaviour
 
     public void Cleanup()
     {
+        Debug.Log("Cleanup called");
         cam.enabled = false;
-        mc.enabled = true;
+        GetComponent<AudioListener>().enabled = false;
+        if (fixedCamera)
+        {
+            fc.enabled = true;
+            fcListener.enabled = true;
+        }
+        else
+        {
+            mc.enabled = true;
+            mcListener.enabled = true;
+        }       
         controller.TogglePlayerControl();
     }
 
@@ -118,6 +173,7 @@ public class CutsceneCameraDirector : MonoBehaviour
                 opsQueue[i].targets[j] = targetVectors[i*4+j];
             }
         }
+        opsQueue[0].opStartTime = Time.time;
         cs = new Cutscene(opsQueue);
     }
 
@@ -125,14 +181,28 @@ public class CutsceneCameraDirector : MonoBehaviour
     //and call Cutscene's TerminateOperation method once each has concluded
     public void PerformOperation(int index)
     {
+        if(hasAudio)
+        {
+            if (!soundPlayed[index])
+            {
+                if (soundQueue[index]!=-1)
+                {
+                    sfx[soundQueue[index]].Play();
+                    soundPlayed[index] = true;
+                }                
+            }
+        }
+        Debug.Log("Index: " + index);
         switch ((int)cs.csOps[index].opType)
         {
             case 0://CutTo
-                gameObject.transform.position = cs.csOps[cs.currentOperation].targets[0];//set position
-                gameObject.transform.rotation = Quaternion.Euler(cs.csOps[cs.currentOperation].targets[1]);//set rotation
+                gameObject.transform.position = cs.csOps[index].targets[0];//set position
+                gameObject.transform.rotation = Quaternion.Euler(cs.csOps[index].targets[1]);//set rotation
                 //put logic to check termination condition here
-                if(Time.time> cs.csOps[index].opStartTime + cs.csOps[index].speed && ((int)cs.csOps[index].termType!=0))
+                if(Time.time> cs.csOps[index].opStartTime + cs.csOps[index].speed && ((int)cs.csOps[index].termType != 0))
                 {
+                    Debug.Log(cs.csOps[index].targets[0]);
+                    Debug.Log(cs.csOps[index].targets[1]);
                     cs.TerminateOperation(index);//mark operation done
                 }
                 break;
@@ -147,7 +217,7 @@ public class CutsceneCameraDirector : MonoBehaviour
                     cs.TerminateOperation(index);//mark operation done
                 }
                 break;
-            case 2://
+            case 2://BezierCurve
                 float startTime = cs.csOps[index].opStartTime;
                 float curTime = Time.time;
                 float time = (curTime- startTime)/ cs.csOps[index].speed;
@@ -165,7 +235,7 @@ public class CutsceneCameraDirector : MonoBehaviour
             case 3://PanTo
                 if (Time.time > cs.csOps[index].opStartTime + cs.csOps[index].speed && ((int)cs.csOps[index].termType != 0))
                 {
-                    gameObject.transform.rotation = Quaternion.Euler(cs.csOps[index].targets[1]);
+                    gameObject.transform.rotation = Quaternion.Euler(cs.csOps[index].targets[0]);
                     cs.TerminateOperation(index);
                 }
                 else
@@ -181,7 +251,9 @@ public class CutsceneCameraDirector : MonoBehaviour
 
     float Lerp(float startValue, float endValue, float startTime, float lerpTime)
     {
+        
         float timeElapsed = Time.time - startTime;
+        Debug.Log(timeElapsed);
         float val;
         if (timeElapsed < lerpTime)
         {
