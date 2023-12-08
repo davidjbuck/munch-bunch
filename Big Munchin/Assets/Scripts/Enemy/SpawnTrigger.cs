@@ -9,6 +9,7 @@ public class SpawnTrigger : MonoBehaviour
 {
     public EnemySpawner enemySpawner;
     public GameObject spawnTrigger;
+    public TonyRunAI tony;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class SpawnTrigger : MonoBehaviour
         if (col.tag == "Player")
         {
             enemySpawner.spawnEnemies(4, 1, 2);
+            tony.startRun();
             Destroy(spawnTrigger);
         }
     }

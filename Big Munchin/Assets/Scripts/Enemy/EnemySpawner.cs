@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     int spawnNum;
     public GameObject enemyPrefab;
     public GameObject tonyPrefab;
-    public GameObject invWalls;
+    //public GameObject invWalls;
     public GameObject wave2Trigger;
     float timer;
     float spawnTimer;
@@ -82,13 +82,15 @@ public class EnemySpawner : MonoBehaviour
             }
 
         }
-        if (wave1Enemies == enemyDeathCounter && !wave1Completed)
+        /*
+        if (enemyDeathCounter == 3 && !wave1Completed)
         {
             Debug.Log("WALLS DOWN");
             invWalls.SetActive(false);
             wave2Trigger.SetActive(true);
             wave1Completed = true;
         }
+        */
         /* TEST TO HAVE CONTINUOUS SPAWNS (but no delay between them)
         else
         {

@@ -17,9 +17,9 @@ public class TonyRunAI : MonoBehaviour
         waypoint = GameObject.FindGameObjectWithTag("tonyWaypoint").transform;
         navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         speedDecrease = 0.01f;
-        startRun();
+        //startRun();
     }
-    void startRun()
+    public void startRun()
     {
         StartCoroutine("SlowSpeedPerSecond", 1f);
         Destination = waypoint.position;
