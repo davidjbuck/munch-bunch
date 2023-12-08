@@ -8,9 +8,9 @@ public class CutsceneCameraDirector : MonoBehaviour
 {
     Camera cam;
     Camera mc;
-    Camera fc;
+    public Camera fc;
     AudioListener mcListener;
-    AudioListener fcListener;
+    public AudioListener fcListener;
     ThirdPersonController controller;
     Cutscene cs;
     public bool cutsceneOngoing = false;
@@ -37,12 +37,6 @@ public class CutsceneCameraDirector : MonoBehaviour
         mc = GameObject.Find("Main Camera").GetComponent<Camera>();
         mcListener = GameObject.Find("Main Camera").GetComponent<AudioListener>();
         controller = mc.gameObject.GetComponent<ThirdPersonController>();
-        if (fixedCamera)
-        {
-            fc = GameObject.Find("Fixed Camera").GetComponent<Camera>();
-            fcListener = GameObject.Find("Fixed Camera").GetComponent<AudioListener>();
-
-        }
         if (loadIntoCutscene)
         {
             Setup("not test");
