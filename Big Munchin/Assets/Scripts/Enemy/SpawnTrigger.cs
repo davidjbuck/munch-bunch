@@ -8,6 +8,7 @@ using UnityEngine;
 public class SpawnTrigger : MonoBehaviour
 {
     public EnemySpawner enemySpawner;
+    public GameObject spawnTrigger;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,14 +20,14 @@ public class SpawnTrigger : MonoBehaviour
     {
         
     }
-    private void OnTriggerEnter(Collider trg)
+    private void OnTriggerEnter(Collider col)
     {
-        //Debug.Log("Spawn Enemies: " + trg.tag);
+        Debug.Log(col.tag);
         
-        if (trg.tag == "Player")
+        if (col.tag == "Player")
         {
-            enemySpawner.spawnEnemies(2, 6, 1);
-            Destroy(this.gameObject);
+            enemySpawner.spawnEnemies(4, 1, 2);
+            Destroy(spawnTrigger);
         }
     }
 }
