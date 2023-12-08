@@ -28,6 +28,7 @@ public class SpawnTrigger : MonoBehaviour
         if (col.tag == "Player")
         {
             enemySpawner.spawnEnemies(4, 1, 2);
+            enemySpawner.continuousSpawnsOn();
             tony.startRun();
             Destroy(spawnTrigger);
         }

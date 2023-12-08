@@ -12,6 +12,7 @@ public class TonyRunAI : MonoBehaviour
     //public GameObject Player;
     float distance;
     float speedDecrease;
+    public static bool TonyReachedEnd = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +43,14 @@ public class TonyRunAI : MonoBehaviour
     void Update()
     {
         distance = Vector3.Distance(gameObject.transform.position, waypoint.position);
-        if(distance <= 10)
+        if(distance <= 3)
         {
             //END GAME HERE
-            SceneManager.LoadScene("End Screen");
+            TonyReachedEnd = true;
+            if (EndGame.PlayerReachedEnd)
+            {
+                SceneManager.LoadScene("End Screen");
+            }
         }
         //Debug.Log(distance);
 
