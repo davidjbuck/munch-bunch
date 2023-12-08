@@ -212,22 +212,31 @@ public class ThirdPersonController : MonoBehaviour
             
         }
         if(lockedOn)//if the player is already locked on
-        {            
-            if(Vector3.Distance(lockOnTarget.transform.position,playerCollider.transform.position)>lockOnRange)
-            {//if the lock on target is out of range                
-                CheckLockOnCandidates();//check for new candidates
-                if (lockOnCandidateFound)
-                {
-                    lockedOn = true;//if a candidate was found, set locked on to true
-                }
-                else
-                {//if no candidates are found, then turn off the icons and set lockedOn to false
-                    lockedOnIcon.SetActive(false);
-                    lockOnCandidateIcon.SetActive(false);
-                    lockedOn = false;
-                }
-            }//move the icon holder
-            lockOnIconsHolder.transform.position = new Vector3(lockOnTarget.transform.position.x, lockOnTarget.transform.position.y + lockOnIconYOffset, lockOnTarget.transform.position.z);
+        {
+            try
+            {
+                if (Vector3.Distance(lockOnTarget.transform.position, playerCollider.transform.position) > lockOnRange)
+                {//if the lock on target is out of range                
+                    CheckLockOnCandidates();//check for new candidates
+                    if (lockOnCandidateFound)
+                    {
+                        lockedOn = true;//if a candidate was found, set locked on to true
+                    }
+                    else
+                    {//if no candidates are found, then turn off the icons and set lockedOn to false
+                        lockedOnIcon.SetActive(false);
+                        lockOnCandidateIcon.SetActive(false);
+                        lockedOn = false;
+                    }
+                }//move the icon holder
+                lockOnIconsHolder.transform.position = new Vector3(lockOnTarget.transform.position.x, lockOnTarget.transform.position.y + lockOnIconYOffset, lockOnTarget.transform.position.z);
+            }
+            catch
+            {
+                lockedOn = false;
+                CheckLockOnCandidates();
+            }
+            
         }else if(!lockedOn)//if the player was not already locked on
         {
             if (Time.time - lastSearchTime > lockOnCandSearchPeriod)//if time enough time has passed since last search
