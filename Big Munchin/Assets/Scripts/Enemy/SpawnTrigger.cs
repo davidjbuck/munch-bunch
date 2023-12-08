@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -10,6 +11,7 @@ public class SpawnTrigger : MonoBehaviour
     public EnemySpawner enemySpawner;
     public GameObject spawnTrigger;
     public TonyRunAI tony;
+
     // Start is called before the first frame update
     void Start()
     {

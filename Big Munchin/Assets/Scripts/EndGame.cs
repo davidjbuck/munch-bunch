@@ -21,7 +21,7 @@ public class EndGame : MonoBehaviour
         if (col.tag == "Player")
         {
             PlayerReachedEnd = true;
-            endDemo();
+            SceneManager.LoadScene("End Screen");
         }
     }
 }
