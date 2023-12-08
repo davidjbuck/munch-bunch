@@ -116,6 +116,8 @@ public class NGcontroller : MonoBehaviour
         NMGCanvas.SetActive(false);
         player.SetActive(true);
         kitchenCam.SetActive(false);
+        startCanvas.SetActive(false);
+
 
         Physics.gravity *= 7.5f;
         GameObject cutsceneCamera = GameObject.Find("Cutscene Camera");
