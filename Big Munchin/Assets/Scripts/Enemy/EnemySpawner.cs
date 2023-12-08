@@ -41,13 +41,14 @@ public class EnemySpawner : MonoBehaviour
         //number of enemies/spawn timer/spawner number (for separate spawn locations)
 
         //INITIAL ENCOUNTER IS 1
-        spawnEnemies(3, 0, 1);
+        //spawnEnemies(3, 0, 1);
 
         //SECOND ENCOUNTER IS 2 (WHERE THEY COME FROM TONYS SHOP)
         //spawnEnemies(4, 1, 2);
 
         //TONY SPAWN IS 3 (MUST BE 1,0,3)
         //spawnEnemies(1, 0, 3);
+        wave1Enemies = 3;
     }
 
     // Update is called once per frame
