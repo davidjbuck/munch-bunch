@@ -42,7 +42,7 @@ public class UIPlayerTest : MonoBehaviour
         maxStam = player.maxStamina;
         maxHP = player.maxHealth;
 
-        print(player.maxStamina);
+        //print(player.maxStamina);
 
         if (player.stamina > 100f)
         {
@@ -70,11 +70,15 @@ public class UIPlayerTest : MonoBehaviour
         {
             currentStamina = 0f;
         }
-        
-/*        if(Input.GetKeyDown(KeyCode.D))
+        if(player.health < maxHP)
         {
-            DrainHunger(20f);
-        }*/
+            currentHealth = player.health;
+            healthBar.SetHealth(currentHealth);
+        }
+        /*        if(Input.GetKeyDown(KeyCode.D))
+                {
+                    DrainHunger(20f);
+                }*/
 
         DegenerateHunger(.0005f);
     }
