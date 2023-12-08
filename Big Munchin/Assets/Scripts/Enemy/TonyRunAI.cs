@@ -40,13 +40,12 @@ public class TonyRunAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if(navAgent.speed <= 0)
         {
             Destination = this.transform.position;
             navAgent.SetDestination(Destination);
             navAgent.isStopped = true;
-        } 
+        }
         /*
         distance = Vector3.Distance(Player.transform.position, this.transform.position);
         if(distance < 10f)

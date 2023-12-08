@@ -37,14 +37,12 @@ public class EnemyHealth : MonoBehaviour
         {
             //attackProps = CollisionManager.GetComponent<CollisionManager>();
             float damage = col.GetComponent<CollisionManager>().GetAttackDamage();
-            Debug.Log(damage); 
+            Debug.Log(damage);
             removeHealth(damage);
         }
     }
     public void EnemyDead()
     {
-        EnemySpawner.enemyDeathCounter++;
-        Debug.Log(EnemySpawner.enemyDeathCounter);
         Destroy(this.gameObject);
 
     }
