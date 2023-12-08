@@ -9,7 +9,7 @@ public class EnemyHealth : MonoBehaviour
     public float enemyHP;
     public bool enemyAlive;
     [SerializeField] private Slider hSlider;
-
+    private bool deathCounted = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +24,7 @@ public class EnemyHealth : MonoBehaviour
         {
             enemyAlive = false;
             EnemyDead();
+
         }
     }
     public void updateEnemyHealthBar(float hp, float maxHealth)
@@ -37,14 +38,19 @@ public class EnemyHealth : MonoBehaviour
         {
             //attackProps = CollisionManager.GetComponent<CollisionManager>();
             float damage = col.GetComponent<CollisionManager>().GetAttackDamage();
-            Debug.Log(damage); 
+            //Debug.Log(damage); 
             removeHealth(damage);
         }
     }
     public void EnemyDead()
     {
-        EnemySpawner.enemyDeathCounter++;
-        Debug.Log(EnemySpawner.enemyDeathCounter);
+        if (!deathCounted)
+        {
+            EnemySpawner.enemyDeathCounter++;
+            //Debug.Log(EnemySpawner.enemyDeathCounter + "EDC");
+
+            deathCounted = true;
+        }
         Destroy(this.gameObject);
 
     }

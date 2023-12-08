@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     int spawnNum;
     public GameObject enemyPrefab;
     public GameObject tonyPrefab;
-    //public GameObject invWalls;
+    public GameObject invWalls;
     public GameObject wave2Trigger;
     float timer;
     float spawnTimer;
@@ -31,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
     bool wave1Completed = false;
     public static int enemyDeathCounter;
     int wave1Enemies;
+    bool continuousSpawns;
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +83,12 @@ public class EnemySpawner : MonoBehaviour
             }
 
         }
-        /*
+        else if (continuousSpawns)
+        {
+            Debug.Log("CONTINE SPAWNING");
+            spawnEnemies(3, 4, 2);
+        }
+        //Debug.Log(enemyDeathCounter + "EDC");
         if (enemyDeathCounter == 3 && !wave1Completed)
         {
             Debug.Log("WALLS DOWN");
@@ -90,12 +96,9 @@ public class EnemySpawner : MonoBehaviour
             wave2Trigger.SetActive(true);
             wave1Completed = true;
         }
-        */
+        
         /* TEST TO HAVE CONTINUOUS SPAWNS (but no delay between them)
-        else
-        {
-            //spawnEnemies(Random.Range(0, 5), Random.Range(1, 3), Random.Range(0, 2));
-        }
+
         */
     }
     //SETS SPAWNS WITH NUM ENEMIES, SPAWN TIME, AND SPAWNPOINT
@@ -125,6 +128,14 @@ public class EnemySpawner : MonoBehaviour
         //ADD MORE WAVE CHECKS HERE
 
     } 
+    public void continuousSpawnsOn()
+    {
+        continuousSpawns = true;
+    }
+    public void continuousSpawnsOff()
+    {
+        continuousSpawns = false;
+    }
     public void spawn()
     {
         // Debug.Log("SPAWN ENEMY");
