@@ -13,6 +13,7 @@ public class PlayerInteract : MonoBehaviour
             if(interactable != null)
             {
                 interactable.Interact(transform);
+                Debug.Log("INTERACT TOGGLED");
             }
 
             /*

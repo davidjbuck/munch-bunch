@@ -819,7 +819,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  curWaypoint: 0
   p1: {fileID: 0}
   lightAttackCooldown: 3
   heavyAttackCooldown: 5
@@ -845,6 +844,8 @@ MonoBehaviour:
   enemyHP: 50
   enemyAlive: 0
   hSlider: {fileID: 6785215112268726132}
+  itemDropped: {fileID: 5876139229619801673, guid: f253be8853ce56448a9ee18c1a4a67a0, type: 3}
+  numDropped: 1
 --- !u!114 &1065198576564057272
 MonoBehaviour:
   m_ObjectHideFlags: 0
