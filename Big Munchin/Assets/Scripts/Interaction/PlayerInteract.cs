@@ -49,7 +49,6 @@ public class PlayerInteract : MonoBehaviour
             if (collider.TryGetComponent(out IInteractable interactable))
             {
                 interactableList.Add(interactable);
-                //return npcInteractable;
             }
         }
         IInteractable closestInteractable = null;
@@ -63,7 +62,6 @@ public class PlayerInteract : MonoBehaviour
                 if(Vector3.Distance(transform.position,interactable.GetTransform().position)<
                     Vector3.Distance(transform.position, closestInteractable.GetTransform().position))
                 {
-                    //closestInteractable.hideText();
                     closestInteractable = interactable;
                 }
             }
