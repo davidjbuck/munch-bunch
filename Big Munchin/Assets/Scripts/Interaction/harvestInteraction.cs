@@ -15,7 +15,8 @@ public class harvestInteraction : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                harvestTXT.text = "Harvested 1 " + hName;
+
+                Instantiate(Resources.Load(hName), transform.position, Quaternion.identity);
             }
         }
     }

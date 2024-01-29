@@ -511,12 +511,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017203536
+      value: -0.000000017203536
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 3.1297526e-10
+      value: -3.1297526e-10
       objectReference: {fileID: 0}
+    - target: {fileID: 6039032862499348253, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
+      propertyPath: ITDName
+      value: 
+      objectReference: {fileID: 1910742252}
+    - target: {fileID: 6039032862499348253, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
+      propertyPath: ITDType
+      value: 
+      objectReference: {fileID: 804707138}
+    - target: {fileID: 6039032862499348253, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
+      propertyPath: ITDFlavorText
+      value: 
+      objectReference: {fileID: 1617561476}
+    - target: {fileID: 6039032862499348253, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
+      propertyPath: inventoryParent
+      value: 
+      objectReference: {fileID: 218834697}
     - target: {fileID: 7469417238580951095, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_Name
       value: PlayerControllerCollectionV7
@@ -1728,7 +1744,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &562736487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5980,7 +5996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1928020758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6429,7 +6445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954d92b0139ea4c4e9db6099380dbfd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hName: broccoli
+  hName: broccoliH
   harvestTXT: {fileID: 878284752}
 --- !u!1 &2131889251
 GameObject:
