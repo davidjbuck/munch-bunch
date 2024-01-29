@@ -349,7 +349,7 @@ public class ThirdPersonController : MonoBehaviour
 
     //updates the states of input variables
     public void GetInput() {
-        
+
         //code to get input for num keys 1-4, and use inventory item in slot 0-3
         //as temporary testing implementation until adding item to hotbar is implemented
         if(Input.GetKeyDown(KeyCode.Alpha1)|| Input.GetKeyDown(KeyCode.Keypad1))

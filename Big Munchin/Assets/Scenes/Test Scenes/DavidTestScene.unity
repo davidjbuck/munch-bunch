@@ -10302,6 +10302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3e5bfddcec184c91d1d09897081f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fc: {fileID: 0}
+  fcListener: {fileID: 0}
   cutsceneOngoing: 0
   testing: 0
   preview: 0
@@ -10332,6 +10334,11 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   loadIntoCutscene: 0
+  fixedCamera: 0
+  hasAudio: 0
+  soundQueue: 
+  loadSceneUponEnding: 0
+  sceneName: 
 --- !u!4 &8079251692713801075
 Transform:
   m_ObjectHideFlags: 0
