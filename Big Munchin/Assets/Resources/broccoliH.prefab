@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 966614684564354790}
   m_Layer: 0
   m_Name: broccoliH
-  m_TagString: Untagged
+  m_TagString: item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4963511972236480271}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.4668334, y: -0.2042411, z: -0.15459684, w: 0.8464349}
+  m_LocalRotation: {x: -0.46683612, y: -0.20423993, z: -0.1545987, w: 0.8464333}
   m_LocalPosition: {x: -403.1403, y: 31.038, z: 65.3065}
-  m_LocalScale: {x: 18.846561, y: 18.846561, z: 50.312572}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4.23, y: 4.23, z: 11.292361}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -58.588, y: -22.733, z: -7.832}
 --- !u!33 &892705751208809490
 MeshFilter:
   m_ObjectHideFlags: 0

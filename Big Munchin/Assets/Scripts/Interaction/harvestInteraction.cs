@@ -15,8 +15,14 @@ public class harvestInteraction : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-
-                Instantiate(Resources.Load(hName), transform.position, Quaternion.identity);
+                int amountInstant = Random.Range(1, 4);
+                Debug.Log("random: " + amountInstant);
+                for (int x = 0; x < amountInstant; x++)
+                {
+                    Instantiate(Resources.Load(hName), transform.position, Quaternion.identity);
+                }
+                Destroy(gameObject);
+                harvestTXT.text = "";
             }
         }
     }
@@ -24,5 +30,10 @@ public class harvestInteraction : MonoBehaviour
     {
         hasEntered = true;
         harvestTXT.text = "Press E to Harvest " + hName;
+    }
+    public void OnCollisionExit(Collision collision)
+    {
+        hasEntered = false;
+        harvestTXT.text = "";
     }
 }
