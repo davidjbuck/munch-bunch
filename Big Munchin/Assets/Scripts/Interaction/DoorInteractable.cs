@@ -21,7 +21,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     }
     public void Interact(Transform interactorTransform)
     {
-        Debug.Log("Door INTERACT");
+        Debug.Log("Door INTERACT" + open);
         ToggleDoor();
     }
     public string GetInteractText()
