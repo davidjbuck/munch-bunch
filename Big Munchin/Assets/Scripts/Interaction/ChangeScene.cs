@@ -27,7 +27,8 @@ public class ChangeScene : MonoBehaviour, IInteractable
     }
     public string GetInteractText()
     {
-        return newScene;
+        
+        return "Go to " + newScene + " Scene";
     }
     public Transform GetTransform()
     {
