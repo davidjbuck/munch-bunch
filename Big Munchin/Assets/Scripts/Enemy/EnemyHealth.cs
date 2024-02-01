@@ -10,6 +10,8 @@ public class EnemyHealth : MonoBehaviour
     public bool enemyAlive;
     [SerializeField] private Slider hSlider;
     private bool deathCounted = false;
+    //public GameObject itemDropped;
+    //public int numDropped;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +53,17 @@ public class EnemyHealth : MonoBehaviour
 
             deathCounted = true;
         }
+        /*
+        if(numDropped!= 0)
+        {
+            Debug.Log("DROP ITEM");
+            for(int i = 0; i < numDropped; i++)
+            {
+                Instantiate(itemDropped, this.transform.position, Quaternion.identity);
+
+            }
+        }
+        */
         Destroy(this.gameObject);
 
     }

@@ -85,13 +85,13 @@ public class EnemySpawner : MonoBehaviour
         }
         else if (continuousSpawns)
         {
-            Debug.Log("CONTINE SPAWNING");
+           // Debug.Log("CONTINE SPAWNING");
             spawnEnemies(3, 4, 2);
         }
         //Debug.Log(enemyDeathCounter + "EDC");
         if (enemyDeathCounter == 3 && !wave1Completed)
         {
-            Debug.Log("WALLS DOWN");
+            //Debug.Log("WALLS DOWN");
             invWalls.SetActive(false);
             wave2Trigger.SetActive(true);
             wave1Completed = true;
