@@ -9,20 +9,29 @@ public class harvestInteraction : MonoBehaviour
     bool hasEntered = false;
     public TextMeshProUGUI harvestTXT;
 
+    public GameObject MC;
+
     private void Update()
     {
         if (hasEntered)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                int tempMissNumb = MC.GetComponent<missionController>().getCurrentMission();
+                if (tempMissNumb == 0)
+                {
+                    tempMissNumb++;
+                    MC.GetComponent<missionController>().setCurrentMission(tempMissNumb);
+                    Debug.Log("entered getE, tempmissnumb: " + tempMissNumb);
+                }
+
                 int amountInstant = Random.Range(1, 4);
-                Debug.Log("random: " + amountInstant);
                 for (int x = 0; x < amountInstant; x++)
                 {
                     Instantiate(Resources.Load(hName), transform.position, Quaternion.identity);
                 }
-                Destroy(gameObject);
                 harvestTXT.text = "";
+                Destroy(gameObject);
             }
         }
     }
