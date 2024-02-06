@@ -3,46 +3,47 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class harvestInteraction : MonoBehaviour
+public class harvestInteraction : MonoBehaviour, IInteractable
 {
-    public string hName;
-    bool hasEntered = false;
-    public TextMeshProUGUI harvestTXT;
+    [SerializeField] private string interactText;
 
-    public GameObject MC;
+    private bool interacted;
+    public GameObject harvestText;
+    public GameObject Player;
 
-    private void Update()
+
+    public void Interact(Transform interactorTransform)
     {
-        if (hasEntered)
+        interacted = true;
+        showText();
+    }
+    public void showText()
+    {
+        harvestText.SetActive(true);
+    }
+    public void hideText()
+    {
+        harvestText.SetActive(false);
+    }
+    public string GetInteractText()
+    {
+        return interactText;
+    }
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+    public void Update()
+    {
+        if (interacted)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            float dist = Vector3.Distance(this.GetTransform().position, Player.transform.position);
+            Vector3 playerPosition = new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z);
+            if (dist > 5.5f)
             {
-                int tempMissNumb = MC.GetComponent<missionController>().getCurrentMission();
-                if (tempMissNumb == 0)
-                {
-                    tempMissNumb++;
-                    MC.GetComponent<missionController>().setCurrentMission(tempMissNumb);
-                    Debug.Log("entered getE, tempmissnumb: " + tempMissNumb);
-                }
-
-                int amountInstant = Random.Range(1, 4);
-                for (int x = 0; x < amountInstant; x++)
-                {
-                    Instantiate(Resources.Load(hName), transform.position, Quaternion.identity);
-                }
-                harvestTXT.text = "";
-                Destroy(gameObject);
+                hideText();
+                interacted = false;
             }
         }
-    }
-    public void OnCollisionEnter(Collision collision)
-    {
-        hasEntered = true;
-        harvestTXT.text = "Press E to Harvest " + hName;
-    }
-    public void OnCollisionExit(Collision collision)
-    {
-        hasEntered = false;
-        harvestTXT.text = "";
     }
 }

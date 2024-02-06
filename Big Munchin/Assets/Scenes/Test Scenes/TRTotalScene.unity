@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6979894893606320852, guid: 12d65237516599c41bce21f987c685c1, type: 3}
+      propertyPath: playerInteract
+      value: 
+      objectReference: {fileID: 5712295554248732390}
     - target: {fileID: 7001235621143098415, guid: 12d65237516599c41bce21f987c685c1, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -217,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7569287049595197979, guid: 12d65237516599c41bce21f987c685c1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -358,6 +362,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 0}
+--- !u!1 &390223733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6442299156265651544, guid: 12d65237516599c41bce21f987c685c1, type: 3}
+  m_PrefabInstance: {fileID: 159996187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &878284750
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,9 +767,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954d92b0139ea4c4e9db6099380dbfd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hName: broccoliH
-  harvestTXT: {fileID: 878284752}
-  MC: {fileID: 1811464147}
+  interactText: please work i'll cry
+  harvestText: {fileID: 390223733}
+  Player: {fileID: 7905831162973286116}
 --- !u!114 &3645769090981836
 MonoBehaviour:
   m_ObjectHideFlags: 0
