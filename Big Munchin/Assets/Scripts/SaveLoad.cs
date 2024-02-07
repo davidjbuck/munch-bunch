@@ -9,6 +9,7 @@ public class SaveLoad : MonoBehaviour
     string myFilePath, fileName;
     public GameObject player;
     public GameObject playerH;
+    public static bool loading;
    // public GameObject inventoryL;
     //body for rotation which wasnt working
     //public GameObject pTurn;
@@ -24,15 +25,33 @@ public class SaveLoad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (loading)
+        {
+           // Load();
+            Debug.Log("LOAD AGAIN");
+            setPosition();
+            loading = false;
+
+        }
+    }
+    public void setPosition()
+    {
+
+        string saveString = File.ReadAllText(Application.dataPath + "/save.txt");
+        string[] playerLocationLoad = saveString.Split(',');
+        player.transform.position = new Vector3(float.Parse(playerLocationLoad[1]), float.Parse(playerLocationLoad[2]), float.Parse(playerLocationLoad[3]));
+        Debug.Log("SET PLAYER POSITION AGAIN");
     }
     public void Load()
     {
+        loading = true;
+
         string saveString = File.ReadAllText(Application.dataPath + "/save.txt");
         string[] playerLocationLoad = saveString.Split(',');
         SceneManager.LoadScene(int.Parse(playerLocationLoad[0]));
-
+        setPosition();
         player.transform.position = new Vector3(float.Parse(playerLocationLoad[1]), float.Parse(playerLocationLoad[2]), float.Parse(playerLocationLoad[3]));
+        Debug.Log("SET PLAYER POSITION");
         //pTurn.transform.eulerAngles = new Vector3(0,float.Parse(playerLocationLoad[3]),0);
         /*
         string[] inventoryLoad = saveString.Split(',');
@@ -45,6 +64,7 @@ public class SaveLoad : MonoBehaviour
             player.GetComponent<Inventory>().inventoryList.Add(inventoryLoad[i]);
         }
         */
+        loading = false;
     }
     public void SaveGame()
     {
