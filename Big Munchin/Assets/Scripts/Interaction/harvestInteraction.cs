@@ -6,33 +6,50 @@ using UnityEngine;
 public class harvestInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] private string interactText;
+    [SerializeField] private string hName;
 
     private bool interacted;
-    public GameObject harvestText;
     public GameObject Player;
+    public GameObject MC;
 
 
     public void Interact(Transform interactorTransform)
     {
         interacted = true;
-        showText();
-    }
-    public void showText()
-    {
-        harvestText.SetActive(true);
-    }
-    public void hideText()
-    {
-        harvestText.SetActive(false);
+        missionCheck();
+        harvest();
     }
     public string GetInteractText()
     {
-        return interactText;
+        return interactText + " " + hName;
     }
     public Transform GetTransform()
     {
         return transform;
     }
+
+    public void harvest()
+    {
+        int amountInstant = Random.Range(1, 4);
+        Destroy(gameObject);
+        for (int x = 0; x < amountInstant; x++)
+        {
+            Instantiate(Resources.Load(hName), transform.position, Quaternion.identity);
+        }
+        Instantiate(Resources.Load(gameObject.name + "_Harvested"), transform.position, transform.rotation);
+    }
+
+    public void missionCheck()
+    {
+        int tempMissNumb = MC.GetComponent<missionController>().getCurrentMission();
+        if (tempMissNumb == 0)
+        {
+            MC.GetComponent<missionController>().mZeroFunction();
+            //tempMissNumb++;
+            //MC.GetComponent<missionController>().setCurrentMission(tempMissNumb);
+        }
+    }
+
     public void Update()
     {
         if (interacted)
@@ -41,7 +58,6 @@ public class harvestInteraction : MonoBehaviour, IInteractable
             Vector3 playerPosition = new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z);
             if (dist > 5.5f)
             {
-                hideText();
                 interacted = false;
             }
         }

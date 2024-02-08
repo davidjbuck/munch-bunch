@@ -15,6 +15,7 @@ public class Item : MonoBehaviour
     public float[] effectDuration;
     public float[] effectValue;
 
+    public GameObject missionControl;
 
     //destroys the object on contact
     private void OnCollisionEnter(Collision collision)

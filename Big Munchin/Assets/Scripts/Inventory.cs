@@ -75,6 +75,12 @@ public class Inventory : MonoBehaviour
                 inventoryList.Add(tempItem);
             }
             fillGUIButtons();
+
+            int tempMissNumb = gameObject.GetComponent<missionController>().getCurrentMission();
+            if (tempMissNumb == 1)
+            {
+                gameObject.GetComponent<missionController>().mOneFunction();
+            }
         }
     }
 
