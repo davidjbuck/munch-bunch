@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//THIS SCRIPT IS CUSTOMIZED FOR THE FIRST ENCOUNTER, BUT PARTS OF THE ENEMY SPAWNER CAN BE USED IN OTHER PLACES
 public class EnemySpawner : MonoBehaviour
 {
     public bool spawnActive;
@@ -32,11 +32,16 @@ public class EnemySpawner : MonoBehaviour
     public static int enemyDeathCounter;
     int wave1Enemies;
     bool continuousSpawns;
+    public GameObject run1;
+    public GameObject run2;
+    public GameObject run3;
     // Start is called before the first frame update
     void Start()
     {
+       // runEnemies = false;
         enemyDeathCounter = 0;
-
+        //no continuous spawns
+        continuousSpawnsOff();
 
         //THESE ARE TEMP CALLS TO TEST SPAWNER FOR EACH SCENARIO (PROBABLY USE ONE SIMILAR FOR FINAL DEMO, BUT CAN HAVE FIRST TWO NUMBERS TWEAKED)
         //number of enemies/spawn timer/spawner number (for separate spawn locations)
@@ -49,7 +54,12 @@ public class EnemySpawner : MonoBehaviour
 
         //TONY SPAWN IS 3 (MUST BE 1,0,3)
         //spawnEnemies(1, 0, 3);
-        wave1Enemies = 3;
+        wave1Enemies = 3; 
+        /*
+        run1.RunFleeNode();
+        run2.RunFleeNode();
+        run3.RunFleeNode();
+        */
     }
 
     // Update is called once per frame
@@ -95,6 +105,17 @@ public class EnemySpawner : MonoBehaviour
             invWalls.SetActive(false);
             wave2Trigger.SetActive(true);
             wave1Completed = true;
+            /*
+            run1.GetComponent<SpawnedEnemyAI>().wave1RunningEnemies = true;
+            run2.GetComponent<SpawnedEnemyAI>().wave1RunningEnemies = true;
+            run3.GetComponent<SpawnedEnemyAI>().wave1RunningEnemies = true;
+            */
+            run1.GetComponent<SpawnedEnemyAI>().FleeToRestaurant();
+            run2.GetComponent<SpawnedEnemyAI>().FleeToRestaurant();
+            run3.GetComponent<SpawnedEnemyAI>().FleeToRestaurant();
+
+            //  runEnemies = true;
+            Debug.Log("ENEMIES RUN");
         }
         
         /* TEST TO HAVE CONTINUOUS SPAWNS (but no delay between them)
