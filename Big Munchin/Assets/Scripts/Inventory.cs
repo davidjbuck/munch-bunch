@@ -186,7 +186,12 @@ public class Inventory : MonoBehaviour
         }
         return inventoryList[0];
     }
-
+    public void LoadItem(Item loadedItem, int numLoaded)
+    {
+        inventoryList.Add(loadedItem);
+        int invListLength = inventoryList.Count;
+        inventoryList[invListLength-1].amount = numLoaded;
+    }
     public int GetInventoryCapacity()
     {
         return inventoryList.Count;
