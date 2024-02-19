@@ -536,7 +536,7 @@ public class ThirdPersonController : MonoBehaviour
                     audioSources[1].Play();
                     ani.SetBool("BetweenPunches", true);
                     Invoke("DisableMultiPunch", 0.05f);
-                    ani.SetBool("Punching", true);
+                    ani.SetBool("Kicking", true);
 
                 }
                 //Debug.Log("Fire2 down! Sending Heavy Attack Request!");
@@ -618,6 +618,7 @@ public class ThirdPersonController : MonoBehaviour
         }
         activeMoveset.StopAttacking();//stop any further attacks from coming out
         ani.SetBool("Punching", false);
+        ani.SetBool("Kicking", false);
         //Debug.Log("Taking Damage: " + damageVal + ", and Stun: " + stunTime);
     }
 
@@ -628,6 +629,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             currentPlayerState = PlayerState.Neutral;//set player back to neutral state
             ani.SetBool("Punching", false);
+            ani.SetBool("Kicking", false);
         }
     }
 
@@ -716,7 +718,7 @@ public class ThirdPersonController : MonoBehaviour
                 audioSources[1].Play();
                 ani.SetBool("BetweenPunches", true);
                 Invoke("DisableMultiPunch", 0.05f);
-                ani.SetBool("Punching", true);
+                ani.SetBool("Kicking", true);
             }
             else
             {
@@ -746,6 +748,7 @@ public class ThirdPersonController : MonoBehaviour
                 {
                     activeMoveset.StopAttacking();
                     ani.SetBool("Punching", false);
+                    ani.SetBool("Kicking", true);
                     currentPlayerState = PlayerState.Neutral;
                 }
             }
