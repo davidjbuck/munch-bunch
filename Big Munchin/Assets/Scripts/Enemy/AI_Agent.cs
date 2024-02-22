@@ -17,7 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
-public enum Behaviors { Idle, Guard, Combat, Flee };
+public enum Behaviors { Idle, Guard, Combat, Flee, FleeToRestaurant };
 
 public class AI_Agent : MonoBehaviour
 {

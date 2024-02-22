@@ -29,10 +29,19 @@ public class SpawnTrigger : MonoBehaviour
         
         if (col.tag == "Player")
         {
+            //put detective code here
+
+
+
+
+
+            //old version for tony running
+            /*
             enemySpawner.spawnEnemies(4, 1, 2);
             enemySpawner.continuousSpawnsOn();
             tony.startRun();
             Destroy(spawnTrigger);
+            */
         }
     }
 }

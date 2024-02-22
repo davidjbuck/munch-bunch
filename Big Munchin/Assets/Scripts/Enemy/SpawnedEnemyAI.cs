@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 
-//public enum Behaviors { Idle, Guard, Combat, Flee };
+//public enum Behaviors { Idle, Guard, Combat, Flee, FleeToRestaurant };
 
 public class SpawnedEnemyAI : MonoBehaviour
 {
@@ -57,12 +57,13 @@ public class SpawnedEnemyAI : MonoBehaviour
 	public Transform attackSpawn;
 	public Image lightAttackWarning;
 	public Image heavyAttackWarning;
-
+	public bool wave1RunningEnemies;
 	private int randNum;
 	private bool newRand;
 	public MovesetHolder[] enemyMovesets;
 	MovesetHolder enemyActiveMoveset;
 	GameObject player;
+	private bool movingToRestaurant;
 	#region Behaviors
 	void RunBehaviors()
 	{
@@ -80,6 +81,9 @@ public class SpawnedEnemyAI : MonoBehaviour
 			case Behaviors.Flee:
 				RunFleeNode();
 				break;
+			case Behaviors.FleeToRestaurant:
+				RunFleeToRestaurantNode();
+				break;
 		}
 	}
 
@@ -94,7 +98,10 @@ public class SpawnedEnemyAI : MonoBehaviour
 	{
 		Idle();
 	}
-
+	void RunFleeToRestaurantNode()
+    {
+		FleeToRestaurant();
+    }
 	void RunGuardNode()
 	{
 		Guard();
@@ -244,19 +251,32 @@ public class SpawnedEnemyAI : MonoBehaviour
 		}
 	}
 
-	void Flee()
+	public void Flee()
 	{
 		if (dead == false)
 		{
 			Destination = player.transform.position;
 			Distance = Vector3.Distance(gameObject.transform.position, Destination);
-			if (Distance > 20f)
+			if (Distance > 10f)
 			{
 				isSuspicious = false;
 				Guard();
 			}
 			Destination = transform.position + (transform.position - player.transform.position);
 			navAgent.SetDestination(Destination);
+		}
+	}
+	public void FleeToRestaurant()
+    {
+		if (dead == false)
+		{
+			Destination = GameObject.FindGameObjectWithTag("restaurantsidedoor").transform.position;
+			Debug.Log(Destination);
+			navAgent.SetDestination(Destination);
+			Distance = Vector3.Distance(transform.position, Destination);
+			//Debug.Log(Distance);
+			movingToRestaurant = true;
+
 		}
 	}
 	void GuardSearchForTarget()
@@ -356,6 +376,7 @@ public class SpawnedEnemyAI : MonoBehaviour
 	}
 	void Start()
 	{
+		wave1RunningEnemies = false;
 		enemyActiveMoveset = enemyMovesets[0];
 		navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -384,6 +405,7 @@ public class SpawnedEnemyAI : MonoBehaviour
 			//makes sure it doesnt call both constantly, resets once the attack spawns
 			newRand = true;
 		}
+		
 		if (attackTimer < (attackCooldown - 1))
 		{
 			attackTimer += Time.deltaTime;
@@ -394,12 +416,30 @@ public class SpawnedEnemyAI : MonoBehaviour
 
 		if (dead == false)
 		{
-			/*
+            /*
 			//healthRect.transform.localScale = new Vector3(health/100f, 0.1f, 0.1f);
 
 			rAttackTimer = rAttackTimer + 1;
 			mAttackTimer = mAttackTimer + 1;
 			*/
+            if (movingToRestaurant)
+            {
+				//Destination = GameObject.FindGameObjectWithTag("restaurantsidedoor").transform.position;
+				//Debug.Log(Destination);
+				//navAgent.SetDestination(Destination);
+				Distance = Vector3.Distance(transform.position, Destination);
+				//Debug.Log(Distance);
+				if (Distance < 1.00f)
+				{
+					Destroy(this.gameObject);
+					//Debug.Log("DELETE HERE");
+					//Destroy(this.GameObject);
+				}
+			}
+            if (wave1RunningEnemies)
+            {
+				Flee();
+            }
 			RunBehaviors();
 
 		}

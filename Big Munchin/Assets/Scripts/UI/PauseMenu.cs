@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class PauseMenu : MonoBehaviour
 {
     public static bool isPaused = false;
-
     public GameObject pauseMenu;
+    SaveLoad saveLoadScript;
     void Start()
     {
-        
+        saveLoadScript = GameObject.FindGameObjectWithTag("save load").GetComponent<SaveLoad>();
     }
     public void PauseGame()
     {
@@ -34,10 +33,15 @@ public class PauseMenu : MonoBehaviour
     {
 
     }
-
+  
     public void QuitGame()
     {
-        Application.Quit();
+        //GameObject save = GameObject.FindGameObjectWithTag("save load");
+        saveLoadScript.SaveGame();
+        //saveLoadScript.Load();
+
+        Debug.Log("QUIT GAME");
+        //Application.Quit();
     }
 
     // Update is called once per frame
