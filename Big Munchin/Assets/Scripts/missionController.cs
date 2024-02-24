@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class missionController : MonoBehaviour
 {
-    public int currentMission = 0;
     public TextMeshProUGUI missionTXT;
+    public int currentMission = 0;
 
     private int mZeroCounter = 0;
     private int mOneCounter = 0;
 
     public void Start()
     {
+        currentMission = PlayerPrefs.GetInt("mission", currentMission);
+        Debug.Log("current mission: " + currentMission);
         missionControl(currentMission);
     }
     public int getCurrentMission()
@@ -22,8 +24,21 @@ public class missionController : MonoBehaviour
     public void setCurrentMission(int i)
     {
         currentMission = i;
+        PlayerPrefs.SetInt("mission", currentMission);
         missionControl(currentMission);
     }
+    public void toggleVisibility(bool b)
+    {
+        if (b == false)
+        {
+            missionTXT.text = "";
+        }
+        else if (b == true)
+        {
+            missionControl(currentMission);
+        }
+    }
+
     public void mZeroFunction()
     {
         mZeroCounter++;
@@ -47,13 +62,13 @@ public class missionController : MonoBehaviour
         switch (m)
         {
             case 0:
-                missionTXT.text = "Current Mission: Interact with 2 Bushes";
+                missionTXT.text = "Current Mission: Cook A Meal";
                 break;
             case 1:
-                missionTXT.text = "Current Mission: Harvest 3 broccoli";
+                missionTXT.text = "Current Mission: Take Out The Goons";
                 break;
             case 2:
-                missionTXT.text = "Current Mission: Celebrate, You Did Things";
+                missionTXT.text = "Current Mission: Check Out The Market";
                 break;
             case 3:
                 break;
