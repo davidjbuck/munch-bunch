@@ -7,11 +7,13 @@ public class PauseMenu : MonoBehaviour
     public static bool isPaused = false;
     public GameObject pauseMenu;
     SaveLoad saveLoadScript;
+
+    public GameObject mainMenu; //First screen when you hit Escape
     void Start()
     {
         saveLoadScript = GameObject.FindGameObjectWithTag("save load").GetComponent<SaveLoad>();
     }
-    public void PauseGame()
+    public void PauseGame() //Freezes the game using timeScale and opens the first pause menu
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
@@ -19,8 +21,14 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
+    public void BackMenu() //Returns to the prior pause screen
+    {
+        pauseMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        isPaused = true;      
+    }
 
-    public void ResumeGame()
+    public void ResumeGame() //Unfreezes time and unpauses the game 
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
@@ -43,16 +51,24 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("QUIT GAME");
         //Application.Quit();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if(isPaused)
+            if(isPaused && pauseMenu.activeSelf == true && mainMenu.activeSelf == false) //BackMenu
+            {
+                BackMenu();
+                isPaused = true;
+                Debug.Log("Is Paused: " + isPaused);
+            }
+            else
+
+            if (isPaused && mainMenu.activeSelf == true && pauseMenu.activeSelf == true) //When at the first pause screen, "mainMenu" and "pauseMenu" will be the same object
             {
                 ResumeGame();
-                Debug.Log("Is Paused: " + isPaused);
+                Debug.Log("Resuming Game");
             }
 
             else
@@ -61,5 +77,6 @@ public class PauseMenu : MonoBehaviour
                 Debug.Log("Is Paused: " + isPaused);
             }
         }
+
     }
 }
