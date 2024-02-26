@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class NGcontroller : MonoBehaviour
 {
+    public GameObject missionBoss;
+
     //stores the int for the current screen, the object holding this script, and the current object
     int currentScreen = 0;
     public GameObject counter;
@@ -73,6 +75,12 @@ public class NGcontroller : MonoBehaviour
     public GameObject player;
     public GameObject kitchenCam;
 
+    private void Start()
+    {
+        missionBoss.GetComponent<missionController>().setCurrentMission(0);
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
@@ -104,6 +112,15 @@ public class NGcontroller : MonoBehaviour
         }
         player.SetActive(false);
         kitchenCam.SetActive(true);
+
+
+        int tempMissNum = missionBoss.GetComponent<missionController>().getCurrentMission();
+        if (tempMissNum == 0)
+        {
+            missionBoss.GetComponent<missionController>().setCurrentMission(1);
+            missionBoss.GetComponent<missionController>().toggleVisibility(false);
+        }
+
 
         Physics.gravity /= 7.5f;
     }
