@@ -17,7 +17,9 @@ public class HitboxProperties : MonoBehaviour
         move = GetComponentInParent<MoveData>();//grab MoveData component from parent MoveData
         if ((int)move.team == 0)
         {
-            anchorObject = GameObject.Find("player").transform;
+            anchorObject = this.transform;
+            //anchorObject = GameObject.Find("player").transform;
+
         }
     }
 
