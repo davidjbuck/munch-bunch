@@ -4,6 +4,9 @@ using UnityEngine;
 //THIS SCRIPT IS CUSTOMIZED FOR THE FIRST ENCOUNTER, BUT PARTS OF THE ENEMY SPAWNER CAN BE USED IN OTHER PLACES
 public class EnemySpawner : MonoBehaviour
 {
+    //Tab added this in for the first mission, it has another part on line 124
+    public GameObject missionControl;
+
     public bool spawnActive;
     //this one uses other arrays to set the spawn point later on
     Transform[] enemySpawnpoints;
@@ -116,8 +119,12 @@ public class EnemySpawner : MonoBehaviour
 
             //  runEnemies = true;
             Debug.Log("ENEMIES RUN");
+
+
+            //TAB: this turns off the mission text while the enemies flee and the investigator approaches
+            missionControl.GetComponent<missionController>().toggleVisibility(false);
         }
-        
+
         /* TEST TO HAVE CONTINUOUS SPAWNS (but no delay between them)
 
         */
