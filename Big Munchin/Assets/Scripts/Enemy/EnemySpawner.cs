@@ -121,8 +121,12 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("ENEMIES RUN");
 
 
-            //TAB: this turns off the mission text while the enemies flee and the investigator approaches
-            missionControl.GetComponent<missionController>().toggleVisibility(false);
+            //TAB: this gets the current mission, and if it is to take out the goons, turns off the mission text
+            int tempMissNum = missionControl.GetComponent<missionController>().getCurrentMission();
+            if (tempMissNum == 1)
+            {
+                missionControl.GetComponent<missionController>().toggleVisibility(false);
+            }
         }
 
         /* TEST TO HAVE CONTINUOUS SPAWNS (but no delay between them)

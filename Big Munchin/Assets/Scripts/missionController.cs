@@ -39,22 +39,33 @@ public class missionController : MonoBehaviour
         }
     }
 
-    public void mZeroFunction()
+    public void mTwoFunction()
     {
         mZeroCounter++;
         if (mZeroCounter == 2)
         {
-            setCurrentMission(1);
+            setCurrentMission(3);
         }
     }
-    public void mOneFunction()
-    {
-        mOneCounter++;
-        if (mOneCounter == 3)
-        {
-            setCurrentMission(2);
-        }
-    }
+
+
+    //these were for the harvesting missions
+    //public void mZeroFunction()
+    //{
+    //    mZeroCounter++;
+    //    if (mZeroCounter == 2)
+    //    {
+    //        setCurrentMission(1);
+    //    }
+    //}
+    //public void mOneFunction()
+    //{
+    //    mOneCounter++;
+    //    if (mOneCounter == 3)
+    //    {
+    //        setCurrentMission(2);
+    //    }
+    //}
 
 
     public void missionControl(int m)
@@ -71,6 +82,7 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Current Mission: Check Out The Market";
                 break;
             case 3:
+                missionTXT.text = "Current Mission: Return To The Kitchen";
                 break;
             case 4:
                 break;

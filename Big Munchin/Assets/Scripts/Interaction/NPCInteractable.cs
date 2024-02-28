@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class NPCInteractable : MonoBehaviour, IInteractable
 {
+    //Tab added this, more on lines
+    public GameObject missionBoss;
+
+
     [SerializeField] private string interactText;
     public GameObject allyText;
     public GameObject Player;
@@ -14,7 +18,19 @@ public class NPCInteractable : MonoBehaviour, IInteractable
         interacted = true;
         Debug.Log("INTERACT");
         showText();
-       // interactUI.SetActive(false);
+
+        int tempMissNum = missionBoss.GetComponent<missionController>().getCurrentMission();
+        if (tempMissNum == 1)
+        {
+            missionBoss.GetComponent<missionController>().toggleVisibility(true);
+            missionBoss.GetComponent<missionController>().setCurrentMission(2);
+        }
+        else if (tempMissNum == 2)
+        {
+            missionBoss.GetComponent<missionController>().toggleVisibility(true);
+            missionBoss.GetComponent<missionController>().setCurrentMission(3);
+        }
+        // interactUI.SetActive(false);
         //ChatBubble3D.Create(transformtransform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Happy, "Hello There!");
     }
     public string GetInteractText()
