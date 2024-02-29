@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HitboxProperties : MonoBehaviour
 {
@@ -17,26 +18,34 @@ public class HitboxProperties : MonoBehaviour
         move = GetComponentInParent<MoveData>();//grab MoveData component from parent MoveData
         if ((int)move.team == 0)
         {
-            anchorObject = this.transform;
             //anchorObject = GameObject.Find("player").transform;
 
+            //anchorObject = this.transform;
+            
+            if (SceneManager.GetActiveScene().name == "KitchenScene")
+            {
+                anchorObject = this.transform;
+            } else { 
+                anchorObject = GameObject.Find("player").transform;
+            }
+            
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void CreateHitbox()
     {
         //Debug.Log("Actually Creating Hitbox now");
-        Vector3 pos = anchorObject.position+offset;//calculate position to place
+        Vector3 pos = anchorObject.position + offset;//calculate position to place
         Vector3 dir = pos - anchorObject.transform.position;
-        dir = anchorObject.rotation*dir;
+        dir = anchorObject.rotation * dir;
         Vector3 rotatedPosition = dir + anchorObject.transform.position;
-        GameObject hb = Instantiate(hitboxCollider,rotatedPosition, anchorObject.transform.rotation);//instantiate and store reference to hitbox
+        GameObject hb = Instantiate(hitboxCollider, rotatedPosition, anchorObject.transform.rotation);//instantiate and store reference to hitbox
         hb.GetComponent<CollisionManager>().PassMoveData(move);//pass move data to hb
         hb.GetComponent<CollisionManager>().PassAttackProperties(move.GetAttackProperties().Clone());//pass attack properties to hb
         hb.GetComponent<CollisionManager>().SetAttackTeam((int)move.team);//pass attackTeam to hb
@@ -49,7 +58,7 @@ public class HitboxProperties : MonoBehaviour
                 if (tpc.IsCrit())
                 {
                     hb.GetComponent<CollisionManager>().UpdateAttackDamage(tpc.GetAttackIncrease());
-                }                
+                }
             }
             else
             {
