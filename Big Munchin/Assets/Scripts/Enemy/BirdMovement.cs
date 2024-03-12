@@ -16,331 +16,159 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 //UPDATED CODE FOR SIMPLICY/READABILITY
-public class EnemyAI : MonoBehaviour
+public class BirdMovement : MonoBehaviour
 {
-    // Enum for different AI behaviors
-    public enum Behaviors { Idle, Guard, Combat, Flee, Patrol };
+	// Enum for different AI behaviors
+	public enum Behaviors { Idle, Flee, Patrol };
 
-    // AI properties and variables
-    public Behaviors aiBehaviors = Behaviors.Idle;
-    public bool dead = false;
-    public bool isSuspicious = false;
-    public bool isInRange = false;
-    public bool FightsRanged = false;
-    public float attackTimer;
-    public bool aggressive;
-    public bool permAggressive;
-    public Rigidbody rigidBod;
-    public float sprintSpeed;
-    public float patrolSpeed;
-    UnityEngine.AI.NavMeshAgent navAgent;
-    Vector3 Destination;
-    float Distance;
-    public Transform[] Waypoints;
-    int curWaypoint = 0;
-    bool ReversePath = false;
-    public PlayerMover p1;
-    private float attackCooldown = 0;
-    public float lightAttackCooldown;
-    public float heavyAttackCooldown;
-    public GameObject enemyAttack;
-    public Transform attackSpawn;
-    public Image lightAttackWarning;
-    public Image heavyAttackWarning;
+	// AI properties and variables
+	public Behaviors aiBehaviors = Behaviors.Idle;
+	public bool dead = false;
+	public bool isSuspicious = false;
+	public bool isInRange = false;
+	public Rigidbody rigidBod;
+	public float speed = 6f;
+	UnityEngine.AI.NavMeshAgent navAgent;
+	Vector3 Destination;
+	float Distance;
+	public Transform[] Waypoints;
+	int curWaypoint = 0;
+	bool ReversePath = false;
+	//public PlayerMover p1;
+	GameObject player;
+	// Start is called before the first frame update
+	void Start()
+	{
+		// Initialize variables and objects
+		navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+		player = GameObject.FindGameObjectWithTag("Player");
+		Destination = Waypoints[curWaypoint].position;
+		//Patrol();
 
-    private int randNum;
-    private bool newRand;
-    public MovesetHolder[] enemyMovesets;
-    MovesetHolder enemyActiveMoveset;
-    GameObject player;
+	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Initialize variables and objects
-        enemyActiveMoveset = enemyMovesets[0];
-        navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        Destination = player.transform.position;
-    }
+	// Update is called once per frame
+	void Update()
+	{
+		// Perform AI behaviors if not dead
+		if (dead == false)
+		{
+			RunBehaviors();
+		}
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Randomly select an attack type
-        if (!newRand)
-        {
-            randNum = Random.Range(0, 2);
-            if (randNum == 0)
-            {
-                attackCooldown = lightAttackCooldown;
-            }
-            if (randNum == 1)
-            {
-                attackCooldown = heavyAttackCooldown;
-            }
-            newRand = true;
-        }
-
-        // Update attack timer
-        if (attackTimer < (attackCooldown - 1))
-        {
-            attackTimer += Time.deltaTime;
-        }
-
-        // Perform AI behaviors if not dead
-        if (dead == false)
-        {
-            RunBehaviors();
-        }
-    }
-
-    // Execute different AI behaviors based on the current behavior state
-    void RunBehaviors()
-    {
-        switch (aiBehaviors)
-        {
-            case Behaviors.Idle:
-                Idle();
-                break;
-            case Behaviors.Guard:
-                Guard();
-                break;
-            case Behaviors.Combat:
-                Combat();
-                break;
-            case Behaviors.Flee:
-                Flee();
-                break;
+	// Execute different AI behaviors based on the current behavior state
+	void RunBehaviors()
+	{
+		switch (aiBehaviors)
+		{
+			case Behaviors.Idle:
+				Idle();
+				break;
+			case Behaviors.Flee:
+				Flee();
+				break;
 			case Behaviors.Patrol:
 				Flee();
 				break;
 		}
-    }
+	}
 
-    // Change the current AI behavior and execute corresponding actions
-    void ChangeBehavior(Behaviors newBehavior)
-    {
-        aiBehaviors = newBehavior;
-        RunBehaviors();
-    }
+	// Change the current AI behavior and execute corresponding actions
+	void ChangeBehavior(Behaviors newBehavior)
+	{
+		aiBehaviors = newBehavior;
+		RunBehaviors();
+	}
 
-    // Idle behavior - placeholder for animation or other actions
-    void Idle()
-    {
-        if (!dead)
-        {
-            //GetComponent<Animation>().Play("dance");
-        }
-    }
-
-    // Guard behavior - patrol or attack based on aggression and suspicion
-    void Guard()
-    {
-        if (!dead)
-        {
-            Destination = player.transform.position;
-            Distance = Vector3.Distance(transform.position, Destination);
-
-            // Check if suspicious or permanently aggressive
-            if (permAggressive || (isSuspicious && aggressive))
-            {
-                navAgent.speed = sprintSpeed;
-                GuardSearchForTarget();
-            }
-            else
-            {
-                navAgent.speed = patrolSpeed;
-                Patrol();
-            }
-        }
-    }
-
-    // Combat behavior - engage in combat with the player
-    void Combat()
-    {
-        if (!dead)
-        {
-            if (Distance < 2)
-            {
-                Vector3 playerPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
-                transform.LookAt(playerPosition);
-                Attack();
-            }
-            else if (Distance < 5)
-            {
-                navAgent.SetDestination(player.transform.position);
-            }
-            else
-            {
-                attackTimer = 200;
-                SearchForTarget();
-            }
-        }
-    }
-
-    // Flee behavior - move away from the player
-    void Flee()
-    {
-        if (!dead)
-        {
-            Destination = player.transform.position;
-            Distance = Vector3.Distance(transform.position, Destination);
-            if (Distance > 20f)
-            {
-                isSuspicious = false;
-                Guard();
-            }
-            Destination = transform.position + (transform.position - player.transform.position);
-            navAgent.SetDestination(Destination);
-        }
-    }
-
-    // Guard searches for the player if within a certain distance
-    void GuardSearchForTarget()
-    {
-        if (!dead && Distance < 40f)
-        {
-            if (Distance < 3f)
-            {
-                Combat();
-            }
-            else
-            {
-                ResetAttackWarnings();
-            }
-            navAgent.SetDestination(Destination);
-        }
-        else if (!permAggressive)
-        {
-            isSuspicious = false;
-        }
-    }
-
-    // Search for the player within a certain distance
-    void SearchForTarget()
-    {
-        if (!dead)
-        {
-            Destination = player.transform.position;
-            Distance = Vector3.Distance(transform.position, Destination);
-            if (Distance < 10f)
-            {
-                rigidBod.constraints = Distance < 2f ? RigidbodyConstraints.None : RigidbodyConstraints.FreezeAll;
-                navAgent.SetDestination(Destination);
-            }
-            else
-            {
-                rigidBod.constraints = RigidbodyConstraints.FreezeAll;
-            }
-        }
-    }
-
-    // Patrol between waypoints
-    void Patrol()
-    {
-        if (!dead && Waypoints.Length > 0)
-        {
-            Distance = Vector3.Distance(transform.position, Waypoints[curWaypoint].position);
-            if (Distance > 2.00f)
-            {
-                Destination = Waypoints[curWaypoint].position;
-                navAgent.SetDestination(Destination);
-            }
-            else
-            {
-                UpdateWaypoint();
-            }
-        }
-    }
-
-    // Perform attack actions
-    void Attack()
-    {
-        if (attackTimer >= (attackCooldown - 1))
-        {
-            if (randNum == 0)
-            {
-                lightAttackWarning.enabled = true;
-            }
-            else if (randNum == 1)
-            {
-                heavyAttackWarning.enabled = true;
-            }
-            else
-            {
-                ResetAttackWarnings();
-            }
-
-            if (attackTimer <= attackCooldown)
-            {
-                attackTimer += Time.deltaTime;
-            }
-
-            if (attackTimer > attackCooldown)
-            {
-                ExecuteAttack();
-            }
-
-            Destination = transform.position;
-            navAgent.SetDestination(Destination);
-        }
-    }
-
-    // Execute the chosen attack type
-    void ExecuteAttack()
-    {
-        if (randNum == 0)
-        {
-            enemyActiveMoveset.LightAttackCombo();
-        }
-        else if (randNum == 1)
-        {
-            enemyActiveMoveset.HeavyAttackCombo();
-            attackCooldown -= 1;
-        }
-
-        newRand = false;
-        attackTimer = 0;
-    }
-
-    // Reset attack warnings
-    void ResetAttackWarnings()
-    {
-        lightAttackWarning.enabled = false;
-        heavyAttackWarning.enabled = false;
-    }
-
-    // Update waypoint for patrolling
-    void UpdateWaypoint()
-    {
-		if (ReversePath)
+	// Idle behavior - placeholder for animation or other actions
+	void Idle()
+	{
+		if (!dead)
 		{
-			if (curWaypoint <= 0)
+
+			//CODE FOR TRYING TO LAND ON SPOT AND WAIT UNTIL PLAYER GETS NEARBY, BUT WASNT WORKING SO SWITCHED TO ALTERNATE WAYPOINTS
+			Patrol();
+/*
+			//rigidBod.velocity = transform.forward * speed;
+			Distance = Vector3.Distance(transform.position, player.transform.position);
+			if (Distance < 7.00f)
 			{
-				ReversePath = false;
+
+				//Patrol();
+			} else
+            {
+				//Debug.Log("BIRD STOP");
+				rigidBod.velocity = Vector3.zero;
+				//this.transform.position = Waypoints[curWaypoint].position;
+				//rigidBod.velocity = transform.forward * 0f;
+			}
+			//rigidBod.velocity = 0f;
+
+			//GetComponent<Animation>().Play("dance");
+*/
+		}
+	}
+
+	// Flee behavior - move away from the player
+	void Flee()
+	{
+		if (!dead)
+		{
+			rigidBod.velocity = transform.forward* speed;
+
+			Destination = player.transform.position;
+			Distance = Vector3.Distance(transform.position, Destination);
+			if (Distance > 20f)
+			{
+				isSuspicious = false;
+				Patrol();
+			}
+			Destination = transform.position + (transform.position - player.transform.position);
+			transform.LookAt(Destination);
+
+			//navAgent.SetDestination(Destination);
+		}
+	}
+
+	// Patrol between waypoints
+	void Patrol()
+	{
+
+		if (!dead && Waypoints.Length > 0)
+		{
+
+			Distance = Vector3.Distance(transform.position, Waypoints[curWaypoint].position);
+			if (Distance > 0.50f)
+			{
+				transform.LookAt(Waypoints[curWaypoint].position);
+
+				rigidBod.velocity = transform.forward * speed;
+				//Destination = Waypoints[curWaypoint].position;
+				//navAgent.SetDestination(Destination);
 			}
 			else
 			{
-				curWaypoint--;
-				Destination = Waypoints[curWaypoint].position;
+				UpdateWaypoint();
+				//Debug.Log("LANDED ON SPOT");
+				//Idle();
 			}
 		}
-		else
-		{
-			if (curWaypoint >= Waypoints.Length - 1)
-			{
-				ReversePath = true;
-			}
-			else
-			{
-				curWaypoint++;
-				Destination = Waypoints[curWaypoint].position;
-			}
-		}
+	}
 
+	// Update waypoint for patrolling
+	void UpdateWaypoint()
+	{
+		int newWaypoint;
+
+		do
+		{
+			newWaypoint = Random.Range(0, Waypoints.Length);
+		} while (newWaypoint == curWaypoint);
+
+		curWaypoint = newWaypoint;
 		Destination = Waypoints[curWaypoint].position;
-    }
+	}
 }
 
 

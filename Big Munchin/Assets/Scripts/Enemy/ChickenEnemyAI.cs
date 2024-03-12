@@ -18,10 +18,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 
-//public enum Behaviors { Idle, Guard, Combat, Flee, FleeToRestaurant };
 
 public class ChickenEnemyAI : MonoBehaviour
 {
+	public enum Behaviors { Idle, Guard, Combat, Flee };
+
 	//public GameObject healthRect;
 	//public Transform shotSpawn;
 	//public Transform shotSpawn1;
@@ -80,9 +81,6 @@ public class ChickenEnemyAI : MonoBehaviour
 				break;
 			case Behaviors.Flee:
 				RunFleeNode();
-				break;
-			case Behaviors.FleeToRestaurant:
-				RunFleeToRestaurantNode();
 				break;
 		}
 	}
@@ -285,16 +283,22 @@ public class ChickenEnemyAI : MonoBehaviour
 		{
 			if (Distance < 40f)
 			{
-				if (Distance < 3f)
+				if (Distance < 1.5f)
 				{
 					Combat();
+					RunCombatNode();
+					Destination = this.transform.position;
+					navAgent.SetDestination(Destination);
+
 				}
 				else
 				{
 					lightAttackWarning.enabled = false;
 					heavyAttackWarning.enabled = false;
+					Destination = player.transform.position;
+					navAgent.SetDestination(Destination);
+
 				}
-				navAgent.SetDestination(Destination);
 			}
 			else if (permAggressive)
 			{
@@ -387,25 +391,15 @@ public class ChickenEnemyAI : MonoBehaviour
 
 	void Update()
 	{
+		//Debug.Log(aiBehaviors);
 		if (!newRand)
 		{
-			randNum = Random.Range(0, 2);
-			//makes attack cooldown depending on attack and what is put in the inpector
-			if (randNum == 0)
-			{
-				attackCooldown = lightAttackCooldown;
-				//Debug.Log("light cooldown");
-			}
-			if (randNum == 1)
-			{
-				attackCooldown = heavyAttackCooldown;
-				//Debug.Log("heavy cooldown");
+			randNum = 0;
+			attackCooldown = lightAttackCooldown;
 
-			}
-			//makes sure it doesnt call both constantly, resets once the attack spawns
 			newRand = true;
 		}
-
+		
 		if (attackTimer < (attackCooldown - 1))
 		{
 			attackTimer += Time.deltaTime;
