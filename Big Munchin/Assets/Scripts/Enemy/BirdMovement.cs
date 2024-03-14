@@ -34,6 +34,8 @@ public class BirdMovement : MonoBehaviour
 	public Transform[] Waypoints;
 	int curWaypoint = 0;
 	bool ReversePath = false;
+	public float rotationSpeed = 2.0f; // Adjust as needed
+
 	//public PlayerMover p1;
 	GameObject player;
 	// Start is called before the first frame update
@@ -134,24 +136,23 @@ public class BirdMovement : MonoBehaviour
 	// Patrol between waypoints
 	void Patrol()
 	{
-
 		if (!dead && Waypoints.Length > 0)
 		{
-
 			Distance = Vector3.Distance(transform.position, Waypoints[curWaypoint].position);
 			if (Distance > 0.50f)
 			{
-				transform.LookAt(Waypoints[curWaypoint].position);
+				// Calculate the direction to the next waypoint
+				Vector3 targetDirection = Waypoints[curWaypoint].position - transform.position;
+				// Calculate the rotation needed to face the waypoint
+				Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+				// Slowly rotate towards the waypoint
+				transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
 				rigidBod.velocity = transform.forward * speed;
-				//Destination = Waypoints[curWaypoint].position;
-				//navAgent.SetDestination(Destination);
 			}
 			else
 			{
 				UpdateWaypoint();
-				//Debug.Log("LANDED ON SPOT");
-				//Idle();
 			}
 		}
 	}
