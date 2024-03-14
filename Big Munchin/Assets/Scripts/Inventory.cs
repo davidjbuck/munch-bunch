@@ -78,6 +78,12 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void addItem(Item item)
+    {
+        Debug.Log("Item added");
+        inventoryList.Add(item);
+    }
+
     //for now takes in item name, can also change to take in an item parameter
     private void removeItem(string s)
     {

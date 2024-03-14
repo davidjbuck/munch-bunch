@@ -49,25 +49,6 @@ public class missionController : MonoBehaviour
     }
 
 
-    //these were for the harvesting missions
-    //public void mZeroFunction()
-    //{
-    //    mZeroCounter++;
-    //    if (mZeroCounter == 2)
-    //    {
-    //        setCurrentMission(1);
-    //    }
-    //}
-    //public void mOneFunction()
-    //{
-    //    mOneCounter++;
-    //    if (mOneCounter == 3)
-    //    {
-    //        setCurrentMission(2);
-    //    }
-    //}
-
-
     public void missionControl(int m)
     {
         switch (m)

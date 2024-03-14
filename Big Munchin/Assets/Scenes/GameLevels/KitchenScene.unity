@@ -895,6 +895,86 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7469417238580951095, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
   m_PrefabInstance: {fileID: 1717206005}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &215339430
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -391.6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 30.08
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 61.55
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_Name
+      value: broccoli on scale bowl
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1265557200}
+  m_SourcePrefab: {fileID: 100100000, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
 --- !u!1 &236097183
 GameObject:
   m_ObjectHideFlags: 0
@@ -6005,6 +6085,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1265557199 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
+  m_PrefabInstance: {fileID: 215339430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1265557200
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265557199}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 477525350536967170, guid: 8d6c5043dcc0a3d408f73917a34b1e54, type: 3}
 --- !u!114 &1303828259 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6039032862499348253, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
@@ -17386,6 +17493,7 @@ MonoBehaviour:
   bowlForRice: {fileID: 1456450724}
   scoopForRice: {fileID: 1476018728}
   bowl: {fileID: 1701337640}
+  bowlOnScale: {fileID: 1265557199}
   mostPlateWeightTxt: {fileID: 1310708344}
   vegWeightTxt: {fileID: 1545748641}
   meatSumTXT: {fileID: 499636795}
@@ -17399,6 +17507,7 @@ MonoBehaviour:
   startCanvas: {fileID: 1786994379}
   NMGCanvas: {fileID: 4164468546863709105}
   player: {fileID: 179067251}
+  playerForInventory: {fileID: 1786275340}
   kitchenCam: {fileID: 1077293795}
 --- !u!114 &7003944814298329607
 MonoBehaviour:
@@ -18279,6 +18388,7 @@ SceneRoots:
   - {fileID: 1971552751}
   - {fileID: 442715107}
   - {fileID: 873702277}
+  - {fileID: 215339430}
   - {fileID: 1717206005}
   - {fileID: 1786994383}
   - {fileID: 5483590221343873488}

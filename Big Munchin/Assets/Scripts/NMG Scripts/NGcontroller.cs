@@ -53,6 +53,7 @@ public class NGcontroller : MonoBehaviour
     //objects for the veg screen
     string vegName;
     public GameObject bowl;
+    public GameObject bowlOnScale;
     public TextMeshProUGUI mostPlateWeightTxt;
     public TextMeshProUGUI vegWeightTxt;
 
@@ -71,6 +72,7 @@ public class NGcontroller : MonoBehaviour
     public GameObject NMGCanvas;
 
     public GameObject player;
+    public GameObject playerForInventory;
     public GameObject kitchenCam;
 
     private void OnTriggerEnter(Collider other)
@@ -112,6 +114,7 @@ public class NGcontroller : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
 
         NMGCanvas.SetActive(false);
         player.SetActive(true);
@@ -224,6 +227,7 @@ public class NGcontroller : MonoBehaviour
         currentScreen = 2;
         mostPlateWeightTxt.text = "Current Weight: " + (meatWeight + carbWeight);
         bowl.SetActive(true);
+        bowlOnScale.SetActive(true);
         bowlForRice.SetActive(false);
         scoopForRice.SetActive(false);
         riceParent.SetActive(false);
@@ -265,6 +269,12 @@ public class NGcontroller : MonoBehaviour
         }
 
         cityHealthTXT.text = "City Health Increased by " + cityHealth;
+
+        Item completeMeal = new Item();
+        completeMeal.itemName = "Chicken, Rice, and Broccoli Meal";
+        completeMeal.flavorText = "A completed dish. Provides many advantages over snacking.";
+        completeMeal.amount = 1;
+        playerForInventory.GetComponent<Inventory>().addItem(completeMeal);
     }
 
 
