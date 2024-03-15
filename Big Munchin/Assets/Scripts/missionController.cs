@@ -11,11 +11,19 @@ public class missionController : MonoBehaviour
     private int mZeroCounter = 0;
     private int mOneCounter = 0;
 
+    public GameObject saveLoad;
+
+
     public void Start()
     {
         currentMission = PlayerPrefs.GetInt("mission", currentMission);
         Debug.Log("current mission: " + currentMission);
         missionControl(currentMission);
+
+        if (currentMission == 1)
+        {
+            saveLoad.GetComponent<SaveLoad>().LoadInventory();
+        }
     }
     public int getCurrentMission()
     {

@@ -107,6 +107,8 @@ public class NGcontroller : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        missionCont.GetComponent<missionController>().toggleVisibility(false);
+
         startCanvas.SetActive(false);
         NMGCanvas.SetActive(true);
         AudioListener[] al = player.GetComponentsInChildren<AudioListener>();
@@ -125,11 +127,15 @@ public class NGcontroller : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        //playerForInventory.SetActive(false);
 
         NMGCanvas.SetActive(false);
         player.SetActive(true);
         kitchenCam.SetActive(false);
         startCanvas.SetActive(false);
+
+        missionCont.GetComponent<missionController>().setCurrentMission(1);
+        missionCont.GetComponent<missionController>().toggleVisibility(false);
 
         saveLoad.GetComponent<SaveLoad>().SaveInventory();
 
