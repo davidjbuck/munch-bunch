@@ -27,6 +27,7 @@ public class Inventory : MonoBehaviour
     string selectedItem;
 
 
+
     private void Start()
     {
         //sets all button texts to null

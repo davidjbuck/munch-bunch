@@ -75,6 +75,16 @@ public class NGcontroller : MonoBehaviour
     public GameObject playerForInventory;
     public GameObject kitchenCam;
 
+    public GameObject missionCont;
+
+    public GameObject saveLoad;
+
+
+    private void Start()
+    {
+        missionCont.GetComponent<missionController>().setCurrentMission(0);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
@@ -121,6 +131,7 @@ public class NGcontroller : MonoBehaviour
         kitchenCam.SetActive(false);
         startCanvas.SetActive(false);
 
+        saveLoad.GetComponent<SaveLoad>().SaveInventory();
 
         Physics.gravity *= 7.5f;
         GameObject cutsceneCamera = GameObject.Find("Cutscene Camera");
@@ -241,6 +252,7 @@ public class NGcontroller : MonoBehaviour
         currentScreen = 3;
         scaleObject.SetActive(false);
         bowl.SetActive(false);
+        bowlOnScale.SetActive(false);
         vegParent.SetActive(false);
         sumParent.SetActive(true);
         

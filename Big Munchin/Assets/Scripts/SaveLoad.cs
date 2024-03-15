@@ -133,6 +133,7 @@ public class SaveLoad : MonoBehaviour
     //works better for ingredients, rather than specific foods with custom stats
     public void SaveInventory()
     {
+        Debug.Log("SAVING INVENTORY!!!!!!!!");
         using (StreamWriter sw = new StreamWriter(FILE_PATH))
         {
             sw.Write("");
