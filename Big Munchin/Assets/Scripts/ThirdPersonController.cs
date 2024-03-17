@@ -102,6 +102,10 @@ public class ThirdPersonController : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     private float lastJumpTime;
+    private float groundedTime;
+    private float airborneTime;
+    private bool checkIsAirborne;
+    public float minAirborneTime;
 
     private Animator ani;
 
@@ -126,6 +130,8 @@ public class ThirdPersonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   //grab components and set some initial values
+        groundedTime = Time.time;
+        airborneTime = Time.time;
         cam = GetComponent<Camera>();
         rb.freezeRotation = true;
         LockCursor();
@@ -463,13 +469,10 @@ public class ThirdPersonController : MonoBehaviour
             }
         }
 
-        if (Input.GetButton("Jump") && grounded && Time.time>lastJumpTime+jumpCooldown && (currentPlayerState==PlayerState.Neutral||currentPlayerState == PlayerState.Parrying||currentPlayerState==PlayerState.Blocking))
+        if (Input.GetButton("Jump") && grounded && Time.time>lastJumpTime+jumpCooldown && Time.time-groundedTime>0.5f &&(currentPlayerState==PlayerState.Neutral||currentPlayerState == PlayerState.Parrying||currentPlayerState==PlayerState.Blocking))
         {
             jumping = true;
-            lastJumpTime = Time.time;
-            ani.SetBool("Walking", false);
-            audioSources[0].Stop();
-            ani.SetBool("Airborne", true);
+            //Debug.Log("Input for jump received");
         }
         else
         {
@@ -952,12 +955,56 @@ public class ThirdPersonController : MonoBehaviour
     {
         float offset = playerCollider.GetComponent<CapsuleCollider>().height * 0.5f;
         Vector3 pt = new Vector3(playerCollider.transform.position.x, playerCollider.transform.position.y+ offset, playerCollider.transform.position.z);
+        Vector3 pt2 = new Vector3(playerCollider.transform.position.x, playerCollider.transform.position.y + offset, playerCollider.transform.position.z+0.3f);
+        Vector3 pt3 = new Vector3(playerCollider.transform.position.x, playerCollider.transform.position.y + offset, playerCollider.transform.position.z-0.3f);
+        Vector3 pt4 = new Vector3(playerCollider.transform.position.x-0.3f, playerCollider.transform.position.y + offset, playerCollider.transform.position.z - 0.3f);
+        Vector3 pt5 = new Vector3(playerCollider.transform.position.x+0.3f, playerCollider.transform.position.y + offset, playerCollider.transform.position.z + 0.3f);
+        Vector3 pt6 = new Vector3(playerCollider.transform.position.x + 0.3f, playerCollider.transform.position.y + offset, playerCollider.transform.position.z - 0.3f);
+        Vector3 pt7 = new Vector3(playerCollider.transform.position.x - 0.3f, playerCollider.transform.position.y + offset, playerCollider.transform.position.z + 0.3f);
+        Vector3 pt8 = new Vector3(playerCollider.transform.position.x + 0.3f, playerCollider.transform.position.y + offset, playerCollider.transform.position.z);
+        Vector3 pt9 = new Vector3(playerCollider.transform.position.x - 0.3f, playerCollider.transform.position.y + offset, playerCollider.transform.position.z);
+
         Debug.DrawLine(pt, new Vector3(pt.x, pt.y - (offset + raycastProtrusion*player.transform.localScale.y/2.0f), pt.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt2, new Vector3(pt2.x, pt2.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt2.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt3, new Vector3(pt3.x, pt3.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt3.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt4, new Vector3(pt4.x, pt4.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt4.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt5, new Vector3(pt5.x, pt5.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt5.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt6, new Vector3(pt6.x, pt6.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt6.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt7, new Vector3(pt7.x, pt7.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt7.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt8, new Vector3(pt8.x, pt8.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt8.z), Color.red, Time.deltaTime);
+        Debug.DrawLine(pt9, new Vector3(pt9.x, pt9.y - (offset + raycastProtrusion * player.transform.localScale.y / 2.0f), pt9.z), Color.red, Time.deltaTime);
         bool wasGrounded = grounded;
-        grounded = Physics.Raycast(pt, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
-        if(grounded)
+        if(Time.time - lastJumpTime > 0.6f)
         {
-            if(!wasGrounded)
+            bool g1 = Physics.Raycast(pt, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g2 = Physics.Raycast(pt2, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g3 = Physics.Raycast(pt3, Vector3.down, offset + raycastProtrusion* player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g4 = Physics.Raycast(pt4, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g5 = Physics.Raycast(pt5, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g6 = Physics.Raycast(pt6, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g7 = Physics.Raycast(pt7, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g8 = Physics.Raycast(pt8, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            bool g9 = Physics.Raycast(pt9, Vector3.down, offset + raycastProtrusion * player.transform.localScale.y / 2.0f, groundedCheck);
+            grounded = g1 || g2 || g3 || g4 || g5 || g6 || g7 || g8 ||g9;
+            if (wasGrounded&&!grounded&&!checkIsAirborne)
+            {
+                airborneTime = Time.time;
+                checkIsAirborne = true;
+                grounded = true;
+            }else if(!grounded && checkIsAirborne && Time.time-airborneTime > minAirborneTime)
+            {
+                checkIsAirborne = false;
+                grounded = false;
+                //Debug.Log("Min Airborne time fulfilled, player is no longer grounded.");
+            }
+        }
+        else
+        {
+            grounded = false;
+        }
+        if(grounded&&!jumping&& Time.time - lastJumpTime > 0.6f)
+        {
+            if(!wasGrounded && Time.time - airborneTime > minAirborneTime)
             {
                 ani.SetBool("Airborne", false);
                 audioSources[2].pitch = 1.4f;
@@ -969,10 +1016,19 @@ public class ThirdPersonController : MonoBehaviour
         {
             rb.drag = 0.0f;
         }
+        if (!wasGrounded && grounded)
+        {
+            groundedTime = Time.time;
+        }
     }
 
     public void Jump()
     {
+        //Debug.Log("Jumping");
+        lastJumpTime = Time.time;
+        ani.SetBool("Walking", false);
+        audioSources[0].Stop();
+        ani.SetBool("Airborne", true);
         rb.velocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
         rb.AddForce(playerCollider.transform.up * jumpForce, ForceMode.Impulse);
         jumping = false;
@@ -987,11 +1043,20 @@ public class ThirdPersonController : MonoBehaviour
         {
             if (grounded)
             {
-                if (vel.magnitude > movementSpeed + playerSpeedChange)
+                if (vel.magnitude > movementSpeed + playerSpeedChange||checkIsAirborne)
                 {
                     //Debug.Log("Limiting ground speed");
-                    Vector3 newVel = vel.normalized * (movementSpeed + playerSpeedChange);
-                    rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+                    if (checkIsAirborne)
+                    {
+                        Vector3 newVel = vel.normalized * (movementSpeed + playerSpeedChange)*0.33f;
+                        rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+                    }
+                    else
+                    {
+                        Vector3 newVel = vel.normalized * (movementSpeed + playerSpeedChange);
+                        rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+                    }
+                    
                 }
             }
             else
