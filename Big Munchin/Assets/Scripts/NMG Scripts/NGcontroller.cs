@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -161,7 +162,7 @@ public class NGcontroller : MonoBehaviour
                 //if the particle system is active (redundant), updates the weight and displays it on scale
                 if (riceParent.activeInHierarchy == true)
                 {
-                    fakeWeightCount += Time.deltaTime * 2;
+                    fakeWeightCount += Time.deltaTime * 20;
                     weightTxt.text = (fakeWeightCount.ToString("F2"));
                 }
             }
@@ -240,7 +241,7 @@ public class NGcontroller : MonoBehaviour
     public void switchToVeg()
     {
         carbWeight = fakeWeightCount;
-        carbCal = fakeWeightCount * 2;
+        carbCal = fakeWeightCount * 1.3f;
         currentScreen = 2;
         mostPlateWeightTxt.text = "Current Weight: " + (meatWeight + carbWeight);
         bowl.SetActive(true);
@@ -255,32 +256,40 @@ public class NGcontroller : MonoBehaviour
     //switches screens from veg to sum (and activates/deactivates respective objects)
     public void switchToSummary()
     {
+        vegCal = vegWeight / .34f;
         currentScreen = 3;
         scaleObject.SetActive(false);
         bowl.SetActive(false);
         bowlOnScale.SetActive(false);
         vegParent.SetActive(false);
         sumParent.SetActive(true);
-        
 
-        //displays all the values for summary
-        meatSumTXT.text = "Meat Calories: " + meatCal + "      Desired Calories: " + 230;
-        carbSumTXT.text = "Carb Calories: " + carbCal.ToString("F2") + "      Desired Calories: " + 4;
-        vegSumTXT.text = "Vegetable Calories: " + vegWeight + "      Desired Calories: " + (meatWeight + carbWeight).ToString("F2");
-        calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegWeight).ToString("F2");
-         
+
+        //THIS IS HOW IT USED TO WORK
+        ////displays all the values for summary
+        //meatSumTXT.text = "Meat Calories: " + meatCal + "      Desired Calories: " + 230;
+        //carbSumTXT.text = "Carb Calories: " + carbCal.ToString("F2") + "      Desired Calories: " + 4;
+        //vegSumTXT.text = "Vegetable Calories: " + vegWeight + "      Desired Calories: " + (meatWeight + carbWeight).ToString("F2");
+        //calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegWeight).ToString("F2");
+
+        //THIS IS HOW IT WORKS NOW
+        meatSumTXT.text = "Meat Weight: " + meatWeight + "g      Desired Weight: " + 85 + "g";
+        carbSumTXT.text = "Carb Weight: " + carbWeight.ToString("F2") + "      Desired Weight: " + 100 + "g";
+        vegSumTXT.text = "Vegetable Weight: " + vegWeight + "      Desired Weight: " + (meatWeight + carbWeight).ToString("F2");
+        calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegCal).ToString("F2");
+
         //activates stars depending how well the numbers are balanced
-        if (Math.Abs((230 - meatCal)) <= 10)
+        if (Math.Abs((85 - meatCal)) <= 10)
         {
             star.SetActive(true);
             cityHealth += 10;
         }
-        if (Math.Abs((4 - carbCal)) <= 1)
+        if (Math.Abs((130 - carbCal)) <= 10)
         {
             star1.SetActive(true);
             cityHealth += 10;
         }
-        if (Math.Abs(((meatWeight + carbWeight) - vegWeight)) <= 1)
+        if (Math.Abs(((meatWeight + carbWeight) - vegWeight)) <= 10)
         {
             star2.SetActive(true);
             cityHealth += 10;
@@ -318,10 +327,5 @@ public class NGcontroller : MonoBehaviour
     public float setVegWeight()
     {
         return vegWeight;
-    }
-
-    public void openRecipeBook()
-    {
-        //onclick, activate ui object for recipe book
     }
 }

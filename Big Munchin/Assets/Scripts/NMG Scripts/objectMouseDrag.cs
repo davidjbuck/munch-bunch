@@ -20,9 +20,9 @@ public class objectMouseDrag : MonoBehaviour
     {
         ngControllerParent = GameObject.Find("NMG Parent");
         vegWeight = ngControllerParent.GetComponent<NGcontroller>().setVegWeight();
-        if (collision.gameObject.tag == "scale")
+        if (collision.gameObject.tag == "bowlOnScale")
         {
-            vegWeight++;
+            vegWeight+=20;
             ngControllerParent.GetComponent<NGcontroller>().getVegWeight(vegWeight);
         }
     }
@@ -30,9 +30,9 @@ public class objectMouseDrag : MonoBehaviour
     {
         ngControllerParent = GameObject.Find("NMG Parent");
         vegWeight = ngControllerParent.GetComponent<NGcontroller>().setVegWeight();
-        if (collision.gameObject.tag == "scale")
+        if (collision.gameObject.tag == "bowlOnScale")
         {
-            vegWeight--;
+            vegWeight-=20;
             ngControllerParent.GetComponent<NGcontroller>().getVegWeight(vegWeight);
         }
     }
