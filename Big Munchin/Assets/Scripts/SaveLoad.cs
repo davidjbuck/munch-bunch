@@ -28,6 +28,7 @@ public class SaveLoad : MonoBehaviour
         FILE_PATH = Application.dataPath + "/saveInventory.txt";
 
         CreateItemDictionary();
+        LoadInventory();
     }
     void Start()
     {
@@ -76,12 +77,16 @@ public class SaveLoad : MonoBehaviour
                 allItemCodes.Add(key, i);
         }
     }
-
+    public void NewGame()
+    {
+        string saveString = "";
+        File.WriteAllText(Application.dataPath + "/save.txt", saveString);
+        ClearInventorySaveFile();
+    }
 
     //Delete all items in the inventory. Will be irreversable. Could just create a new file (ie. Change the name of the old save file and create a new one)
     public void ClearInventorySaveFile()
     {
-   
         File.WriteAllText(Application.dataPath + "/saveInventory.txt", "");//Was previously using String.Empty for the "" empty string but this does not require system namespace
     }
 
