@@ -14,6 +14,7 @@ public class missionController : MonoBehaviour
 
     public void Start()
     {
+        setCurrentMission(2);
         currentMission = PlayerPrefs.GetInt("mission", currentMission);
         Debug.Log("current mission: " + currentMission);
         missionControl(currentMission);
@@ -44,7 +45,8 @@ public class missionController : MonoBehaviour
     public void mTwoFunction()
     {
         mZeroCounter++;
-        if (mZeroCounter == 2)
+        Debug.Log("counter: " +  mZeroCounter);
+        if (mZeroCounter >= 4)
         {
             setCurrentMission(3);
         }
@@ -65,13 +67,16 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Current Mission: Check Out The Market";
                 break;
             case 3:
-                missionTXT.text = "Current Mission: Return To The Kitchen";
+                missionTXT.text = "Current Mission: Return To The Detective";
                 break;
             case 4:
+                missionTXT.text = "Current Mission: Collect Fried Food Animals";
                 break;
             case 5:
+                missionTXT.text = "Current Mission: Return To The Detective";
                 break;
             case 6:
+                missionTXT.text = "Current Mission: Investigate the Chicken Farm";
                 break;
             case 7:
                 break;

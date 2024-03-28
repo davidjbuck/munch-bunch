@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPCInteractable : MonoBehaviour, IInteractable
 {
-    //Tab added this, more on lines
+    //Tab added this, more on lines 23-34
     public GameObject missionBoss;
 
 
@@ -19,6 +19,8 @@ public class NPCInteractable : MonoBehaviour, IInteractable
         Debug.Log("INTERACT");
         showText();
 
+
+        //if you just defeated the goons (mission 1) and interact with an NPC, switch it to mission 2
         int tempMissNum = missionBoss.GetComponent<missionController>().getCurrentMission();
         if (tempMissNum == 1)
         {
@@ -27,8 +29,8 @@ public class NPCInteractable : MonoBehaviour, IInteractable
         }
         else if (tempMissNum == 2)
         {
-            missionBoss.GetComponent<missionController>().toggleVisibility(true);
-            missionBoss.GetComponent<missionController>().setCurrentMission(3);
+            //otherwise, its mission 2, add to the vendor interaction count
+            missionBoss.GetComponent <missionController>().mTwoFunction();
         }
         // interactUI.SetActive(false);
         //ChatBubble3D.Create(transformtransform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Happy, "Hello There!");
