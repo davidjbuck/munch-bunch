@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -412,23 +412,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 02620000
-      m_LastClickedID: 25090
-      m_ExpandedIDs: fcfaffff
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 9addffff14fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Cube (1)
-        m_OriginalName: Cube (1)
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 25090
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 8}
       m_SearchString: 
@@ -833,9 +833,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 712.8527, y: -21.725788, z: 657.1873}
+    m_Target: {x: 546.16064, y: 29.331821, z: 727.4479}
     speed: 2
-    m_Value: {x: 712.8527, y: -21.725788, z: 657.1873}
+    m_Value: {x: 546.16064, y: 29.331821, z: 727.4479}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -881,13 +881,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.1897936, y: 0.48531672, z: -0.109406024, w: 0.8467013}
+    m_Target: {x: 0.025274007, y: 0.93700147, z: -0.070888884, w: 0.3417688}
     speed: 2
-    m_Value: {x: 0.18991697, y: 0.48394287, z: -0.10909793, w: 0.8472476}
+    m_Value: {x: 0.025672097, y: 0.9371987, z: -0.072317086, w: 0.3402497}
   m_Size:
-    m_Target: 57.954796
+    m_Target: 11.564093
     speed: 2
-    m_Value: 57.954796
+    m_Value: 11.564093
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1027,7 +1027,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Characters
+    - Assets/Prefabs/Environments
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1035,16 +1035,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Characters
+  - Assets/Prefabs/Environments
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Tabitha\source\repos\munch-bunch\Big Munchin
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 31}
-    m_SelectedIDs: 287b0000
-    m_LastClickedID: 31528
-    m_ExpandedIDs: 00000000ac6f00001270000018700000
+    m_SelectedIDs: 08700000
+    m_LastClickedID: 28680
+    m_ExpandedIDs: 00000000aa6f0000e06f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ac6f0000
+    m_ExpandedIDs: 00000000aa6f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
