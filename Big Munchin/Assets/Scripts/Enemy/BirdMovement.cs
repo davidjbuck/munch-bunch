@@ -35,12 +35,15 @@ public class BirdMovement : MonoBehaviour
 	int curWaypoint = 0;
 	bool ReversePath = false;
 	public float rotationSpeed = 2.0f; // Adjust as needed
+	public Animator anim;
 
 	//public PlayerMover p1;
 	GameObject player;
 	// Start is called before the first frame update
 	void Start()
 	{
+		//anim = GetComponent<Animator>();
+
 		// Initialize variables and objects
 		navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -139,8 +142,9 @@ public class BirdMovement : MonoBehaviour
 		if (!dead && Waypoints.Length > 0)
 		{
 			Distance = Vector3.Distance(transform.position, Waypoints[curWaypoint].position);
-			if (Distance > 0.50f)
+			if (Distance > 1.50f)
 			{
+				anim.Play("Hostile Run", 0, 0.25f);
 				// Calculate the direction to the next waypoint
 				Vector3 targetDirection = Waypoints[curWaypoint].position - transform.position;
 				// Calculate the rotation needed to face the waypoint
