@@ -11,6 +11,7 @@ public class Dialogue : MonoBehaviour
 
     public string[] line;
     public float textSpeed;
+    private VoiceLines voiceLines;
 
     private int index;
     // Start is called before the first frame update
@@ -18,7 +19,9 @@ public class Dialogue : MonoBehaviour
     {
         textComponent.text = string.Empty;
         character.text = characterName;
+        voiceLines = GetComponent<VoiceLines>();
         StartDialogue();
+
     }
 
     // Update is called once per frame
@@ -42,6 +45,7 @@ public class Dialogue : MonoBehaviour
     {
         index = 0;
         StartCoroutine(TypeLine());
+        voiceLines.PlayCurrentVoiceLine();
     }
 
     IEnumerator TypeLine()
@@ -60,8 +64,13 @@ public class Dialogue : MonoBehaviour
             index++;
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
+            voiceLines.PlayCurrentVoiceLine();
         }
 
-        else gameObject.SetActive(false);
+        else
+        {
+            voiceLines.ResetVoiceLines();
+            gameObject.SetActive(false);
+        }
     }
 }
