@@ -30,7 +30,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
         else if (tempMissNum == 2)
         {
             //otherwise, its mission 2, add to the vendor interaction count
-            missionBoss.GetComponent <missionController>().mTwoFunction();
+            missionBoss.GetComponent <missionController>().missionTwoFunction();
         }
         // interactUI.SetActive(false);
         //ChatBubble3D.Create(transformtransform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Happy, "Hello There!");

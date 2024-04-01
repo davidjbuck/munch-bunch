@@ -10,8 +10,8 @@ public class missionController : MonoBehaviour
     public int currentMission = 0;
 
     private int mTwoCounter = 0;
-    private int smZeroCounter = 0;
-    private int smOneCounter = 0;
+    //private int smZeroCounter = 0;
+    //private int smOneCounter = 0;
 
 
     public void Start()
@@ -125,17 +125,17 @@ public class missionController : MonoBehaviour
         }
     }
 
-    public void sideMissionControl(int m)
-    {
-        switch (m)
-        {
-            case 0:
-                sideMissionTXT.text = "Side Mission: Harvest 3 Plants";
-                break;
-            case 1:
-                sideMissionTXT.text = "Side Mission: Gather 5 broccoli";
-                break;
-        }
-    }
+    //public void sideMissionControl(int m)
+    //{
+    //    switch (m)
+    //    {
+    //        case 0:
+    //            sideMissionTXT.text = "Side Mission: Harvest 3 Plants";
+    //            break;
+    //        case 1:
+    //            sideMissionTXT.text = "Side Mission: Gather 5 broccoli";
+    //            break;
+    //    }
+    //}
 }
 
