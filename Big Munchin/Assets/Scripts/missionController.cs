@@ -6,10 +6,12 @@ using UnityEngine;
 public class missionController : MonoBehaviour
 {
     public TextMeshProUGUI missionTXT;
+    public TextMeshProUGUI sideMissionTXT;
     public int currentMission = 0;
 
-    private int mZeroCounter = 0;
-    private int mOneCounter = 0;
+    private int mTwoCounter = 0;
+    private int smZeroCounter = 0;
+    private int smOneCounter = 0;
 
 
     public void Start()
@@ -20,6 +22,8 @@ public class missionController : MonoBehaviour
         missionControl(currentMission);
 
     }
+
+    //missions
     public int getCurrentMission()
     {
         return currentMission;
@@ -30,6 +34,19 @@ public class missionController : MonoBehaviour
         PlayerPrefs.SetInt("mission", currentMission);
         missionControl(currentMission);
     }
+
+    //side missions
+    //public int getCurrentSideMission()
+    //{
+    //    return currentMission;
+    //}
+    //public void setCurrentSideMission(int i)
+    //{
+    //    currentMission = i;
+    //    PlayerPrefs.SetInt("mission", currentMission);
+    //    missionControl(currentMission);
+    //}
+
     public void toggleVisibility(bool b)
     {
         if (b == false)
@@ -42,15 +59,40 @@ public class missionController : MonoBehaviour
         }
     }
 
-    public void mTwoFunction()
+    //missions
+    public void missionTwoFunction()
     {
-        mZeroCounter++;
-        Debug.Log("counter: " +  mZeroCounter);
-        if (mZeroCounter >= 4)
+        mTwoCounter++;
+        Debug.Log("counter: " + mTwoCounter);
+        if (mTwoCounter >= 4)
         {
             setCurrentMission(3);
         }
     }
+    
+
+
+    //side missions
+    //public void sMissionZeroFunction()
+    //{
+    //    smZeroCounter++;
+    //    Debug.Log("counter: " + smZeroCounter);
+    //    if (smZeroCounter >= 4)
+    //    {
+    //        setCurrentMission(3);
+    //    }
+    //}
+    
+    //public void sMissionOneFunction()
+    //{
+    //    smOneCounter++;
+    //    Debug.Log("counter: " + smOneCounter);
+    //    if (smOneCounter >= 4)
+    //    {
+    //        setCurrentMission(3);
+    //    }
+    //}
+
 
 
     public void missionControl(int m)
@@ -79,6 +121,19 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Current Mission: Investigate the Chicken Farm";
                 break;
             case 7:
+                break;
+        }
+    }
+
+    public void sideMissionControl(int m)
+    {
+        switch (m)
+        {
+            case 0:
+                sideMissionTXT.text = "Side Mission: Harvest 3 Plants";
+                break;
+            case 1:
+                sideMissionTXT.text = "Side Mission: Gather 5 broccoli";
                 break;
         }
     }
