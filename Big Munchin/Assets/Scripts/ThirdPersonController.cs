@@ -1,4 +1,3 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class ThirdPersonController : MonoBehaviour
 {   //variables to handle orientation and movement
     Camera cam;
-    public Vector3 startingRotation;
     public Transform player;
     public Transform playerCollider;
     public Rigidbody rb;
