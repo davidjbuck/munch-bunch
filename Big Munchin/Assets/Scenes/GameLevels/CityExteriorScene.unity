@@ -1147,6 +1147,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113110177}
   m_CullTransparentMesh: 1
+--- !u!1001 &123584544
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 699.631
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 22.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 536.158
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.41054693
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.41040376
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5756686
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5758695
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 109.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 4381204228948306222, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      propertyPath: m_Name
+      value: NPC_Female (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4381204228948306222, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2028501273}
+  m_SourcePrefab: {fileID: 100100000, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
 --- !u!114 &190251144 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3425300385578941862, guid: 974c6c7aa7e3b754686f500661cea5b0, type: 3}
@@ -2264,6 +2324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionBoss: {fileID: 2022924127}
   interactText: Speak With Vendor
+  NPCName: 
   allyText: {fileID: 1765593098}
   Player: {fileID: 1375420113}
 --- !u!1 &705844959
@@ -2721,6 +2782,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8259308288942467152, guid: 6c92b08874e0fc24d87db623f8fac29e, type: 3}
+--- !u!114 &835514820 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8349674185012743984, guid: e3f71ae6d3d142043b8eb3f422f98d5a, type: 3}
+  m_PrefabInstance: {fileID: 1447587564}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &858388212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3226,6 +3298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionBoss: {fileID: 2022924127}
   interactText: Speak With Vendor
+  NPCName: 
   allyText: {fileID: 1292590403}
   Player: {fileID: 1375420113}
 --- !u!1 &1023673872
@@ -3877,10 +3950,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6442299156265651544, guid: 12d65237516599c41bce21f987c685c1, type: 3}
-      propertyPath: m_Name
-      value: detective text
-      objectReference: {fileID: 0}
     - target: {fileID: 6979894893606320852, guid: 12d65237516599c41bce21f987c685c1, type: 3}
       propertyPath: playerInteract
       value: 
@@ -4041,11 +4110,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1217891342492995414, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021495101
+      value: 0.0000000021495101
       objectReference: {fileID: 0}
     - target: {fileID: 1217891342492995414, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 7.441277e-11
+      value: -7.441277e-11
       objectReference: {fileID: 0}
     - target: {fileID: 1638336558870278599, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4105,11 +4174,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000017316166
+      value: -0.000000017316166
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -9.142257e-10
+      value: 9.142257e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5811156132911578989, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: hitboxPropertyCollection.Array.size
@@ -4213,11 +4282,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7657924475019562170, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021495106
+      value: 0.0000000021495106
       objectReference: {fileID: 0}
     - target: {fileID: 7657924475019562170, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 7.4412795e-11
+      value: -7.4412795e-11
       objectReference: {fileID: 0}
     - target: {fileID: 7749656350258619311, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4368,6 +4437,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1601397303998170637, guid: e3f71ae6d3d142043b8eb3f422f98d5a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2491305676520991435, guid: e3f71ae6d3d142043b8eb3f422f98d5a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4451,6 +4524,10 @@ PrefabInstance:
     - target: {fileID: 8201530377694216797, guid: e3f71ae6d3d142043b8eb3f422f98d5a, type: 3}
       propertyPath: m_Name
       value: Menu Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349674185012743984, guid: e3f71ae6d3d142043b8eb3f422f98d5a, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5435,6 +5512,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 710133573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1748027147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8312806685670553406, guid: 12d65237516599c41bce21f987c685c1, type: 3}
+  m_PrefabInstance: {fileID: 1292590402}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1749849445
 GameObject:
   m_ObjectHideFlags: 0
@@ -5593,6 +5675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionBoss: {fileID: 2022924127}
   interactText: Speak With Vendor
+  NPCName: 
   allyText: {fileID: 2024436061}
   Player: {fileID: 1375420113}
 --- !u!1 &1951628557
@@ -5727,8 +5810,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionTXT: {fileID: 1447587565}
-  sideMissionTXT: {fileID: 0}
+  sideMissionTXT: {fileID: 835514820}
   currentMission: 0
+  currentSideMission: 0
 --- !u!4 &2022924129
 Transform:
   m_ObjectHideFlags: 0
@@ -5749,6 +5833,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1338590632065527394, guid: 12d65237516599c41bce21f987c685c1, type: 3}
   m_PrefabInstance: {fileID: 1292590402}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2028501272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4381204228948306222, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
+  m_PrefabInstance: {fileID: 123584544}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2028501273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028501272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b893c6c05967bb54090541a6da87a2dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionBoss: {fileID: 2022924127}
+  interactText: Speak With Vendor
+  NPCName: SMHarvestPlants
+  allyText: {fileID: 1748027147}
+  Player: {fileID: 1375420113}
 --- !u!1 &2088442364
 GameObject:
   m_ObjectHideFlags: 0
@@ -6098,6 +6204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionBoss: {fileID: 2022924127}
   interactText: Speak to Detective
+  NPCName: Detective
   allyText: {fileID: 442541255}
   Player: {fileID: 1375420113}
 --- !u!1660057539 &9223372036854775807
@@ -6119,5 +6226,6 @@ SceneRoots:
   - {fileID: 76280960}
   - {fileID: 93758389}
   - {fileID: 858388212}
+  - {fileID: 123584544}
   - {fileID: 872373234}
   - {fileID: 916210271}

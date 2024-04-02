@@ -8,16 +8,22 @@ public class missionController : MonoBehaviour
     public TextMeshProUGUI missionTXT;
     public TextMeshProUGUI sideMissionTXT;
     public int currentMission = 0;
+    public int currentSideMission;
 
+
+    //mission variables
     private int mTwoCounter = 0;
-    //private int smZeroCounter = 0;
-    //private int smOneCounter = 0;
+    
+    
+    //side mission variables
+    private int smZeroCounter = 0;
+    private int smOneCounter = 0;
 
 
     //sets current mission to saved prefab
     public void Start()
     {
-        setCurrentMission(2);
+        setCurrentMission(1);
         currentMission = PlayerPrefs.GetInt("mission", currentMission);
         Debug.Log("current mission: " + currentMission);
         missionControl(currentMission);
@@ -100,16 +106,15 @@ public class missionController : MonoBehaviour
 
     //~SIDE MISSIONS~
 
-    //public int getCurrentSideMission()
-    //{
-    //    return currentMission;
-    //}
-    //public void setCurrentSideMission(int i)
-    //{
-    //    currentMission = i;
-    //    PlayerPrefs.SetInt("mission", currentMission);
-    //    missionControl(currentMission);
-    //}
+    public int getCurrentSideMission()
+    {
+        return currentSideMission;
+    }
+    public void setCurrentSideMission(int i)
+    {
+        currentSideMission = i;
+        sideMissionControl(currentSideMission);
+    }
 
 
     //side missions
@@ -133,17 +138,18 @@ public class missionController : MonoBehaviour
     //    }
     //}
 
-    //public void sideMissionControl(int m)
-    //{
-    //    switch (m)
-    //    {
-    //        case 0:
-    //            sideMissionTXT.text = "Side Mission: Harvest 3 Plants";
-    //            break;
-    //        case 1:
-    //            sideMissionTXT.text = "Side Mission: Gather 5 broccoli";
-    //            break;
-    //    }
-    //}
+    public void sideMissionControl(int m)
+    {
+        switch (m)
+        {
+            case 0:
+                sideMissionTXT.text = "Side Mission: Harvest 3 Plants";
+                
+                break;
+            case 1:
+                sideMissionTXT.text = "Side Mission: Gather 5 broccoli";
+                break;
+        }
+    }
 }
 

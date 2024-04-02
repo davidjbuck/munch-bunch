@@ -29,7 +29,7 @@ public class PlayerInteractUI : MonoBehaviour
         allyInteractContainer.SetActive(true);
         interactTextMeshProUGUI.text = interactable.GetInteractText();
     }
-    private void Hide()
+    public void Hide()
     {
         allyInteractContainer.SetActive(false);
 
