@@ -8,7 +8,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
     public GameObject missionBoss;
 
 
-    [SerializeField] private string interactText;
+    [SerializeField] private string interactText;  
     public GameObject allyText;
     public GameObject Player;
     private bool interacted;

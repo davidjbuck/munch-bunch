@@ -62,6 +62,7 @@ public class Dialogue : MonoBehaviour
             StartCoroutine(TypeLine());
         }
 
-        else gameObject.SetActive(false);
+        //TAB CHANGE: commented this out
+        //else gameObject.SetActive(false);
     }
 }

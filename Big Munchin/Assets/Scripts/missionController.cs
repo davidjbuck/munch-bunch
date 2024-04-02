@@ -14,6 +14,7 @@ public class missionController : MonoBehaviour
     //private int smOneCounter = 0;
 
 
+    //sets current mission to saved prefab
     public void Start()
     {
         setCurrentMission(2);
@@ -23,30 +24,9 @@ public class missionController : MonoBehaviour
 
     }
 
-    //missions
-    public int getCurrentMission()
-    {
-        return currentMission;
-    }
-    public void setCurrentMission(int i)
-    {
-        currentMission = i;
-        PlayerPrefs.SetInt("mission", currentMission);
-        missionControl(currentMission);
-    }
+    //~MISSIONS~
 
-    //side missions
-    //public int getCurrentSideMission()
-    //{
-    //    return currentMission;
-    //}
-    //public void setCurrentSideMission(int i)
-    //{
-    //    currentMission = i;
-    //    PlayerPrefs.SetInt("mission", currentMission);
-    //    missionControl(currentMission);
-    //}
-
+    //toggles visibility of mission text
     public void toggleVisibility(bool b)
     {
         if (b == false)
@@ -59,7 +39,21 @@ public class missionController : MonoBehaviour
         }
     }
 
-    //missions
+    //getter for current mission
+    public int getCurrentMission()
+    {
+        return currentMission;
+    }
+
+    //setter for current mission (also saves in prefab)
+    public void setCurrentMission(int i)
+    {
+        currentMission = i;
+        PlayerPrefs.SetInt("mission", currentMission);
+        missionControl(currentMission);
+    }
+
+    //controller for mission two (increases when player interacts with market vendors)
     public void missionTwoFunction()
     {
         mTwoCounter++;
@@ -69,32 +63,8 @@ public class missionController : MonoBehaviour
             setCurrentMission(3);
         }
     }
-    
 
-
-    //side missions
-    //public void sMissionZeroFunction()
-    //{
-    //    smZeroCounter++;
-    //    Debug.Log("counter: " + smZeroCounter);
-    //    if (smZeroCounter >= 4)
-    //    {
-    //        setCurrentMission(3);
-    //    }
-    //}
-    
-    //public void sMissionOneFunction()
-    //{
-    //    smOneCounter++;
-    //    Debug.Log("counter: " + smOneCounter);
-    //    if (smOneCounter >= 4)
-    //    {
-    //        setCurrentMission(3);
-    //    }
-    //}
-
-
-
+    //controls which mission text is currently displayed
     public void missionControl(int m)
     {
         switch (m)
@@ -124,6 +94,44 @@ public class missionController : MonoBehaviour
                 break;
         }
     }
+
+
+
+
+    //~SIDE MISSIONS~
+
+    //public int getCurrentSideMission()
+    //{
+    //    return currentMission;
+    //}
+    //public void setCurrentSideMission(int i)
+    //{
+    //    currentMission = i;
+    //    PlayerPrefs.SetInt("mission", currentMission);
+    //    missionControl(currentMission);
+    //}
+
+
+    //side missions
+    //public void sMissionZeroFunction()
+    //{
+    //    smZeroCounter++;
+    //    Debug.Log("counter: " + smZeroCounter);
+    //    if (smZeroCounter >= 4)
+    //    {
+    //        setCurrentMission(3);
+    //    }
+    //}
+
+    //public void sMissionOneFunction()
+    //{
+    //    smOneCounter++;
+    //    Debug.Log("counter: " + smOneCounter);
+    //    if (smOneCounter >= 4)
+    //    {
+    //        setCurrentMission(3);
+    //    }
+    //}
 
     //public void sideMissionControl(int m)
     //{
