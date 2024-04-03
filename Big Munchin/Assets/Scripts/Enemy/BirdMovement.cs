@@ -40,6 +40,8 @@ public class BirdMovement : MonoBehaviour
 	bool attackingPlayer;
 	//public PlayerMover p1;
 	GameObject player;
+	Animator animator;
+
 	// Start is called before the first frame update
 	void Start()
 	{

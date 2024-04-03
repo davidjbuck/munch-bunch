@@ -12,6 +12,7 @@ public class RunningBird : MonoBehaviour
     private float attackTimer = 0f;
     GameObject player;
     Vector3 playerPosition;
+    public Animator animator;
 
     private UnityEngine.AI.NavMeshAgent navAgent;
 
@@ -24,6 +25,10 @@ public class RunningBird : MonoBehaviour
         navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerPosition = player.transform.position;
+        animator.SetBool("Idle", false);
+        animator.SetBool("Walk", true);
+        animator.SetBool("Chasing", false);
+        animator.SetBool("Attack", false);
     }
 
     void Update()
@@ -64,11 +69,16 @@ public class RunningBird : MonoBehaviour
 
     void Idle()
     {
+
         // Check if player is within chase range
         if (Vector3.Distance(transform.position, playerPosition) <= chaseRange)
         {
             // If player is within chase range, switch to chase behavior
             aiBehavior = Behaviors.Chase;
+            animator.SetBool("Idle", false);
+            animator.SetBool("Walk", false);
+            animator.SetBool("Chasing", true);
+            animator.SetBool("Attack", false);
             return;
         }
 
@@ -82,6 +92,10 @@ public class RunningBird : MonoBehaviour
                 isIdle = false;
                 navAgent.isStopped = false;
                 aiBehavior = Behaviors.RandomWalk;
+                animator.SetBool("Idle", false);
+                animator.SetBool("Walk", true);
+                animator.SetBool("Chasing", false);
+                animator.SetBool("Attack", false);
                 return;
             }
             else
@@ -97,6 +111,8 @@ public class RunningBird : MonoBehaviour
 
     void RandomWalk()
     {
+
+
         idleTimer = 0;
         navAgent.isStopped = false;
         isIdle = false;
@@ -109,12 +125,13 @@ public class RunningBird : MonoBehaviour
             UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, 10f, UnityEngine.AI.NavMesh.AllAreas);
             Vector3 finalPosition = hit.position;
             navAgent.SetDestination(finalPosition);
-        }
-        if(navAgent.hasPath && navAgent.remainingDistance < 1f)
-        {
-            if (Random.Range(0, 4) == 0) // 1 in 4 chance
+            if (Random.Range(0, 6) == 0) // 1 in 4 chance
             {
                 aiBehavior = Behaviors.Idle;
+                animator.SetBool("Idle", true);
+                animator.SetBool("Walk", false);
+                animator.SetBool("Chasing", false);
+                animator.SetBool("Attack", false);
                 StartIdle();
             }
         }
@@ -124,11 +141,15 @@ public class RunningBird : MonoBehaviour
     {
         isIdle = true;
         navAgent.isStopped = true;
-        idleDuration = Random.Range(1f, 3f);
+        idleDuration = Random.Range(5f, 10f);
         idleTimer = idleDuration;
     }
     void Chase()
     {
+        animator.SetBool("Idle", false);
+        animator.SetBool("Walk", false);
+        animator.SetBool("Chasing", true);
+        animator.SetBool("Attack", false);
         idleTimer = 0;
         navAgent.isStopped = false;
         isIdle = false;
@@ -137,6 +158,10 @@ public class RunningBird : MonoBehaviour
         {
             // If player is out of range, switch to idle behavior
             aiBehavior = Behaviors.Idle;
+            animator.SetBool("Idle", true);
+            animator.SetBool("Walk", false);
+            animator.SetBool("Chasing", false);
+            animator.SetBool("Attack", false);
             return;
         }
 
@@ -147,6 +172,10 @@ public class RunningBird : MonoBehaviour
         if (Vector3.Distance(transform.position, playerPosition) <= attackRange)
         {
             aiBehavior = Behaviors.Attack;
+            animator.SetBool("Idle", false);
+            animator.SetBool("Walk", false);
+            animator.SetBool("Chasing", false);
+            animator.SetBool("Attack", true);
         }
     }
 
@@ -156,6 +185,10 @@ public class RunningBird : MonoBehaviour
         if (Vector3.Distance(transform.position, playerPosition) > chaseRange)
         {
             aiBehavior = Behaviors.Chase;
+            animator.SetBool("Idle", false);
+            animator.SetBool("Walk", false);
+            animator.SetBool("Chasing", true);
+            animator.SetBool("Attack", false);
             return;
         }
 
