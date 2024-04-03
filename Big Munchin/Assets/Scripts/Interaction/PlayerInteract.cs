@@ -74,7 +74,7 @@ public class PlayerInteract : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, interactable.GetTransform().position) >= interactRange)
             {
-                Debug.Log("RESET INTERACTION HIDDEN");
+                //Debug.Log("RESET INTERACTION HIDDEN");
                 hideInteraction = false;
             }
         }

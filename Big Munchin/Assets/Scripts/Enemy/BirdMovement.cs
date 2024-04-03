@@ -148,7 +148,7 @@ public class BirdMovement : MonoBehaviour
 			float PlayerDistance = Vector3.Distance(transform.position, PlayerDestination);
 			if(PlayerDistance < 100 && !attackingPlayer)
             {
-				Debug.Log("ATTACK PLAYER");
+				//Debug.Log("ATTACK PLAYER");
 				SetPlayerWaypoint();
 				attackingPlayer = true;
             }
@@ -183,7 +183,7 @@ public class BirdMovement : MonoBehaviour
 	{
         if (!nearPlayer && Destination != PlayerDestination)
         {
-			Debug.Log("RESET BIRD ATTACK");
+			//Debug.Log("RESET BIRD ATTACK");
 			attackingPlayer = false;
         }
 		int newWaypoint;
