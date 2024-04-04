@@ -41,7 +41,8 @@ public class BirdMovement : MonoBehaviour
 	//public PlayerMover p1;
 	GameObject player;
 	Animator animator;
-
+	public int damage;
+	public float stunTime;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -198,9 +199,10 @@ public class BirdMovement : MonoBehaviour
 		curWaypoint = newWaypoint;
 		Destination = Waypoints[curWaypoint].position;
 	}
-	void OnCollisionEnter(Collision col)
+	void OnTriggerEnter(Collider col)
 	{
 		UpdateWaypoint(true);
+		//col.TakeDamage(1, 1f);
 	}
 }
 

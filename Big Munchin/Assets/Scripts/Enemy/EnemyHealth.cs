@@ -36,6 +36,7 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log("ENEMY TOUCHED");
         if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0) 
         {
             //attackProps = CollisionManager.GetComponent<CollisionManager>();

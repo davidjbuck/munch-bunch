@@ -7,7 +7,7 @@ public class RunningBird : MonoBehaviour
     public Behaviors aiBehavior = Behaviors.Idle;
     public Transform playerTransform;
     public float chaseRange = 10f;
-    public float attackRange = 2f;
+    public float attackRange = 1.5f;
     public float attackCooldown = 2f;
     private float attackTimer = 0f;
     GameObject player;
@@ -19,6 +19,9 @@ public class RunningBird : MonoBehaviour
     private bool isIdle = false;
     private float idleTimer = 0f;
     private float idleDuration = 0f;
+    public Transform attackSpawn;
+    public GameObject birdAttack;
+    GameObject bAttack;
 
     void Start()
     {
@@ -63,8 +66,19 @@ public class RunningBird : MonoBehaviour
         // Update attack cooldown
         if (attackTimer > 0)
         {
+            //Debug.Log(attackTimer);
             attackTimer -= Time.deltaTime;
         }
+        if (aiBehavior == Behaviors.Attack)
+        {
+            Vector3 playerPosition = new Vector3(player.transform.position.x, this.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z);
+            this.transform.LookAt(playerPosition);
+            if (attackTimer <= 0)
+            {
+                startAttack();
+            }
+        }
+
     }
 
     void Idle()
@@ -171,6 +185,8 @@ public class RunningBird : MonoBehaviour
         // If within attack range, switch to attack behavior
         if (Vector3.Distance(transform.position, playerPosition) <= attackRange)
         {
+            navAgent.SetDestination(this.transform.position);
+
             aiBehavior = Behaviors.Attack;
             animator.SetBool("Idle", false);
             animator.SetBool("Walk", false);
@@ -181,6 +197,9 @@ public class RunningBird : MonoBehaviour
 
     void Attack()
     {
+        navAgent.SetDestination(this.transform.position);
+//        startAttack();
+        Debug.Log("ATTACKING");
         // If player is out of range, switch to chase behavior
         if (Vector3.Distance(transform.position, playerPosition) > chaseRange)
         {
@@ -195,14 +214,22 @@ public class RunningBird : MonoBehaviour
         // If attack is on cooldown, return
         if (attackTimer > 0)
         {
+            attackTimer -= Time.deltaTime;
             return;
         }
 
-        // Attack the player
-        // Replace this with your attack logic
-        Debug.Log("Attacking player!");
+        // If player is within attack range, attack
+        if (Vector3.Distance(transform.position, playerPosition) <= attackRange)
+        {
+            // Perform attack action here
 
-        // Reset attack cooldown
+        }
+    }
+    public void startAttack()
+    {
+        bAttack = Instantiate(birdAttack, attackSpawn.transform.position, attackSpawn.transform.rotation);
+        Destroy(bAttack, 0.1f);
         attackTimer = attackCooldown;
+        Debug.Log("Attacking player!");
     }
 }
