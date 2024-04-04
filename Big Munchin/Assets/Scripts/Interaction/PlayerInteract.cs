@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    [SerializeField] private PlayerInteractUI playerInteractUI;
+    public bool hideInteraction;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             IInteractable interactable = GetInteractableObject();
             float interactRange = 4f;
-            if(interactable != null)
+            if (interactable != null)
             {
                 interactable.Interact(transform);
                 Debug.Log("INTERACT TOGGLED");
+                hideInteraction = true;
+                //playerInteractUI.InteractHide();
             }
 
             /*
@@ -53,21 +57,30 @@ public class PlayerInteract : MonoBehaviour
             }
         }
         IInteractable closestInteractable = null;
-        foreach(IInteractable interactable in interactableList)
+        foreach (IInteractable interactable in interactableList)
         {
-            if(closestInteractable == null)
+            if (closestInteractable == null)
             {
                 closestInteractable = interactable;
-            } else
+            }
+            else
             {
-                if(Vector3.Distance(transform.position,interactable.GetTransform().position)<
+                if (Vector3.Distance(transform.position, interactable.GetTransform().position) <
                     Vector3.Distance(transform.position, closestInteractable.GetTransform().position))
                 {
+
                     closestInteractable = interactable;
                 }
             }
+            if (Vector3.Distance(transform.position, interactable.GetTransform().position) >= interactRange)
+            {
+                //Debug.Log("RESET INTERACTION HIDDEN");
+                hideInteraction = false;
+            }
         }
+
         return closestInteractable;
         //return null;
     }
 }
+

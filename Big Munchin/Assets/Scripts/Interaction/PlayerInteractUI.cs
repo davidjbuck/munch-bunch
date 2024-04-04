@@ -11,15 +11,23 @@ public class PlayerInteractUI : MonoBehaviour
     private int counter;
     private void Update()
     {
-        if(playerInteract.GetInteractableObject() != null)
+        if (playerInteract.hideInteraction)
         {
-            Show(playerInteract.GetInteractableObject());
+            Hide();
+        }
+        if (playerInteract.GetInteractableObject() != null)
+        {
+            if (!playerInteract.hideInteraction)
+            {
+                Show(playerInteract.GetInteractableObject());
+            }
             counter = 0;
-        } else if (counter < 100)
+        }
+        else if (counter < 100)
         {
             counter++;
         }
-        if(counter >= 100)
+        if (counter >= 100)
         {
             Hide();
         }
@@ -29,9 +37,16 @@ public class PlayerInteractUI : MonoBehaviour
         allyInteractContainer.SetActive(true);
         interactTextMeshProUGUI.text = interactable.GetInteractText();
     }
-    public void Hide()
+    private void Hide()
     {
         allyInteractContainer.SetActive(false);
-
+        //Debug.Log("HIDE INTERACT THING");
     }
+    public void InteractHide()
+    {
+        allyInteractContainer.SetActive(false);
+        counter = 0;
+    }
+
 }
+
