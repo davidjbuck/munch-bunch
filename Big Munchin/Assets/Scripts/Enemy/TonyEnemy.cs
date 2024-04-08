@@ -18,10 +18,13 @@ public class TonyEnemy : MonoBehaviour
     private bool charging;
     private float stunTimer = 0f;
     private float attackTimer = 0f;
-
+    public float meatballCooldown;
+    private float meatballTimer;
+    public Transform attackSpawn;
+    public GameObject meatballPrefab;
     private UnityEngine.AI.NavMeshAgent navAgent;
     public Animator animator;
-
+    public float meatballSpeed;
     void Start()
     {
         navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -65,6 +68,10 @@ public class TonyEnemy : MonoBehaviour
         if (attackTimer > 0)
         {
             attackTimer -= Time.deltaTime;
+        }
+        if(meatballTimer > 0)
+        {
+            meatballTimer -= Time.deltaTime;
         }
     }
 
@@ -181,16 +188,20 @@ public class TonyEnemy : MonoBehaviour
         if (Random.Range(0, 2) == 0)
         {
             // 50% chance to charge
-            aiBehavior = Behaviors.Charge;
+            aiBehavior = Behaviors.ThrowMeatball;
+
+            //aiBehavior = Behaviors.Charge;
             SetAnimatorBools();
         }
         else
         {
-            aiBehavior = Behaviors.Charge;
-            SetAnimatorBools();
+          //  aiBehavior = Behaviors.Charge;
 
             // 50% chance to throw meatball
-            // aiBehavior = Behaviors.ThrowMeatball;
+             aiBehavior = Behaviors.ThrowMeatball;
+
+            SetAnimatorBools();
+
         }
 
         // Start attack cooldown
@@ -199,7 +210,40 @@ public class TonyEnemy : MonoBehaviour
 
     void ThrowMeatball()
     {
-        // Implement throwMeatball behavior here
+        navAgent.SetDestination(transform.position);
+        if (meatballTimer <= 0)
+        {
+            // Calculate throw direction towards the player
+            Vector3 throwDirection = (playerPosition - transform.position).normalized;
+
+            // Add a random offset within the 10-degree window in each direction
+            float randomAngle = Random.Range(-10f, 10f);
+            throwDirection = Quaternion.Euler(0f, randomAngle, 0f) * throwDirection;
+
+            // Calculate the initial velocity for the meatball (horizontal and vertical)
+            Vector3 initialVelocity = throwDirection * meatballSpeed;
+
+            // Set the initial velocity of the meatball
+            GameObject meatball = Instantiate(meatballPrefab, attackSpawn.position, Quaternion.identity);
+            Rigidbody meatballRb = meatball.GetComponent<Rigidbody>();
+            meatballRb.velocity = initialVelocity;
+
+            // Reset the meatball throw cooldown timer
+            meatballTimer = meatballCooldown;
+        }
+        else
+        {
+            // Meatball is on cooldown, do nothing
+            return;
+        }
+
+        // Check if the meatball has reached the player
+        if (Vector3.Distance(transform.position, playerPosition) <= 4f)
+        {
+            // Switch back to Idle behavior after throwing the meatball
+            aiBehavior = Behaviors.Idle;
+            SetAnimatorBools();
+        }
     }
 
     void Charge()
