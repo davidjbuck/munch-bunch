@@ -8015,6 +8015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flying Bird
       objectReference: {fileID: 0}
+    - target: {fileID: 1420638889431589266, guid: d6568ea04526abf42a8e5c7138451972, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7833686728557932172, guid: d6568ea04526abf42a8e5c7138451972, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8222,6 +8226,75 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88009e7b4b3e66e449801823eb2a9dbd, type: 3}
+--- !u!1001 &1553163335971697403
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1951209955738347083, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: birdAttack
+      value: 
+      objectReference: {fileID: 688057940}
+    - target: {fileID: 3693275314620056661, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693275314620056661, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -25.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4760002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165916443383978686, guid: cac4d8620bd025446808afd9b197e741, type: 3}
+      propertyPath: m_Name
+      value: ChickenEnemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cac4d8620bd025446808afd9b197e741, type: 3}
 --- !u!1001 &1769642128833459755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8745,6 +8818,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1345138837301099358, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345138837301099358, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345138837301099358, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182113842467055181, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182113842467055181, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4894107721686527047, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.73
@@ -8788,6 +8881,10 @@ PrefabInstance:
     - target: {fileID: 7649807073430689491, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
       propertyPath: m_Name
       value: Running Bird
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649807073430689491, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8981885117605062648, guid: ff52d547d3acd1947b3ba47092968881, type: 3}
       propertyPath: birdAttack
@@ -8836,3 +8933,4 @@ SceneRoots:
   - {fileID: 1115944507131012090}
   - {fileID: 8165549257184298269}
   - {fileID: 688057944}
+  - {fileID: 1553163335971697403}
