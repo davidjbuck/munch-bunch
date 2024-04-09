@@ -11,8 +11,8 @@ public class TonyEnemy : MonoBehaviour
     public float chaseRange = 10f;
     public float attackRange = 1.5f;
     public float attackCooldown = 2f;
-    public float chargeSpeed = 5f;
-
+    public float chargeSpeed = 10f;
+    public float normalSpeed = 5f;
     private Vector3 playerPosition;
     private Vector3 tempPlayerPosition;
     private bool charging;
@@ -77,6 +77,8 @@ public class TonyEnemy : MonoBehaviour
 
     void SetAnimatorBools()
     {
+        navAgent.speed = normalSpeed;
+
         // Set animator state bools based on current behavior
         animator.SetBool("Idle", aiBehavior == Behaviors.Idle);
         animator.SetBool("MoveAway", aiBehavior == Behaviors.MoveAway);
@@ -113,12 +115,10 @@ public class TonyEnemy : MonoBehaviour
     void MoveAway()
     {
         // Move away from the player
-        Vector3 direction = transform.position - playerPosition;
-        direction.y = 0; // Ensure movement is on the XZ plane
-        direction.Normalize();
-        Vector3 targetPosition = transform.position + direction * moveAwayDistance;
-        navAgent.SetDestination(targetPosition);
-
+        Vector3 Destination = playerPosition;
+        float Distance = Vector3.Distance(transform.position, Destination);
+        Destination = transform.position + (transform.position - playerPosition);
+        navAgent.SetDestination(Destination);
         // Check conditions to switch behavior
         if (Vector3.Distance(transform.position, playerPosition) > moveAwayDistance)
         {
@@ -188,9 +188,8 @@ public class TonyEnemy : MonoBehaviour
         if (Random.Range(0, 2) == 0)
         {
             // 50% chance to charge
-            aiBehavior = Behaviors.ThrowMeatball;
-
-            //aiBehavior = Behaviors.Charge;
+            //aiBehavior = Behaviors.ThrowMeatball;
+            aiBehavior = Behaviors.Charge;
             SetAnimatorBools();
         }
         else
@@ -210,6 +209,8 @@ public class TonyEnemy : MonoBehaviour
 
     void ThrowMeatball()
     {
+        Vector3 lookPlayerPosition = new Vector3(playerTransform.position.x, this.transform.position.y, playerTransform.position.z);
+        this.transform.LookAt(lookPlayerPosition);
         navAgent.SetDestination(transform.position);
         if (meatballTimer <= 0)
         {
@@ -248,6 +249,7 @@ public class TonyEnemy : MonoBehaviour
 
     void Charge()
     {
+        navAgent.speed = chargeSpeed;
 
         if (!charging)
         {
@@ -262,6 +264,8 @@ public class TonyEnemy : MonoBehaviour
         // Check if reached player's position
         if (Vector3.Distance(transform.position, tempPlayerPosition) <= 1f)
         {
+            navAgent.speed = normalSpeed;
+
             Debug.Log(Vector3.Distance(transform.position, tempPlayerPosition) + "DISTANCE");
             charging = false;
             // Apply stun once reached
@@ -272,8 +276,20 @@ public class TonyEnemy : MonoBehaviour
     // Method to apply stun effect
     public void ApplyStun()
     {
+        navAgent.speed = normalSpeed;
         aiBehavior = Behaviors.Stunned;
         stunTimer = stunDuration;
         SetAnimatorBools();
+    }
+    void OnTriggerEnter(Collider col)
+    {
+        
+        if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0)
+        {
+            navAgent.speed = normalSpeed;
+
+            Debug.Log("TONY HIT");
+            aiBehavior = Behaviors.MoveAway;
+        }
     }
 }

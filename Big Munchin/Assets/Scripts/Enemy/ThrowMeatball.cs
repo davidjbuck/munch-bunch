@@ -9,6 +9,7 @@ public class ThrowMeatball : MonoBehaviour
 
     private void Start()
     {
+        /*
         if (player == null)
         {
             Debug.LogError("Player transform not assigned!");
@@ -18,6 +19,7 @@ public class ThrowMeatball : MonoBehaviour
             ThrowMeatballAttack();
 
         }
+        */
     }
 
     private void Update()
@@ -28,9 +30,15 @@ public class ThrowMeatball : MonoBehaviour
         }
         */
     }
-
+    void OnTriggerEnter(Collider col)
+    {
+        Debug.Log("MEATBALL HIT"); 
+        Destroy(this);
+    }
+    /*
     private void ThrowMeatballAttack()
     {
+        
         // Calculate the direction towards the player
         Vector3 targetPosition = player.position;
         Vector3 throwDirection = (targetPosition - transform.position).normalized;
@@ -59,4 +67,5 @@ public class ThrowMeatball : MonoBehaviour
         // Apply additional force to account for the initial throw force
         rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
     }
+    */
 }
