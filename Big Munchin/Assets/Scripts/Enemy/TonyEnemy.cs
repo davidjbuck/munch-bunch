@@ -239,10 +239,10 @@ public class TonyEnemy : MonoBehaviour
         }
 
         // Check if the meatball has reached the player
-        if (Vector3.Distance(transform.position, playerPosition) <= 4f)
+        if (Vector3.Distance(transform.position, playerPosition) >= 8.5f)
         {
             // Switch back to Idle behavior after throwing the meatball
-            aiBehavior = Behaviors.Idle;
+            aiBehavior = Behaviors.Chase;
             SetAnimatorBools();
         }
     }
@@ -284,7 +284,7 @@ public class TonyEnemy : MonoBehaviour
     void OnTriggerEnter(Collider col)
     {
         
-        if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0)
+        if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0 && aiBehavior != Behaviors.Stunned)
         {
             navAgent.speed = normalSpeed;
 

@@ -61,7 +61,7 @@ public class BirdMovement : MonoBehaviour
 	void Update()
 	{
 		PlayerDestination = GameObject.FindGameObjectWithTag("Player").transform.position;
-
+		PlayerDestination.y = GameObject.FindGameObjectWithTag("Player").transform.position.y + 1f;
 		// Perform AI behaviors if not dead
 		if (dead == false)
 		{
