@@ -15,7 +15,8 @@ public class RunningBird : MonoBehaviour
     public Animator animator;
 
     private UnityEngine.AI.NavMeshAgent navAgent;
-
+    public MovesetHolder[] enemyMovesets;
+    MovesetHolder enemyActiveMoveset;
     private bool isIdle = false;
     private float idleTimer = 0f;
     private float idleDuration = 0f;
@@ -25,6 +26,8 @@ public class RunningBird : MonoBehaviour
 
     void Start()
     {
+        enemyActiveMoveset = enemyMovesets[0];
+
         navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerPosition = player.transform.position;
@@ -227,9 +230,15 @@ public class RunningBird : MonoBehaviour
     }
     public void startAttack()
     {
+        enemyActiveMoveset.LightAttackCombo();
+        attackTimer = attackCooldown;
+
+        /*
+
         bAttack = Instantiate(birdAttack, attackSpawn.transform.position, attackSpawn.transform.rotation);
         Destroy(bAttack, 0.1f);
         attackTimer = attackCooldown;
+        */
         Debug.Log("Attacking player!");
     }
 }
