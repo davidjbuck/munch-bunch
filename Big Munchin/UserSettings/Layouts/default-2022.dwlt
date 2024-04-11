@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -412,23 +412,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 286affffb86bffff4493ffff2e99ffff
+      m_SelectedIDs: 8a6fffff
+      m_LastClickedID: -36982
+      m_ExpandedIDs: 4693ffff2e99ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: BroccoliPlant_Harvested
+        m_OriginalName: BroccoliPlant_Harvested
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: -36982
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 8}
       m_SearchString: 
@@ -833,9 +833,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 638.11127, y: 21.067532, z: 617.61615}
+    m_Target: {x: 629.84357, y: 25.737415, z: 624.3832}
     speed: 2
-    m_Value: {x: 638.11127, y: 21.067532, z: 617.61615}
+    m_Value: {x: 629.84357, y: 25.737415, z: 624.3832}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -881,13 +881,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.16186726, y: 0.58911353, z: -0.12242341, w: 0.7824927}
+    m_Target: {x: 0.08820725, y: 0.74811685, z: -0.10211554, w: 0.6501178}
     speed: 2
-    m_Value: {x: 0.16182372, y: 0.58895504, z: -0.12239048, w: 0.78228223}
+    m_Value: {x: 0.089157656, y: 0.7477609, z: -0.103210256, w: 0.64980936}
   m_Size:
-    m_Target: 3.4493072
+    m_Target: 1.0463632
     speed: 2
-    m_Value: 3.4493072
+    m_Value: 1.0463655
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1078,7 +1078,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 31}
     m_SelectedIDs: 6caf0000
     m_LastClickedID: 44908
-    m_ExpandedIDs: 000000003eaf000056af00005caf00005eaf0000
+    m_ExpandedIDs: 000000003eaf000056af00005caf0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
