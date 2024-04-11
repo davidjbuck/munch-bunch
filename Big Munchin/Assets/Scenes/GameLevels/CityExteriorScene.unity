@@ -1633,6 +1633,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398159225}
   m_CullTransparentMesh: 1
+--- !u!1 &432389048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+  m_PrefabInstance: {fileID: 1295250923}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &432389049
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432389048}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.60488224, y: 0.5541135, z: 0.23010394}
+  m_Center: {x: 0.04741351, y: 0.15502118, z: 0.020902202}
+--- !u!114 &432389050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432389048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954d92b0139ea4c4e9db6099380dbfd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactText: Press E to Harvest
+  hName: broccoli plant
+  Player: {fileID: 1375420113}
+  MC: {fileID: 2022924127}
 --- !u!1 &442541255 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3425300384040436212, guid: 974c6c7aa7e3b754686f500661cea5b0, type: 3}
@@ -3321,6 +3363,48 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -257278029260952120, guid: 6c92b08874e0fc24d87db623f8fac29e, type: 3}
+--- !u!1 &975358586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+  m_PrefabInstance: {fileID: 1406229030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &975358587
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975358586}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.60488224, y: 0.5541135, z: 0.23010394}
+  m_Center: {x: 0.04741351, y: 0.15502118, z: 0.020902202}
+--- !u!114 &975358588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975358586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954d92b0139ea4c4e9db6099380dbfd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactText: Press E to Harvest
+  hName: broccoli plant
+  Player: {fileID: 1375420113}
+  MC: {fileID: 2022924127}
 --- !u!1 &989590663 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4381204228948306222, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
@@ -4090,6 +4174,85 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7928954863336178718, guid: 12d65237516599c41bce21f987c685c1, type: 3}
   m_PrefabInstance: {fileID: 1292590402}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1295250923
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 650.56995
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 21.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 635.54004
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.63141596
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.63141596
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.31829843
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.31829843
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_Name
+      value: BroccoliPlant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 432389050}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 432389049}
+  m_SourcePrefab: {fileID: 100100000, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
 --- !u!1001 &1375420112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4380,15 +4543,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8507971810989730406, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07087813
+      value: 0.070878126
       objectReference: {fileID: 0}
     - target: {fileID: 8507971810989730406, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000007431843
+      value: -2.2337847e-18
       objectReference: {fileID: 0}
     - target: {fileID: 8507971810989730406, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 5.280833e-10
+      value: -7.441277e-18
       objectReference: {fileID: 0}
     - target: {fileID: 8916013663398742498, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: anchorObject
@@ -4417,6 +4580,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb0be71059856428b8a37a8dc46d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1406229030
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 654.33997
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 21.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 636.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.63141596
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.63141596
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.31829843
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.31829843
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      propertyPath: m_Name
+      value: BroccoliPlant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 975358588}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 975358587}
+  m_SourcePrefab: {fileID: 100100000, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
 --- !u!1 &1407808975 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8866792459211723168, guid: 6c92b08874e0fc24d87db623f8fac29e, type: 3}
@@ -5273,79 +5515,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1163612721}
   m_SourcePrefab: {fileID: 100100000, guid: 6c92b08874e0fc24d87db623f8fac29e, type: 3}
---- !u!1001 &1646716760
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.7899998
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.7899998
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.7899998
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 633.1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 24.526
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 624.53
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.63141596
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.63141596
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.31829843
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.31829843
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
-      propertyPath: m_Name
-      value: BroccoliPlant_Harvested
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7a5a85589d432e2489939845a5e6a28d, type: 3}
 --- !u!1 &1679252459
 GameObject:
   m_ObjectHideFlags: 0
@@ -6138,15 +6307,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 639.13
+      value: 654.85
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.062
+      value: 21.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 624.19
+      value: 632.38
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b3905be83f8ed2746854ec0a6bf8075e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6469,4 +6638,5 @@ SceneRoots:
   - {fileID: 872373234}
   - {fileID: 916210271}
   - {fileID: 2138698411}
-  - {fileID: 1646716760}
+  - {fileID: 1295250923}
+  - {fileID: 1406229030}
