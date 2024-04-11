@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8407701346927907609}
   - component: {fileID: 267167457813108018}
   - component: {fileID: 3453002174684264209}
+  - component: {fileID: -804174667985954442}
   m_Layer: 0
   m_Name: broccoli plant
   m_TagString: Untagged
@@ -128,10 +129,29 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4022315652101844150, guid: 8f5523f83a776ba46a4f64060e82f480, type: 3}
+--- !u!114 &-804174667985954442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716839064859105216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe8154950a0b1a4ebcd24cf8a36f74c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Broccoli
+  flavorText: lil tree guy
+  amount: 0
+  itemType: 0
+  itemBuffTypes: 
+  effectDuration: []
+  effectValue: []
