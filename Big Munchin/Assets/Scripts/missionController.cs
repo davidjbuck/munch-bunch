@@ -142,7 +142,7 @@ public class missionController : MonoBehaviour
         Debug.Log("counter: " + smZeroCounter);
         if (smZeroCounter >= 4)
         {
-            toggleVisibilitySM(false);
+            sideMissionControl(1);
         }
     }
 
@@ -164,7 +164,7 @@ public class missionController : MonoBehaviour
                 sideMissionTXT.text = "Side Mission: Gather Broccoli For Vendor";
                 break;
             case 1:
-                sideMissionTXT.text = "Side Mission: Gather 5 broccoli";
+                sideMissionTXT.text = "Side Mission: Bring Broccoli To Vendor";
                 break;
         }
     }
