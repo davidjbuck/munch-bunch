@@ -3,25 +3,61 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class harvestInteraction : MonoBehaviour
+public class harvestInteraction : MonoBehaviour, IInteractable
 {
-    public string hName;
-    bool hasEntered = false;
-    public TextMeshProUGUI harvestTXT;
+    [SerializeField] private string interactText;
+    [SerializeField] private string hName;
 
-    private void Update()
+    private bool interacted;
+    public GameObject Player;
+    public GameObject MC;
+
+
+    public void Interact(Transform interactorTransform)
     {
-        if (hasEntered)
+        interacted = true;
+        missionCheck();
+        harvest();
+    }
+    public string GetInteractText()
+    {
+        return interactText + " " + hName;
+    }
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    public void harvest()
+    {
+        int amountInstant = Random.Range(1, 4);
+        Destroy(gameObject);
+        for (int x = 0; x < amountInstant; x++)
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                harvestTXT.text = "Harvested 1 " + hName;
-            }
+            Instantiate(Resources.Load(hName), transform.position, Quaternion.identity);
+        }
+        Instantiate(Resources.Load(gameObject.name + "_Harvested"), transform.position, transform.rotation);
+    }
+
+    public void missionCheck()
+    {
+        int tempMissNumb = MC.GetComponent<missionController>().getCurrentSideMission();
+        if (tempMissNumb == 0)
+        {
+            MC.GetComponent<missionController>().sMissionZeroFunction();
         }
     }
-    public void OnCollisionEnter(Collision collision)
+
+    public void Update()
     {
-        hasEntered = true;
-        harvestTXT.text = "Press E to Harvest " + hName;
+        if (interacted)
+        {
+            float dist = Vector3.Distance(this.GetTransform().position, Player.transform.position);
+            Vector3 playerPosition = new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z);
+            if (dist > 5.5f)
+            {
+                interacted = false;
+            }
+        }
     }
 }

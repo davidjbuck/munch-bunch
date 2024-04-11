@@ -123,17 +123,28 @@ public class missionController : MonoBehaviour
         sideMissionControl(currentSideMission);
     }
 
+    public void toggleVisibilitySM(bool b)
+    {
+        if (b == false)
+        {
+            sideMissionTXT.text = "";
+        }
+        else if (b == true)
+        {
+            sideMissionControl(currentSideMission);
+        }
+    }
 
     //side missions
-    //public void sMissionZeroFunction()
-    //{
-    //    smZeroCounter++;
-    //    Debug.Log("counter: " + smZeroCounter);
-    //    if (smZeroCounter >= 4)
-    //    {
-    //        setCurrentMission(3);
-    //    }
-    //}
+    public void sMissionZeroFunction()
+    {
+        smZeroCounter++;
+        Debug.Log("counter: " + smZeroCounter);
+        if (smZeroCounter >= 4)
+        {
+            toggleVisibilitySM(false);
+        }
+    }
 
     //public void sMissionOneFunction()
     //{
@@ -150,8 +161,7 @@ public class missionController : MonoBehaviour
         switch (m)
         {
             case 0:
-                sideMissionTXT.text = "Side Mission: Harvest 3 Plants";
-                
+                sideMissionTXT.text = "Side Mission: Gather Broccoli For Vendor";
                 break;
             case 1:
                 sideMissionTXT.text = "Side Mission: Gather 5 broccoli";
