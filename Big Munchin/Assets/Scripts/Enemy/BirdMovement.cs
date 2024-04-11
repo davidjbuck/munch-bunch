@@ -43,9 +43,13 @@ public class BirdMovement : MonoBehaviour
 	Animator animator;
 	public int damage;
 	public float stunTime;
+	public MovesetHolder[] enemyMovesets;
+	MovesetHolder enemyActiveMoveset;
 	// Start is called before the first frame update
 	void Start()
 	{
+		enemyActiveMoveset = enemyMovesets[0];
+
 		attackingPlayer = false;
 		//anim = GetComponent<Animator>();
 
@@ -156,7 +160,7 @@ public class BirdMovement : MonoBehaviour
 				attackingPlayer = true;
             }
 			Distance = Vector3.Distance(transform.position, Destination);
-			if (Distance > 1.50f)
+			if (Distance > 0.50f)
 			{
 				//anim.Play("Hostile Run", 0, 0.25f);
 				// Calculate the direction to the next waypoint
@@ -201,6 +205,8 @@ public class BirdMovement : MonoBehaviour
 	}
 	void OnTriggerEnter(Collider col)
 	{
+		enemyActiveMoveset.LightAttackCombo();
+
 		UpdateWaypoint(true);
 		//col.TakeDamage(1, 1f);
 	}
