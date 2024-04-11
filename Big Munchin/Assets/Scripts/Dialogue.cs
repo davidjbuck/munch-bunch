@@ -24,21 +24,26 @@ public class Dialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        //TAB ADDED: would increment through text even without being in dialogue
+        if(textComponent.gameObject.activeInHierarchy)
         {
-            if(textComponent.text == line[index])
+            if (Input.GetMouseButtonDown(0))
             {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                textComponent.text = line[index];
+                if (textComponent.text == line[index])
+                {
+                    NextLine();
+                }
+                else
+                {
+                    StopAllCoroutines();
+                    textComponent.text = line[index];
+                }
             }
         }
     }
 
-    void StartDialogue()
+    //TAB ADDED: changed to public so I can access from mission controller
+    public void StartDialogue()
     {
         index = 0;
         StartCoroutine(TypeLine());

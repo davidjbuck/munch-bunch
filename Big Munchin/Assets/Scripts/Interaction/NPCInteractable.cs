@@ -21,7 +21,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
     public void Interact(Transform interactorTransform)
     {
         interacted = true;
-        Debug.Log("INTERACT");
+        //Debug.Log("INTERACT");
         showText();
 
 

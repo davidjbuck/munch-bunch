@@ -10,6 +10,8 @@ public class missionController : MonoBehaviour
     public int currentMission = 0;
     public int currentSideMission;
 
+    public GameObject detective;
+
 
     //mission variables
     private int mTwoCounter = 0;
@@ -82,10 +84,15 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Current Mission: Take Out The Goons";
                 break;
             case 2:
-                missionTXT.text = "Current Mission: Check Out The Market";
+                missionTXT.text = "Current Mission: Check Out The Market";                
                 break;
             case 3:
                 missionTXT.text = "Current Mission: Return To The Detective";
+                detective.GetComponent<Dialogue>().line[0] = "yargh";
+                detective.GetComponent<Dialogue>().line[1] = "I need actual dialogue here to see if it works properly";
+                detective.GetComponent<Dialogue>().line[2] = "and also if it moves like how the dialogue should scroll";
+                detective.GetComponent<Dialogue>().line[3] = "so there be somethin about some birds or whatnot? pretty nutty if you ask me";
+                detective.GetComponent<Dialogue>().StartDialogue();
                 break;
             case 4:
                 missionTXT.text = "Current Mission: Collect Fried Food Animals";
