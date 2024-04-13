@@ -10,6 +10,10 @@ public class EnemyHealth : MonoBehaviour
     public bool enemyAlive;
     [SerializeField] private Slider hSlider;
     private bool deathCounted = false;
+
+    //TAB ADDED: to differentiate different enemies (ie the birds)
+    [SerializeField] private string enemyName;
+
     //public GameObject itemDropped;
     //public int numDropped;
     // Start is called before the first frame update
@@ -65,8 +69,14 @@ public class EnemyHealth : MonoBehaviour
             }
         }
         */
-        Destroy(this.gameObject);
+        //TAB ADDED: drops an object to pick up for the birds
+        if (enemyName == "bird")
+        {
+            Debug.Log("it got here");
+            Instantiate(Resources.Load(enemyName), this.transform.position, Quaternion.identity);
+        }
 
+        Destroy(this.gameObject);
     }
     void Update()
     {
