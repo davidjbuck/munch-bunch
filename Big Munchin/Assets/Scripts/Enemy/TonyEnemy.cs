@@ -303,7 +303,6 @@ public class TonyEnemy : MonoBehaviour
         aiBehavior = Behaviors.Chase;
         SetAnimatorBools();
     }
-
     void Charge()
     {
         stunTimer = stunDuration;
@@ -313,15 +312,14 @@ public class TonyEnemy : MonoBehaviour
         if (!charging)
         {
             Debug.Log("CHARGING");
-           // Debug.Log(playerPosition);
-            tempPlayerPosition = playerPosition;
-            // Move towards the player's position
-            navAgent.SetDestination(tempPlayerPosition);
+            Vector3 chargeDirection = (playerPosition - transform.position).normalized;
+            Vector3 chargeDestination = transform.position + chargeDirection * (Vector3.Distance(transform.position, playerPosition) + 0.75f);
+            navAgent.SetDestination(chargeDestination);
             charging = true;
         }
 
-        // Check if reached player's position
-        if (Vector3.Distance(transform.position, tempPlayerPosition) <= 1f)
+        // Check if reached destination
+        if (Vector3.Distance(transform.position, navAgent.destination) <= 1f)
         {
             navAgent.speed = normalSpeed;
             charging = false;
@@ -344,6 +342,10 @@ public class TonyEnemy : MonoBehaviour
         Debug.Log(col.gameObject.tag);
         if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0 && aiBehavior != Behaviors.Stunned)
         {
+            if (charging)
+            {
+                ApplyStun();
+            }
             hitCounter++;
             if (hitCounter >= 5)
             {
@@ -356,7 +358,6 @@ public class TonyEnemy : MonoBehaviour
             Debug.Log("HIT WHILE CHARGING");
             //spawn hitbox
             enemyActiveMoveset.HeavyAttackCombo();
-
         }
     }
 }

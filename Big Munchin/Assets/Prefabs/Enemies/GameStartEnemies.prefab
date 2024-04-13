@@ -594,9 +594,21 @@ PrefabInstance:
       propertyPath: aiBehaviors
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1065198576564057272, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: heavyAttackWarning
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1065198576564057272, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: lightAttackWarning
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5667528820744436354, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: m_Name
       value: SpawnedEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7792434613390420045, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: hSlider
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7808793161275043027, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -661,6 +673,14 @@ PrefabInstance:
     - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: aiBehaviors
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: heavyAttackWarning
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: lightAttackWarning
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -689,9 +709,21 @@ PrefabInstance:
       propertyPath: aiBehaviors
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1065198576564057272, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: heavyAttackWarning
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1065198576564057272, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: lightAttackWarning
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5667528820744436354, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: m_Name
       value: SpawnedEnemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7792434613390420045, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: hSlider
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7808793161275043027, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -756,6 +788,14 @@ PrefabInstance:
     - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: aiBehaviors
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: heavyAttackWarning
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: lightAttackWarning
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1093,7 +1133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5583459337369410186, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.08
+      value: -116.9
       objectReference: {fileID: 0}
     - target: {fileID: 7133217049824607825, guid: 373ac6a0062980a4b8b354ae0a89d720, type: 3}
       propertyPath: m_Name
@@ -1352,9 +1392,21 @@ PrefabInstance:
       propertyPath: aiBehaviors
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1065198576564057272, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: heavyAttackWarning
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1065198576564057272, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: lightAttackWarning
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5667528820744436354, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: m_Name
       value: SpawnedEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7792434613390420045, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: hSlider
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7808793161275043027, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1419,6 +1471,14 @@ PrefabInstance:
     - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
       propertyPath: aiBehaviors
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: heavyAttackWarning
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095962802530118357, guid: 6b91214bfd64e1047a610e3b3c95075a, type: 3}
+      propertyPath: lightAttackWarning
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
