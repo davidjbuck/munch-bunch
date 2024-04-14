@@ -44,7 +44,8 @@ public class harvestInteraction : MonoBehaviour, IInteractable
         int tempMissNumb = MC.GetComponent<missionController>().getCurrentSideMission();
         if (tempMissNumb == 0)
         {
-            MC.GetComponent<missionController>().sMissionZeroFunction();
+            //this works for a harvesting side mission
+            //MC.GetComponent<missionController>().sMissionZeroFunction();
         }
     }
 

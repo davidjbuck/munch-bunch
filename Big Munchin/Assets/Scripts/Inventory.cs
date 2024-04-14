@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
     string selectedItem;
 
 
-
+    public missionController mc;
     private void Start()
     {
         //sets all button texts to null
@@ -58,6 +58,20 @@ public class Inventory : MonoBehaviour
         {
             //gets the item info from the object
             Item tempItem = collision.gameObject.GetComponent<Item>().Clone();
+
+            if (tempItem.itemName == "Broccoli")
+            {
+                Debug.Log("we made it to the inventory");
+                mc.sMissionZeroFunction();
+            }
+            else if (tempItem.itemName == "Potato Bird")
+            {
+                Debug.Log("we made it to the inventory BIRDS");
+                mc.missionFourFunction();
+            }
+
+
+
 
             //if the item is found already in the list, add another one
             bool itemFound = false;

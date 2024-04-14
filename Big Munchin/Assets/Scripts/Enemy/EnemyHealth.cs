@@ -72,16 +72,18 @@ public class EnemyHealth : MonoBehaviour
             }
         }
         */
-        Destroy(this.gameObject);
-
 
         //TAB ADDED: drops an object to pick up for the birds
         if (enemyName == "bird" && !alreadyDead)
         {
-            Instantiate(Resources.Load(enemyName), this.transform.position, Quaternion.identity);
+            //Debug.Log("y is: " + this.transform.position.y + 7);
+            Vector3 positionWithOffset = new Vector3(this.transform.position.x, (21), this.transform.position.z);
+            Instantiate(Resources.Load(enemyName), positionWithOffset, Quaternion.identity);
             alreadyDead = true;
         }
 
+
+        Destroy(this.gameObject);
     }
     void Update()
     {

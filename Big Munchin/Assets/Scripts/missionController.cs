@@ -15,11 +15,11 @@ public class missionController : MonoBehaviour
 
     //mission variables
     private int mTwoCounter = 0;
+    private int mFourCounter = 0;
     
     
     //side mission variables
     private int smZeroCounter = 0;
-    private int smOneCounter = 0;
 
 
     //sets current mission to saved prefab
@@ -65,10 +65,21 @@ public class missionController : MonoBehaviour
     public void missionTwoFunction()
     {
         mTwoCounter++;
-        Debug.Log("counter: " + mTwoCounter);
+        Debug.Log("counter for 2: " + mTwoCounter);
         if (mTwoCounter >= 4)
         {
             setCurrentMission(3);
+        }
+    }
+    
+    //controller for mission four (collect fried food animals)
+    public void missionFourFunction()
+    {
+        mFourCounter++;
+        Debug.Log("counter for 4: " + mFourCounter);
+        if (mFourCounter >= 2)
+        {
+            setCurrentMission(5);
         }
     }
 
@@ -88,17 +99,28 @@ public class missionController : MonoBehaviour
                 break;
             case 3:
                 missionTXT.text = "Current Mission: Return To The Detective";
-                detective.GetComponent<Dialogue>().line[0] = "yargh";
-                detective.GetComponent<Dialogue>().line[1] = "I need actual dialogue here to see if it works properly";
-                detective.GetComponent<Dialogue>().line[2] = "and also if it moves like how the dialogue should scroll";
-                detective.GetComponent<Dialogue>().line[3] = "so there be somethin about some birds or whatnot? pretty nutty if you ask me";
-                detective.GetComponent<Dialogue>().StartDialogue();
+
+                //sets the next lines of dialogue
+                Dialogue detectiveControl = detective.GetComponent<Dialogue>();
+                detectiveControl.line[0] = "yargh";
+                detectiveControl.line[1] = "I need actual dialogue here to see if it works properly";
+                detectiveControl.line[2] = "and also if it moves like how the dialogue should scroll";
+                detectiveControl.line[3] = "so there be somethin about some birds or whatnot? pretty nutty if you ask me";
+                detectiveControl.StartDialogue();
                 break;
             case 4:
                 missionTXT.text = "Current Mission: Collect Fried Food Animals";
                 break;
             case 5:
                 missionTXT.text = "Current Mission: Return To The Detective";
+
+                //sets the next lines of dialogue
+                detectiveControl = detective.GetComponent<Dialogue>();
+                detectiveControl.line[0] = "great good job you got those little guys";
+                detectiveControl.line[1] = "now go to the chicken farm";
+                detectiveControl.line[2] = "or else i'll be sad haha :(";
+                detectiveControl.line[3] = "lorem ipsum i dont remember the rest";
+                detectiveControl.StartDialogue();
                 break;
             case 6:
                 missionTXT.text = "Current Mission: Investigate the Chicken Farm";
@@ -139,7 +161,7 @@ public class missionController : MonoBehaviour
     public void sMissionZeroFunction()
     {
         smZeroCounter++;
-        Debug.Log("counter: " + smZeroCounter);
+        Debug.Log("counter for broccoli: " + smZeroCounter);
         if (smZeroCounter >= 4)
         {
             sideMissionControl(1);
