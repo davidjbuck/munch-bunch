@@ -12,7 +12,10 @@ public class EnemyHealth : MonoBehaviour
     private bool deathCounted = false;
 
     //TAB ADDED: to differentiate different enemies (ie the birds)
+    //for some reason dying got called twice so I'm also making a separate bool
+    //so it doesn't spawn the body twice
     [SerializeField] private string enemyName;
+    private bool alreadyDead = false;
 
     //public GameObject itemDropped;
     //public int numDropped;
@@ -69,14 +72,16 @@ public class EnemyHealth : MonoBehaviour
             }
         }
         */
+        Destroy(this.gameObject);
+
+
         //TAB ADDED: drops an object to pick up for the birds
-        if (enemyName == "bird")
+        if (enemyName == "bird" && !alreadyDead)
         {
-            Debug.Log("it got here");
             Instantiate(Resources.Load(enemyName), this.transform.position, Quaternion.identity);
+            alreadyDead = true;
         }
 
-        Destroy(this.gameObject);
     }
     void Update()
     {

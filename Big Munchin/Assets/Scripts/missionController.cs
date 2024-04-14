@@ -135,7 +135,7 @@ public class missionController : MonoBehaviour
         }
     }
 
-    //side missions
+    //gather broccoli
     public void sMissionZeroFunction()
     {
         smZeroCounter++;

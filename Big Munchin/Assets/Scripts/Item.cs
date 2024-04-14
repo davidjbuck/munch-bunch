@@ -19,6 +19,10 @@ public class Item : MonoBehaviour
     //destroys the object on contact
     private void OnCollisionEnter(Collision collision)
     {
+        //if(itemName == "broccoli")
+        //{
+
+        //}
         if(collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
