@@ -8,6 +8,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     SaveLoad saveLoadScript;
 
+    public int menuInput;
+
     public GameObject mainMenu; //First screen when you hit Escape
     void Start()
     {
@@ -55,9 +57,36 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && menuInput % 2 == 0) // Change this so it can be applied to other potential keys
         {
-            if(isPaused && pauseMenu.activeSelf == true && mainMenu.activeSelf == false) //BackMenu
+                
+            if (isPaused && pauseMenu.activeSelf == true && mainMenu.activeSelf == false) //BackMenu
+            {
+                BackMenu();
+                isPaused = true;
+                Debug.Log("Is Paused: " + isPaused);
+            }
+            else
+
+            if (isPaused && mainMenu.activeSelf == true && pauseMenu.activeSelf == true) //When at the first pause screen, "mainMenu" and "pauseMenu" will be the same object
+            {
+                ResumeGame();
+                Debug.Log("Resuming Game");
+            }
+
+            else
+            {
+                PauseGame();
+                Debug.Log("Is Paused: " + isPaused);
+            }         
+        }
+
+        else
+
+        if (Input.GetKeyDown(KeyCode.I) && menuInput == 1) // Change this so it can be applied to other potential keys
+        {
+
+            if (isPaused && pauseMenu.activeSelf == true && mainMenu.activeSelf == false) //BackMenu
             {
                 BackMenu();
                 isPaused = true;
@@ -77,6 +106,5 @@ public class PauseMenu : MonoBehaviour
                 Debug.Log("Is Paused: " + isPaused);
             }
         }
-
     }
 }

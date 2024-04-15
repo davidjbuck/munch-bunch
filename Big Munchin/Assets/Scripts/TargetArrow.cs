@@ -6,7 +6,7 @@ public class TargetArrow : MonoBehaviour
 {
     //Arrow object placed on the "player" object in the "PlayerControllerCollection" object
 
-    public Transform target; //Target of the arrow
+    public Transform target; //Target of the arrow (call in other scripts to change the target of the arrow)
     public GameObject targetObject; //Game object this script is attached to
     public float rotationSpeed; //Speed at which arrow rotates
 
