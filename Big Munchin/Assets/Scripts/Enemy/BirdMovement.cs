@@ -36,12 +36,21 @@ public class BirdMovement : MonoBehaviour
 	bool ReversePath = false;
 	public float rotationSpeed = 2.0f; // Adjust as needed
 	public Animator anim;
-
+	Vector3 PlayerDestination;
+	bool attackingPlayer;
 	//public PlayerMover p1;
 	GameObject player;
+	Animator animator;
+	public int damage;
+	public float stunTime;
+	public MovesetHolder[] enemyMovesets;
+	MovesetHolder enemyActiveMoveset;
 	// Start is called before the first frame update
 	void Start()
 	{
+		enemyActiveMoveset = enemyMovesets[0];
+
+		attackingPlayer = false;
 		//anim = GetComponent<Animator>();
 
 		// Initialize variables and objects
@@ -55,6 +64,8 @@ public class BirdMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		PlayerDestination = GameObject.FindGameObjectWithTag("Player").transform.position;
+		PlayerDestination.y = GameObject.FindGameObjectWithTag("Player").transform.position.y + 1f;
 		// Perform AI behaviors if not dead
 		if (dead == false)
 		{
@@ -141,12 +152,19 @@ public class BirdMovement : MonoBehaviour
 	{
 		if (!dead && Waypoints.Length > 0)
 		{
-			Distance = Vector3.Distance(transform.position, Waypoints[curWaypoint].position);
-			if (Distance > 1.50f)
+			float PlayerDistance = Vector3.Distance(transform.position, PlayerDestination);
+			if(PlayerDistance < 100 && !attackingPlayer)
+            {
+				//Debug.Log("ATTACK PLAYER");
+				SetPlayerWaypoint();
+				attackingPlayer = true;
+            }
+			Distance = Vector3.Distance(transform.position, Destination);
+			if (Distance > 0.50f)
 			{
-				anim.Play("Hostile Run", 0, 0.25f);
+				//anim.Play("Hostile Run", 0, 0.25f);
 				// Calculate the direction to the next waypoint
-				Vector3 targetDirection = Waypoints[curWaypoint].position - transform.position;
+				Vector3 targetDirection = Destination - transform.position;
 				// Calculate the rotation needed to face the waypoint
 				Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
 				// Slowly rotate towards the waypoint
@@ -156,14 +174,25 @@ public class BirdMovement : MonoBehaviour
 			}
 			else
 			{
-				UpdateWaypoint();
+				//attackingPlayer = false;
+				//SetPlayerWaypoint();
+				UpdateWaypoint(false);
 			}
 		}
 	}
-
+	void SetPlayerWaypoint()
+    {
+		attackingPlayer = true;
+		Destination = PlayerDestination;
+    }
 	// Update waypoint for patrolling
-	void UpdateWaypoint()
+	void UpdateWaypoint(bool nearPlayer)
 	{
+        if (!nearPlayer && Destination != PlayerDestination)
+        {
+			//Debug.Log("RESET BIRD ATTACK");
+			attackingPlayer = false;
+        }
 		int newWaypoint;
 
 		do
@@ -173,6 +202,13 @@ public class BirdMovement : MonoBehaviour
 
 		curWaypoint = newWaypoint;
 		Destination = Waypoints[curWaypoint].position;
+	}
+	void OnTriggerEnter(Collider col)
+	{
+		enemyActiveMoveset.LightAttackCombo();
+
+		UpdateWaypoint(true);
+		//col.TakeDamage(1, 1f);
 	}
 }
 

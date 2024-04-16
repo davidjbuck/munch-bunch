@@ -10,6 +10,13 @@ public class EnemyHealth : MonoBehaviour
     public bool enemyAlive;
     [SerializeField] private Slider hSlider;
     private bool deathCounted = false;
+
+    //TAB ADDED: to differentiate different enemies (ie the birds)
+    //for some reason dying got called twice so I'm also making a separate bool
+    //so it doesn't spawn the body twice
+    [SerializeField] private string enemyName;
+    private bool alreadyDead = false;
+
     //public GameObject itemDropped;
     //public int numDropped;
     // Start is called before the first frame update
@@ -36,6 +43,7 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log("ENEMY TOUCHED");
         if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0) 
         {
             //attackProps = CollisionManager.GetComponent<CollisionManager>();
@@ -64,8 +72,18 @@ public class EnemyHealth : MonoBehaviour
             }
         }
         */
-        Destroy(this.gameObject);
 
+        //TAB ADDED: drops an object to pick up for the birds
+        if (enemyName == "bird" && !alreadyDead)
+        {
+            //Debug.Log("y is: " + this.transform.position.y + 7);
+            Vector3 positionWithOffset = new Vector3(this.transform.position.x, (21), this.transform.position.z);
+            Instantiate(Resources.Load(enemyName), positionWithOffset, Quaternion.identity);
+            alreadyDead = true;
+        }
+
+
+        Destroy(this.gameObject);
     }
     void Update()
     {

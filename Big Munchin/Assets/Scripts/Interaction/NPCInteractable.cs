@@ -21,7 +21,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
     public void Interact(Transform interactorTransform)
     {
         interacted = true;
-        Debug.Log("INTERACT");
+        //Debug.Log("INTERACT");
         showText();
 
 
@@ -44,9 +44,14 @@ public class NPCInteractable : MonoBehaviour, IInteractable
             missionBoss.GetComponent<missionController>().setCurrentMission(4);
         }
 
-        if (NPCName == "SMHarvestPlants")
+        int tempSMNum = missionBoss.GetComponent<missionController>().getCurrentSideMission();
+        if (NPCName == "SMHarvestPlants" && tempSMNum != 1)
         {
             missionBoss.GetComponent<missionController>().setCurrentSideMission(0);
+        }
+        if (NPCName == "SMHarvestPlants" && tempSMNum == 1)
+        {
+            missionBoss.GetComponent<missionController>().toggleVisibilitySM(false);
         }
         //interactUI.SetActive(false);
         //ChatBubble3D.Create(transformtransform, new Vector3(-.3f, 1.7f, 0f), ChatBubble3D.IconType.Happy, "Hello There!");

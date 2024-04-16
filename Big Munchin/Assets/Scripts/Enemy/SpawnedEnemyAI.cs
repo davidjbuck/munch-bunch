@@ -40,6 +40,8 @@ public class SpawnedEnemyAI : MonoBehaviour
     GameObject player;
     private bool movingToRestaurant;
     private string stateCheck;
+    public Animator animator;
+
     void RunBehaviors()
     {
         switch (aiBehaviors)
@@ -97,6 +99,11 @@ public class SpawnedEnemyAI : MonoBehaviour
     {
         if (dead == false)
         {
+            animator.SetBool("Walking", false);
+            animator.SetBool("InCombat", false);
+            animator.SetBool("Attack", false);
+            animator.SetBool("Idle", true);
+
             //GetComponent<Animation>().Play("dance");
         }
     }
@@ -105,6 +112,10 @@ public class SpawnedEnemyAI : MonoBehaviour
     {
         if (dead == false)
         {
+            animator.SetBool("Walking", true);
+            animator.SetBool("InCombat", false);
+            animator.SetBool("Attack", false);
+            animator.SetBool("Idle", false);
             PlayerDestination = player.transform.position;
             Distance = Vector3.Distance(gameObject.transform.position, PlayerDestination);
             if (Distance < 20f)
@@ -138,8 +149,11 @@ public class SpawnedEnemyAI : MonoBehaviour
 
     void Combat()
     {
-       // Destination = player.transform.position;
-
+        // Destination = player.transform.position;
+        animator.SetBool("Walking", false);
+        animator.SetBool("InCombat", false);
+        animator.SetBool("Attack", false);
+        animator.SetBool("Idle", true);
 
         //engaging();
         if (dead == false)
@@ -325,11 +339,15 @@ public void Flee()
                         if (attackTimer < 4)
                         {
                             if (Distance < 4)
-                            {
+                            { 
                                 Destination = transform.position - transform.forward * 2f; // Adjust the distance as needed
                             }
                             else
                             {
+                                animator.SetBool("Walking", false);
+                                animator.SetBool("InCombat", false);
+                                animator.SetBool("Attack", false);
+                                animator.SetBool("Idle", true);
                                 Destination = this.transform.position;
                             }
                             navAgent.SetDestination(Destination);
@@ -346,11 +364,19 @@ public void Flee()
                             Combat();
                             if (Distance < 2)
                             {
+                                animator.SetBool("Walking", false);
+                                animator.SetBool("InCombat", false);
+                                animator.SetBool("Attack", false);
+                                animator.SetBool("Idle", true);
                                 Destination = this.transform.position;
                                 navAgent.SetDestination(Destination);
                             }
                             else
                             {
+                                animator.SetBool("Walking", true);
+                                animator.SetBool("InCombat", false);
+                                animator.SetBool("Attack", false);
+                                animator.SetBool("Idle", false);
                                 Destination = player.transform.position;
                                 navAgent.SetDestination(Destination);
                             }
@@ -449,6 +475,12 @@ public void Flee()
         {
             if (movingToRestaurant)
             {
+                animator.SetBool("Walking", false);
+                animator.SetBool("InCombat", false);
+                animator.SetBool("Attack", false);
+                animator.SetBool("Idle", false);
+                animator.SetBool("Running", true);
+
                 Distance = Vector3.Distance(transform.position, Destination);
                 if (Distance < 1.00f)
                 {
