@@ -43,17 +43,21 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("ENEMY TOUCHED");
-        if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0) 
+        //Debug.Log("ENEMY TOUCHED");
+        if (enemyAlive)
         {
-            //attackProps = CollisionManager.GetComponent<CollisionManager>();
-            float damage = col.GetComponent<CollisionManager>().GetAttackDamage();
-            //Debug.Log(damage); 
-            removeHealth(damage);
+            if (col.gameObject.tag == "Hitbox" && col.GetComponent<CollisionManager>().GetAttackTeam() == 0)
+            {
+                //attackProps = CollisionManager.GetComponent<CollisionManager>();
+                float damage = col.GetComponent<CollisionManager>().GetAttackDamage();
+                //Debug.Log(damage); 
+                removeHealth(damage);
+            }
         }
     }
     public void EnemyDead()
     {
+        hSlider.gameObject.SetActive(false);
         if (!deathCounted)
         {
             EnemySpawner.enemyDeathCounter++;
@@ -83,7 +87,7 @@ public class EnemyHealth : MonoBehaviour
         }
 
 
-        Destroy(this.gameObject);
+       // Destroy(this.gameObject);
     }
     void Update()
     {

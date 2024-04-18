@@ -36,11 +36,14 @@ public class SpawnedEnemyAI : MonoBehaviour
     private bool newRand;
     private float attackCooldown = 0; // Added variable
     public MovesetHolder[] enemyMovesets;
+    public EnemyHealth eHealth;
     MovesetHolder enemyActiveMoveset;
     GameObject player;
     private bool movingToRestaurant;
     private string stateCheck;
     public Animator animator;
+    private bool punching;
+    private bool launched;
 
     void RunBehaviors()
     {
@@ -172,7 +175,14 @@ public class SpawnedEnemyAI : MonoBehaviour
                     //attacking();
 
                     lightAttackWarning.enabled = true;
-                   // Destination = this.transform.position;
+                    if (!punching)
+                    {
+                        animator.SetTrigger("Punch");
+                        Debug.Log("PUNCH");
+                        punching = true;
+                    }
+
+                    // Destination = this.transform.position;
                 }
                 else if (attackTimer >= (attackCooldown - 1) && randNum == 1)
                 {
@@ -180,13 +190,21 @@ public class SpawnedEnemyAI : MonoBehaviour
                     //attacking();
 
                     heavyAttackWarning.enabled = true;
-                  //  Destination = this.transform.position;
+                    if (!punching)
+                    {
+                        animator.SetTrigger("Punch");
+                        Debug.Log("PUNCH");
+                        punching = true;
+                    }
+                    //  Destination = this.transform.position;
 
                 }
                 else
                 {
                     lightAttackWarning.enabled = false;
                     heavyAttackWarning.enabled = false;
+                   // animator.ResetTrigger("Punch");
+
                     //Destination = this.transform.position;
                     //attacking();
                     //Destination = transform.position - transform.forward * 4f; // Adjust the distance as needed
@@ -219,10 +237,12 @@ public class SpawnedEnemyAI : MonoBehaviour
                     //attacking();
                     if (randNum == 0)
                     {
+
                         enemyActiveMoveset.LightAttackCombo();
                     }
                     if (randNum == 1)
                     {
+
                         enemyActiveMoveset.HeavyAttackCombo();
                         attackCooldown = attackCooldown - 1;
                     }
@@ -230,7 +250,6 @@ public class SpawnedEnemyAI : MonoBehaviour
                     newRand = false;
                     attackTimer = 0;
                 //    movingBack();
-
                     // Destination = this.transform.position;
 
 
@@ -377,6 +396,8 @@ public void Flee()
                                 animator.SetBool("InCombat", false);
                                 animator.SetBool("Attack", false);
                                 animator.SetBool("Idle", false);
+                                punching = false;
+
                                 Destination = player.transform.position;
                                 navAgent.SetDestination(Destination);
                             }
@@ -430,9 +451,41 @@ public void Flee()
 
     void death()
     {
-        // ... (existing code for death)
+        animator.SetTrigger("Died");
+
+        lightAttackWarning.enabled = false;
+        heavyAttackWarning.enabled = false;
+
+        // Disable the NavMesh Agent
+        if (navAgent != null)
+        {
+            navAgent.enabled = false;
+        }
+
+        // Rotate the enemy slowly backward
+        StartCoroutine(RotateEnemyBackward());
+        gameObject.tag = "deadEnemy";
+        if (!dead)
+        {
+            transform.position -= Vector3.up * 0.35f;
+
+        }
+        // Set dead flag
+        dead = true;
     }
 
+    IEnumerator RotateEnemyBackward()
+    {
+        float rotationSpeed = 30f; // Adjust the rotation speed as needed
+        float targetAngle = -90f; // Rotate to -90 degrees (backward)
+
+        while (transform.rotation.eulerAngles.y > targetAngle)
+        {
+            float step = rotationSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetAngle, 0, 0), step);
+            yield return null;
+        }
+    }
     bool isDead()
     {
         return dead;
@@ -445,11 +498,17 @@ public void Flee()
         navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
         Destination = player.transform.position;
+        //animator.SetBool("Dead", false);
+
     }
 
     void Update()
     {
-        Debug.Log(aiBehaviors);
+        if (!eHealth.enemyAlive)
+        {
+            death();
+        }
+       // Debug.Log(aiBehaviors);
         if (!newRand)
         {
             randNum = Random.Range(0, 2);

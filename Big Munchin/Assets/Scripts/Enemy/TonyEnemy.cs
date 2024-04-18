@@ -37,12 +37,14 @@ public class TonyEnemy : MonoBehaviour
     {
         // Initialize components and variables
         navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         playerPosition = playerTransform.position;
         charging = false;
         hitCounter = 0;
         enemyActiveMoveset = enemyMovesets[0];
+       // animator.SetBool("Chase", true);
 
+        //SetAnimatorBools();
     }
 
     void Update()
@@ -125,7 +127,7 @@ public class TonyEnemy : MonoBehaviour
         animator.SetBool("ThrowMeatball", aiBehavior == Behaviors.ThrowMeatball);
         animator.SetBool("Charge", aiBehavior == Behaviors.Charge);
         animator.SetBool("MeleeAttack", aiBehavior == Behaviors.MeleeAttack);
-        animator.SetBool("Punch", aiBehavior == Behaviors.Punch);
+       // animator.SetBool("Punch", aiBehavior == Behaviors.Punch);
 
         hitCounter = 0;
         stunTimer = stunDuration;
@@ -213,6 +215,8 @@ public class TonyEnemy : MonoBehaviour
         // If within attack range, switch to Attack behavior
         if (Vector3.Distance(transform.position, playerPosition) <= attackRange)
         {
+            navAgent.SetDestination(this.transform.position);
+
             aiBehavior = Behaviors.Attack;
             SetAnimatorBools();
             return;
@@ -235,14 +239,19 @@ public class TonyEnemy : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(transform.position, playerPosition) < attackRange / 2)
+        if (Vector3.Distance(transform.position, playerPosition) < 4)
         {
             //MELEE COMBAT
+
             aiBehavior = Behaviors.MeleeAttack;
             SetAnimatorBools();
         }
-        if (Vector3.Distance(transform.position, playerPosition) < attackRange && Vector3.Distance(transform.position, playerPosition) > attackRange / 2)
+        if (Vector3.Distance(transform.position, playerPosition) < attackRange && Vector3.Distance(transform.position, playerPosition) > 4)
         {
+            attackTimer = attackCooldown;
+
+            //aiBehavior = Behaviors.ThrowMeatball;
+
             aiBehavior = Behaviors.Charge;
             SetAnimatorBools();
         }
@@ -262,11 +271,14 @@ public class TonyEnemy : MonoBehaviour
     void MeleeAttack()
     {
         Debug.Log("MELEE ATTACK");
-        if (Vector3.Distance(transform.position, tempPlayerPosition) < 1f)
+        if (Vector3.Distance(transform.position, playerPosition) < 2f)
         {
+            navAgent.SetDestination(this.transform.position);
+
             aiBehavior = Behaviors.Punch;
+
             SetAnimatorBools();
-        } else
+        } else if (Vector3.Distance(transform.position, playerPosition) > 2f)
         {
             navAgent.SetDestination(playerPosition);
         }
@@ -351,6 +363,8 @@ public class TonyEnemy : MonoBehaviour
             {
                 navAgent.speed = normalSpeed;
                 aiBehavior = Behaviors.MoveAway;
+                SetAnimatorBools();
+
             }
         }
         if(col.gameObject.tag == "Player" && charging)
