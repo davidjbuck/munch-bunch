@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class ThirdPersonController : MonoBehaviour
 {   //variables to handle orientation and movement
@@ -98,8 +99,10 @@ public class ThirdPersonController : MonoBehaviour
     public bool jumping;
     public float drag;
     public float airSpeed;
+    private float airSpeedHolder;
     public float maxAirSpeed;
     public LayerMask groundedCheck;
+    public LayerMask wallCheck;
     public float raycastProtrusion;
     public float jumpForce;
     public float jumpCooldown;
@@ -123,6 +126,10 @@ public class ThirdPersonController : MonoBehaviour
     public Vector3 fixedCameraRotation;
     public GameObject fixedCamera;
     private bool fixedCam;
+
+    public bool onScalableSurface = false;
+    private bool scalableSurfaceDetected = false;
+    private GameObject targetScalableSurface;
     public enum PlayerState
     {//enum to hold player state. Determines which actions can be taken,
      //controls much of the flow between different blocks of code
@@ -296,67 +303,125 @@ public class ThirdPersonController : MonoBehaviour
         if((int)currentPlayerState != 4 && currentPlayerState!=PlayerState.Knockdown)
         {
             LimitSpeed();
-        }       
+        }
     }
 
     //rotates the player collider appropriately depending on their current state and lock on status
     public void UpdateRotation()
     {
-        Vector3 viewAngle;//variable to hold result of vector math to be used to determine appropriate orientation
+        if(!onScalableSurface)
+        {
+            Vector3 viewAngle;//variable to hold result of vector math to be used to determine appropriate orientation
 
-        if(!lockedOn)
-        {//if not locked on, do vector math to determine proper orientation relative to camera
-            if(fixedCam)
-            {
-                viewAngle = player.position - new Vector3(fixedCamera.transform.position.x, player.position.y, fixedCamera.transform.position.z);
-                orientationRefObj.forward = viewAngle.normalized;
-            }
-            else
-            {
-                viewAngle = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-                orientationRefObj.forward = viewAngle.normalized;
-            }            
-        }
-        else
-        {//if locked on, do vector math to determine proper orientation relative to lock on target
-            viewAngle = new Vector3(lockOnTarget.transform.position.x, player.position.y, lockOnTarget.transform.position.z) - player.position;
-            orientationRefObj.forward = viewAngle.normalized;
-        }
-
-        if((int)currentPlayerState!=5 )//if the player is not stunned
-        {   //vector math to determine appropriate forward and right directions
-            Vector3 inputDirection = orientationRefObj.forward * verticalInput + orientationRefObj.right * horizontalInput;
-            if(!lockedOn )//if the player is not locked on
-            {
-                if (inputDirection != Vector3.zero)//if the player has pressed down WASD and there has been movement input
-                {//update the player collider rotation
-                    playerCollider.forward = Vector3.Slerp(playerCollider.forward, inputDirection.normalized, Time.deltaTime * rotationSpeed);
+            if (!lockedOn)
+            {//if not locked on, do vector math to determine proper orientation relative to camera
+                if (fixedCam)
+                {
+                    viewAngle = player.position - new Vector3(fixedCamera.transform.position.x, player.position.y, fixedCamera.transform.position.z);
+                    orientationRefObj.forward = viewAngle.normalized;
+                }
+                else
+                {
+                    viewAngle = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+                    orientationRefObj.forward = viewAngle.normalized;
                 }
             }
-            else//if the player is locked on
-            {
-                playerCollider.forward = Vector3.Slerp(playerCollider.forward, viewAngle.normalized, Time.deltaTime * rotationSpeed);
+            else
+            {//if locked on, do vector math to determine proper orientation relative to lock on target
+                viewAngle = new Vector3(lockOnTarget.transform.position.x, player.position.y, lockOnTarget.transform.position.z) - player.position;
+                orientationRefObj.forward = viewAngle.normalized;
             }
-            
-        }
+
+            if ((int)currentPlayerState != 5)//if the player is not stunned
+            {   //vector math to determine appropriate forward and right directions
+                Vector3 inputDirection = orientationRefObj.forward * verticalInput + orientationRefObj.right * horizontalInput;
+                if (!lockedOn)//if the player is not locked on
+                {
+                    if (inputDirection != Vector3.zero)//if the player has pressed down WASD and there has been movement input
+                    {//update the player collider rotation
+                        playerCollider.forward = Vector3.Slerp(playerCollider.forward, inputDirection.normalized, Time.deltaTime * rotationSpeed);
+                    }
+                }
+                else//if the player is locked on
+                {
+                    playerCollider.forward = Vector3.Slerp(playerCollider.forward, viewAngle.normalized, Time.deltaTime * rotationSpeed);
+                }
+            }
+        }        
     }
 
     //locks the cursor to the screen and hides it
     public void LockCursor()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
     }
 
     //unlocks the cursor and makes it visible
     public void UnlockCursor()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
     }
 
     //updates the states of input variables
     public void GetInput() {
+
+        if (scalableSurfaceDetected||onScalableSurface)
+        {
+            
+            if((Input.GetKeyDown(KeyCode.E)||Input.GetKey(KeyCode.E)||Input.GetKeyDown(KeyCode.Space)||Input.GetKey(KeyCode.Space))&&!onScalableSurface)
+            {
+                onScalableSurface = true;
+                targetScalableSurface.GetComponent<ScalableSurfaceScript>().AttachToSurface(player.transform.position);
+                rb.isKinematic = true;
+            }
+            else if((!onScalableSurface)||(onScalableSurface && targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ledge && !(Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Space))))
+            {//if the player is not on a scalable surface, or if they are on a ledge and did not press/ hold e or space
+                LeaveScalableSurface();
+                //Debug.Log("Leaving scalable surface");
+            }
+
+            if (onScalableSurface)
+            {
+                if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ladder)
+                {
+                    //if the player tries to move up
+                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(KeyCode.W))
+                    {
+                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(1);
+                    }
+                    else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.S))
+                    {//if the player tries to move down
+                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(-1);
+                    }
+                }
+                else
+                {
+                    //if the player tries to move right
+                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKey(KeyCode.D))
+                    {
+                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(1);
+                    }
+                    else if (Input.GetKeyDown(KeyCode.A) || Input.GetKey(KeyCode.A))
+                    {//if the player tries to move left
+                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(-1);
+                    }
+                }
+                
+
+                //set the player's position and rotation to the current lerp target
+                player.transform.position = targetScalableSurface.GetComponent<ScalableSurfaceScript>().GetLerpTarget();
+                
+                //if the player has reached the end of the scalable surface, then leave it
+                if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().EndReached())
+                {
+                    LeaveScalableSurface();
+                }
+            }
+        }
+
+        
 
         //code to get input for num keys 1-4, and use inventory item in slot 0-3
         //as temporary testing implementation until adding item to hotbar is implemented
@@ -510,6 +575,7 @@ public class ThirdPersonController : MonoBehaviour
             currentPlayerState = PlayerState.Neutral;
         }
         dodgeDown = false;
+        scalableSurfaceDetected = false;
     }
 
     //checks if the player can attack, has input an attack, and sends appropriate requests if they can
@@ -708,7 +774,13 @@ public class ThirdPersonController : MonoBehaviour
                     }                    
                 }                               
             }
+        }else if (other.gameObject.tag == "Ladder")
+        {
+            scalableSurfaceDetected = true;
+            targetScalableSurface = other.gameObject;
+            //Debug.Log("Scalable surface detected: " + targetScalableSurface.name);
         }
+
     }
 
     //called whenever the player loses stamina. determines whether the player should be fatigued,
@@ -1004,6 +1076,11 @@ public class ThirdPersonController : MonoBehaviour
         {
             grounded = false;
         }
+        if (grounded)
+        {
+            rb.drag = drag;
+            airSpeed = airSpeedHolder;
+        }
         if(grounded&&!jumping&& Time.time - lastJumpTime > 0.6f)
         {
             if(!wasGrounded && Time.time - airborneTime > minAirborneTime)
@@ -1012,7 +1089,6 @@ public class ThirdPersonController : MonoBehaviour
                 audioSources[2].pitch = 1.4f;
                 audioSources[2].Play();
             }
-            rb.drag = drag;
         }
         else
         {
@@ -1063,7 +1139,7 @@ public class ThirdPersonController : MonoBehaviour
             }
             else
             {
-                if (vel.magnitude > airSpeed + playerSpeedChange)
+                if (vel.magnitude > airSpeed + playerSpeedChange&& airSpeed>0.0f)
                 {
                     //Debug.Log("Limiting air speed");
                     Vector3 newVel = vel.normalized * (maxAirSpeed + playerSpeedChange);
@@ -1137,6 +1213,24 @@ public class ThirdPersonController : MonoBehaviour
     private void DisableMultiPunch()
     {
         ani.SetBool("BetweenPunches", false);
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+
+        if (!grounded&&collision.collider.gameObject.layer !=10)
+        {
+            airSpeedHolder = airSpeed;
+            airSpeed = 0.0f;
+            rb.drag = drag;
+            Debug.Log("Collided with something other than ground");
+        }
+    }
+
+    public void LeaveScalableSurface()
+    {
+        onScalableSurface = false;
+        rb.isKinematic = false;
     }
 
 }

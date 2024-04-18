@@ -9,4 +9,12 @@ public class PlayerCollisionManager : MonoBehaviour
     {
         tpc.ResolveTriggerCollision(other);
     }
+
+    public void OnTriggerStay(Collider other)
+    {
+        if(other.gameObject.tag == "Ladder")
+        {
+            tpc.ResolveTriggerCollision(other);
+        }
+    }
 }
