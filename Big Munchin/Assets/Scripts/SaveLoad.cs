@@ -140,24 +140,189 @@ public class SaveLoad : MonoBehaviour
     {
         using (StreamWriter sw = new StreamWriter(FILE_PATH))
         {
-            sw.Write("");
-                Dictionary<Item, int> inventory = new Dictionary<Item, int>();
-                for (int i = 0; i < player.GetComponent<Inventory>().inventoryList.Count; i++)
-                {
-                    inventory.Add(player.GetComponent<Inventory>().inventoryList[i], player.GetComponent<Inventory>().inventoryList[i].amount);
-                }
-                foreach (KeyValuePair<Item, int> kvp in inventory)
-                { 
-                    Item item = kvp.Key;
-                    int count = kvp.Value;
+            for (int i = 0; i < player.GetComponent<Inventory>().inventoryList.Count; i++)
+            {
+                Item currentItem = player.GetComponent<Inventory>().inventoryList[i];
 
-                    string itemID = HashItem(item).ToString();
+                // Serialize arrays into strings
+                string buffTypesString = string.Join(",", currentItem.itemBuffTypes);
+                string durationString = string.Join(",", currentItem.effectDuration);
+                string valueString = string.Join(",", currentItem.effectValue);
 
-                    sw.WriteLine(itemID + SPLIT_CHAR + count);
-                }
-                
-            } 
+                // Construct the line to be saved
+                string invString =
+                    currentItem.itemName + "|" +
+                    currentItem.flavorText + "|" +
+                    currentItem.amount + "|" +
+                    buffTypesString + "|" +
+                    durationString + "|" +
+                    valueString + "\n";
+
+
+                /* NGcontroller needs to add a few values to meals: (up to i think 4 buffs, each must have same size array)
+                    temBuffTypes;//when adding a new item, fill which buff types it has
+                        0 = crit chance up, 
+                        1 = max stamina up,
+                        2 = stamina regen up, 
+                        3 = stamina cost decrease, 
+                        4 = player speed up, 
+                        5 = instant healing, 
+                        6 = healing per second
+                    effectDuration
+                    effectValue
+                */
+
+                Debug.Log(invString);
+
+                // Write the line to the file
+                sw.WriteLine(invString);
+            }
+        }
     }
+    /*
+    public void SaveInventory()
+    {
+        using (StreamWriter sw = new StreamWriter(FILE_PATH))
+        {
+            sw.Write("");
+
+                for (int i = 0; i < player.GetComponent<Inventory>().inventoryList.Count; i++) {
+                string invString = 
+                    player.GetComponent<Inventory>().inventoryList[i].itemName + "|" + 
+                    player.GetComponent<Inventory>().inventoryList[i].flavorText + "|" + 
+                    player.GetComponent<Inventory>().inventoryList[i].amount + "|" +
+                    player.GetComponent<Inventory>().inventoryList[i].itemBuffTypes[] + "|" +
+
+                    +"\n";
+                Debug.Log(invString);
+                    sw.WriteLine(invString); 
+                }
+           
+
+        }
+    }
+    */
+                /*
+                        Dictionary<Item, int> inventory = new Dictionary<Item, int>();
+                        for (int i = 0; i < player.GetComponent<Inventory>().inventoryList.Count; i++)
+                        {
+                            inventory.Add(player.GetComponent<Inventory>().inventoryList[i], player.GetComponent<Inventory>().inventoryList[i].amount);
+                        }
+                        foreach (KeyValuePair<Item, int> kvp in inventory)
+                        { 
+                            Item item = kvp.Key;
+                            int count = kvp.Value;
+
+                            string itemID = HashItem(item).ToString();
+
+                            sw.WriteLine(itemID + SPLIT_CHAR + count);
+                        }
+             */
+                public void LoadInventory()
+    {
+        loading = false;
+
+        if (InventorySaveExists())
+        {
+            using (StreamReader sr = new StreamReader(FILE_PATH))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    if (string.IsNullOrEmpty(line))
+                        continue;
+
+                    string[] parts = line.Split('|');
+
+                    if (parts.Length < 6)
+                    {
+                        Debug.LogError(parts.Length + "1- Invalid line format: " + line);
+                        for (int t = 0; t < parts.Length; t++) {
+                            Debug.Log(parts[t]);
+                        }
+                        continue; // Skip this line and proceed with the next one
+                    }
+
+                    Item loadedItem = new Item();
+                    loadedItem.itemName = parts[0];
+                    loadedItem.flavorText = parts[1];
+                    if (!int.TryParse(parts[2], out loadedItem.amount))
+                    {
+                        Debug.LogError("2- Invalid amount format: " + parts[2]);
+                        continue; // Skip this line and proceed with the next one
+                    }
+
+                    // Deserialize arrays
+                    string[] buffTypeStrings = parts[3].Split('|');
+                    int[] buffTypes = new int[buffTypeStrings.Length];
+                    for (int j = 0; j < buffTypeStrings.Length; j++)
+                    {
+                        if (!int.TryParse(buffTypeStrings[j], out buffTypes[j]))
+                        {
+                            Debug.LogError("3- Invalid buff type format: " + buffTypeStrings[j]);
+                            continue; // Skip this value and proceed with the next one
+                        }
+                    }
+
+                    float[] durations = Array.ConvertAll(parts[4].Split(','), float.Parse);
+                    float[] values = Array.ConvertAll(parts[5].Split(','), float.Parse);
+
+                    // Set arrays to the loaded item
+                    loadedItem.itemBuffTypes = buffTypes;
+                    loadedItem.effectDuration = durations;
+                    loadedItem.effectValue = values;
+                    player.GetComponent<Inventory>().addItem(loadedItem);
+                }
+            }
+        }
+    }
+    /*
+    public void LoadInventory()
+    {
+        loading = false;
+
+        Dictionary<Item, int> inventory = new Dictionary<Item, int>();
+
+        if (InventorySaveExists())
+        {
+            string line = "";
+
+            using (StreamReader sr = new StreamReader(FILE_PATH))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] lMeals = line.Split('!');
+                    for (int i = 0; i < lMeals.Length; i++)
+                    {
+                        string[] parts = line.Split('|');
+
+                        if (parts.Length != 3)
+                        {
+                            Debug.LogError("Invalid line format: " + line);
+                            continue; // Skip this line and proceed with the next one
+                        }
+
+                        Item completeMeal = new Item();
+                        completeMeal.itemName = parts[0];
+                        completeMeal.flavorText = parts[1];
+                        completeMeal.amount = Int32.Parse(parts[2]);
+                        Debug.Log(parts[0] + " " + parts[1] + " " + parts[2]);
+                        if (!int.TryParse(parts[2], out completeMeal.amount))
+                        {
+                            Debug.LogError("Invalid amount format: " + parts[2]);
+                            continue; // Skip this line and proceed with the next one
+                        }
+
+                        player.GetComponent<Inventory>().LoadItem(completeMeal, completeMeal.amount);
+                    } 
+
+                }
+            }
+        }
+    }
+    */
+
+    /*
     public void LoadInventory()
     {
         loading = false;
@@ -174,6 +339,18 @@ public class SaveLoad : MonoBehaviour
             {
                 while ((line = sr.ReadLine()) != null)
                 {
+
+                    Item completeMeal = new Item();
+                    completeMeal.itemName = line.Split("|")[0];
+                    Debug.Log(line.Split("|")[0]);
+                    completeMeal.flavorText = line.Split("|")[1];
+                    Debug.Log(line.Split("|")[1]);
+
+                    completeMeal.amount = Int32.Parse(line.Split("|")[2]);
+                    Debug.Log(line.Split("|")[2]);
+
+                    playerForInventory.GetComponent<Inventory>().addItem(completeMeal);
+                    /*
                     int key = int.Parse(line.Split(SPLIT_CHAR)[0]);
                     Item item = allItemCodes[key];
                     int count = int.Parse(line.Split(SPLIT_CHAR)[1]);
@@ -182,8 +359,12 @@ public class SaveLoad : MonoBehaviour
                     //int invListLength = player.GetComponent<Inventory>().inventoryList.Count;
                     //player.GetComponent<Inventory>().inventoryList[invListLength].amount = count;
                     // }
+                    */
+    /*
                 }
             }
         }
     }
+
+    */
 }

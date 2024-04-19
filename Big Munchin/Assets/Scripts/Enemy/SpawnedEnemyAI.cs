@@ -465,13 +465,23 @@ public void Flee()
         // Rotate the enemy slowly backward
         StartCoroutine(RotateEnemyBackward());
         gameObject.tag = "deadEnemy";
+
         if (!dead)
         {
             transform.position -= Vector3.up * 0.35f;
-
         }
+
         // Set dead flag
         dead = true;
+
+        // Destroy the enemy after 10 seconds
+        StartCoroutine(DestroyAfterDelay(10f));
+    }
+
+    IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
     }
 
     IEnumerator RotateEnemyBackward()
