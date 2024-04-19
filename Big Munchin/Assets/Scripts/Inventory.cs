@@ -12,16 +12,16 @@ public class Inventory : MonoBehaviour
     public List<Item> inventoryList = new List<Item>();
     
     //creates the list for the button text
-    public List<TextMeshProUGUI> buttonList = new List<TextMeshProUGUI>();
+    private List<TextMeshProUGUI> buttonList = new List<TextMeshProUGUI>();
 
     //the object that stores all inventory UI, and bool for if it is active or not
-    public GameObject inventoryParent;
-    bool inventoryOpen = true;
+    private GameObject inventoryParent;
+    private bool inventoryOpen = true;
 
     //the text objects for the inventory display text
-    public TextMeshProUGUI ITDName;
-    public TextMeshProUGUI ITDType;
-    public TextMeshProUGUI ITDFlavorText;
+    private TextMeshProUGUI ITDName;
+    private TextMeshProUGUI ITDType;
+    private TextMeshProUGUI ITDFlavorText;
 
     //string for selected item
     string selectedItem;
@@ -30,11 +30,24 @@ public class Inventory : MonoBehaviour
     public missionController mc;
     private void Start()
     {
+        inventoryParent = GameObject.Find("inventoryParent");
+        buttonList = new List<TextMeshProUGUI>();
+        TextMeshProUGUI[] temp = inventoryParent.GetComponentsInChildren<TextMeshProUGUI>();
+        for(int i = 0;i < 10; i++)
+        {
+            buttonList.Add(temp[i]);
+        }
+        ITDName = temp[10];
+        ITDType = temp[11];
+        ITDFlavorText = temp[12];
+
         //sets all button texts to null
         foreach (TextMeshProUGUI tmpu in buttonList)
         {
             tmpu.text = "";
         }
+        inventoryOpen = false;
+        inventoryParent.SetActive(inventoryOpen);
     }
 
 
@@ -44,9 +57,9 @@ public class Inventory : MonoBehaviour
         //activates UI object, and switches the toggle
         if (Input.GetKeyDown(KeyCode.I))
         {
-            fillGUIButtons();
-            inventoryParent.SetActive(inventoryOpen);
+            fillGUIButtons();            
             inventoryOpen = !inventoryOpen;
+            inventoryParent.SetActive(inventoryOpen);
         }
     }
 
