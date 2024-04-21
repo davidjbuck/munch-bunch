@@ -95,18 +95,20 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Current Mission: Take Out The Goons";
                 break;
             case 2:
-                missionTXT.text = "Current Mission: Check Out The Market";                
+                missionTXT.text = "Current Mission: Check Out The Market";
+                
+                //sets the first few lines of dialogue
+                Dialogue detectiveControl = detective.GetComponent<Dialogue>();
+                detectiveControl.currentIndex = 0;
+                detectiveControl.endIndex = 4;
                 break;
             case 3:
                 missionTXT.text = "Current Mission: Return To The Detective";
-
-                //sets the next lines of dialogue
-                Dialogue detectiveControl = detective.GetComponent<Dialogue>();
-                detectiveControl.line[0] = "yargh";
-                detectiveControl.line[1] = "I need actual dialogue here to see if it works properly";
-                detectiveControl.line[2] = "and also if it moves like how the dialogue should scroll";
-                detectiveControl.line[3] = "so there be somethin about some birds or whatnot? pretty nutty if you ask me";
-                detectiveControl.StartDialogue();
+                
+                //sets the next few lines of dialogue
+                detectiveControl = detective.GetComponent<Dialogue>();
+                detectiveControl.currentIndex = 5;
+                detectiveControl.endIndex = 9;
                 break;
             case 4:
                 missionTXT.text = "Current Mission: Collect Fried Food Animals";
@@ -114,13 +116,10 @@ public class missionController : MonoBehaviour
             case 5:
                 missionTXT.text = "Current Mission: Return To The Detective";
 
-                //sets the next lines of dialogue
+                //sets the next few lines of dialogue
                 detectiveControl = detective.GetComponent<Dialogue>();
-                detectiveControl.line[0] = "great good job you got those little guys";
-                detectiveControl.line[1] = "now go to the chicken farm";
-                detectiveControl.line[2] = "or else i'll be sad haha :(";
-                detectiveControl.line[3] = "lorem ipsum i dont remember the rest";
-                detectiveControl.StartDialogue();
+                detectiveControl.currentIndex = 10;
+                detectiveControl.endIndex = 15;
                 break;
             case 6:
                 missionTXT.text = "Current Mission: Investigate the Chicken Farm";

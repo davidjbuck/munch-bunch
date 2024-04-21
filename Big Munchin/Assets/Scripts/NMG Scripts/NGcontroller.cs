@@ -264,14 +264,6 @@ public class NGcontroller : MonoBehaviour
         vegParent.SetActive(false);
         sumParent.SetActive(true);
 
-
-        //THIS IS HOW IT USED TO WORK
-        ////displays all the values for summary
-        //meatSumTXT.text = "Meat Calories: " + meatCal + "      Desired Calories: " + 230;
-        //carbSumTXT.text = "Carb Calories: " + carbCal.ToString("F2") + "      Desired Calories: " + 4;
-        //vegSumTXT.text = "Vegetable Calories: " + vegWeight + "      Desired Calories: " + (meatWeight + carbWeight).ToString("F2");
-        //calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegWeight).ToString("F2");
-
         //THIS IS HOW IT WORKS NOW
         meatSumTXT.text = "Meat Weight: " + meatWeight + "g      Desired Weight: " + 85 + "g";
         carbSumTXT.text = "Carb Weight: " + carbWeight.ToString("F2") + "      Desired Weight: " + 100 + "g";
@@ -297,10 +289,18 @@ public class NGcontroller : MonoBehaviour
 
         cityHealthTXT.text = "City Health Increased by " + cityHealth;
 
+        int[] buffsForMeal = {1, 2, 3};
+        float[] buffsDuration = {1, 2, 3};
+        float[] buffsValue = {1, 2, 3};
+
         Item completeMeal = new Item();
         completeMeal.itemName = "Chicken, Rice, and Broccoli Meal";
         completeMeal.flavorText = "A completed dish. Provides many advantages over snacking.";
         completeMeal.amount = 1;
+        completeMeal.itemType = 1;
+        completeMeal.itemBuffTypes = buffsForMeal;
+        completeMeal.effectDuration = buffsDuration;
+        completeMeal.effectValue = buffsValue;
         playerForInventory.GetComponent<Inventory>().addItem(completeMeal);
     }
 

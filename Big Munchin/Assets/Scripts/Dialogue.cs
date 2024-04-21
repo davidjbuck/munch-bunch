@@ -13,6 +13,8 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
 
     private int index;
+    public int currentIndex;
+    public int endIndex;
 
     private VoiceLines vl;
     // Start is called before the first frame update
@@ -33,14 +35,15 @@ public class Dialogue : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (textComponent.text == line[index])
-                {
-                    NextLine();
-                }
-                else
+                Debug.Log("this is the current index: " + index);
+                if (index == endIndex)
                 {
                     StopAllCoroutines();
                     textComponent.text = line[index];
+                }
+                else if (textComponent.text == line[index])
+                {
+                    NextLine();
                 }
             }
         }
@@ -49,7 +52,7 @@ public class Dialogue : MonoBehaviour
     //TAB ADDED: changed to public so I can access from mission controller
     public void StartDialogue()
     {
-        index = 0;
+        index = currentIndex;
         StartCoroutine(TypeLine());
         vl.PlayCurrentVoiceLine();
     }
