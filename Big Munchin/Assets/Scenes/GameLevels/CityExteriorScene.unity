@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3232,15 +3232,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 683.454
+      value: 644.6
       objectReference: {fileID: 0}
     - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 22.69
+      value: 22.7
       objectReference: {fileID: 0}
     - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 558.844
+      value: 598.2
       objectReference: {fileID: 0}
     - target: {fileID: 1437972481147205480, guid: 2234c64d0afdf8541966ee541e6cb28d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4946,11 +4946,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1217891342492995414, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000021495101
+      value: -0.0000000021495101
       objectReference: {fileID: 0}
     - target: {fileID: 1217891342492995414, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -7.441277e-11
+      value: 7.441277e-11
       objectReference: {fileID: 0}
     - target: {fileID: 1638336558870278599, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5010,11 +5010,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017316166
+      value: 0.000000017316166
       objectReference: {fileID: 0}
     - target: {fileID: 5045018313472266148, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.142257e-10
+      value: -9.142257e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5811156132911578989, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: hitboxPropertyCollection.Array.size
@@ -5122,11 +5122,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7657924475019562170, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000021495106
+      value: -0.0000000021495106
       objectReference: {fileID: 0}
     - target: {fileID: 7657924475019562170, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -7.4412795e-11
+      value: 7.4412795e-11
       objectReference: {fileID: 0}
     - target: {fileID: 7749656350258619311, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8428,7 +8428,26 @@ MonoBehaviour:
   - "Maybe, just maybe you\u2019re just the guy we\u2019ve been waiting for. Oh but
     I\u2019m getting ahead of myself. A new restaurant needs some new fresh ingredients
     right? Go down to the market and take your pick."
+  - "The market is down the street into town, and then make a right. You can\u2019t
+    miss it!"
+  - "Wow you picked up a lot! I need to stop by your restaurant some time. It\u2019s
+    got to beat every other dump in this town."
+  - 'But anyways rookie, for your first official mission, you need to investigate
+    a new kind of bird taking roost around here. '
+  - "They\u2019re unlike anything I've ever seen.  "
+  - "They look like they\u2019ve been thrown in the grease trap, but they\u2019re
+    walking and flapping around just fine!  "
+  - "See if you can\u2019t wrangle some up so we can take a closer look. "
+  - "Wow those are some\u2026 uhh\u2026 ok I won\u2019t lie those potato birds look
+    absolutely horrid."
+  - "They don\u2019t smell too great either.  "
+  - 'What on earth could have happened to these little guys?  '
+  - 'Well thank you for picking these up!  '
+  - "We\u2019ll run some tests so see if they can lead us anywhere. "
+  - " Come back when you\u2019re ready for another mission. "
   textSpeed: 0
+  currentIndex: 0
+  endIndex: 0
 --- !u!1 &808152643483348740
 GameObject:
   m_ObjectHideFlags: 0
