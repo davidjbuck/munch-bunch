@@ -340,6 +340,7 @@ public void Flee()
             navAgent.SetDestination(Destination);
             Distance = Vector3.Distance(transform.position, Destination);
             movingToRestaurant = true;
+            DestroyAfterDelay(10f);
         }
     }
 

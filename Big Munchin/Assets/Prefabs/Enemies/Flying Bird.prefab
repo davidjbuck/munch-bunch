@@ -997,6 +997,7 @@ MonoBehaviour:
   enemyHP: 2
   enemyAlive: 0
   hSlider: {fileID: 336172241148437563}
+  enemyName: bird
 --- !u!114 &1272370612629435316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,6 +1026,7 @@ MonoBehaviour:
   stunTime: 0
   enemyMovesets:
   - {fileID: 7723599878140961325}
+  eHealth: {fileID: 8568278309633220116}
 --- !u!95 &954539420231906178
 Animator:
   serializedVersion: 5

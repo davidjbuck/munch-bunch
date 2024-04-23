@@ -45,6 +45,8 @@ public class BirdMovement : MonoBehaviour
 	public float stunTime;
 	public MovesetHolder[] enemyMovesets;
 	MovesetHolder enemyActiveMoveset;
+	public EnemyHealth eHealth;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -67,6 +69,10 @@ public class BirdMovement : MonoBehaviour
 		PlayerDestination = GameObject.FindGameObjectWithTag("Player").transform.position;
 		PlayerDestination.y = GameObject.FindGameObjectWithTag("Player").transform.position.y + 1f;
 		// Perform AI behaviors if not dead
+		if (!eHealth.enemyAlive)
+		{
+			death();
+		}
 		if (dead == false)
 		{
 			RunBehaviors();
@@ -209,6 +215,10 @@ public class BirdMovement : MonoBehaviour
 
 		UpdateWaypoint(true);
 		//col.TakeDamage(1, 1f);
+	}
+	void death()
+	{
+		Destroy(this.gameObject);
 	}
 }
 
