@@ -2476,6 +2476,7 @@ MonoBehaviour:
   - {fileID: 7802906256684002323}
   attackSpawn: {fileID: 6166536148416753439}
   birdAttack: {fileID: 0}
+  eHealth: {fileID: 7126388083961503357}
 --- !u!195 &2947324017771887794
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2514,6 +2515,7 @@ MonoBehaviour:
   enemyHP: 4
   enemyAlive: 0
   hSlider: {fileID: 4417923573785609796}
+  enemyName: 
 --- !u!65 &1840514773504581608
 BoxCollider:
   m_ObjectHideFlags: 0

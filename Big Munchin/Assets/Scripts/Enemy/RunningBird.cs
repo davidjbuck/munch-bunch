@@ -23,6 +23,7 @@ public class RunningBird : MonoBehaviour
     public Transform attackSpawn;
     public GameObject birdAttack;
     GameObject bAttack;
+    public EnemyHealth eHealth;
 
     void Start()
     {
@@ -48,7 +49,10 @@ public class RunningBird : MonoBehaviour
             // If player is within chase range, switch to chase behavior
             aiBehavior = Behaviors.Chase;
         }
-
+        if (!eHealth.enemyAlive)
+        {
+            death();
+        }
         // Perform behavior based on current state
         switch (aiBehavior)
         {
@@ -240,5 +244,9 @@ public class RunningBird : MonoBehaviour
         attackTimer = attackCooldown;
         */
         Debug.Log("Attacking player!");
+    }
+    void death()
+    {
+        Destroy(this.gameObject);
     }
 }
