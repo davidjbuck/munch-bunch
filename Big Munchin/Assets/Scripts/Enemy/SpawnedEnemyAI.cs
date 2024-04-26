@@ -44,6 +44,7 @@ public class SpawnedEnemyAI : MonoBehaviour
     public Animator animator;
     private bool punching;
     private bool launched;
+    private Vector3 playerLocation;
 
     void RunBehaviors()
     {
@@ -487,13 +488,14 @@ public void Flee()
 
     IEnumerator RotateEnemyBackward()
     {
-        float rotationSpeed = 30f; // Adjust the rotation speed as needed
+        float rotationSpeed = 15f; // Adjust the rotation speed as needed
         float targetAngle = -90f; // Rotate to -90 degrees (backward)
 
         while (transform.rotation.eulerAngles.y > targetAngle)
         {
             float step = rotationSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetAngle, 0, 0), step);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetAngle, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), step);
+          //  transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetAngle, 0, 0), step);
             yield return null;
         }
     }

@@ -50,7 +50,7 @@ public class ThrowMeatball : MonoBehaviour
         GameObject meatball = Instantiate(meatballPrefab, attackSpawn.position, Quaternion.identity);
         Rigidbody meatballRb = meatball.GetComponent<Rigidbody>();
         meatballRb.velocity = initialVelocity;
-        Destroy(meatball, 5f);
+        Destroy(meatball, 3f);
 
         // Reset the meatball throw cooldown timer
         meatballTimer = meatballCooldown;
