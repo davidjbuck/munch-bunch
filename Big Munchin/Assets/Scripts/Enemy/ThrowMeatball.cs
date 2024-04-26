@@ -1,71 +1,80 @@
 using UnityEngine;
+using System.Collections;
 
 public class ThrowMeatball : MonoBehaviour
 {
     public Transform player; // Reference to the player's transform
     public GameObject meatballPrefab; // Prefab of the meatball to be thrown
-    public float throwForce = 10f; // Force to throw the meatball
-    public float arcHeight = 2f; // Height of the arc
+    public float meatballCooldown;
+    private float meatballTimer;
+    public float meatballSpeed;
+    public bool throwingMeatballs;
+    public Animator animator;
+    private Vector3 playerLocation;
+    public Transform attackSpawn;
+    private Vector3 playerPosition;
+    private bool meatballThrown = false; // Flag to track whether the meatball has been thrown
 
     private void Start()
     {
-        /*
-        if (player == null)
-        {
-            Debug.LogError("Player transform not assigned!");
-            enabled = false; // Disable the script if player transform is not assigned
-        } else
-        {
-            ThrowMeatballAttack();
+        meatballTimer = meatballCooldown;
+        // No need to start the coroutine here since it's inside ThrowMeatballs method
+    }
 
+    void ThrowMeatballs()
+    {
+        if (!meatballThrown) // Check if the meatball hasn't been thrown yet
+        {
+            animator.SetBool("Throw", true);
+            StartCoroutine(ThrowDelayCoroutine());
+            meatballThrown = true; // Set the flag to true to indicate that the meatball is being thrown
         }
-        */
+    }
+
+    IEnumerator ThrowDelayCoroutine()
+    {
+        yield return new WaitForSeconds(0.65f); // Wait for 0.75 seconds
+        // Now you can throw the meatball
+
+        // Calculate throw direction towards the player
+        Vector3 throwDirection = (playerPosition - transform.position).normalized;
+
+        // Add a random offset within the 10-degree window in each direction
+        float randomAngle = Random.Range(0f, 0f);
+        throwDirection = Quaternion.Euler(0f, randomAngle, 0f) * throwDirection;
+
+        // Calculate the initial velocity for the meatball (horizontal and vertical)
+        Vector3 initialVelocity = throwDirection * meatballSpeed;
+
+        // Set the initial velocity of the meatball
+        GameObject meatball = Instantiate(meatballPrefab, attackSpawn.position, Quaternion.identity);
+        Rigidbody meatballRb = meatball.GetComponent<Rigidbody>();
+        meatballRb.velocity = initialVelocity;
+        Destroy(meatball, 5f);
+
+        // Reset the meatball throw cooldown timer
+        meatballTimer = meatballCooldown;
+
+        // Switch back to Chase behavior after throwing the meatball
+        animator.SetBool("Throw", false);
+
+        meatballThrown = false; // Reset the flag once the coroutine ends
     }
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space))
+        playerLocation = new Vector3(playerPosition.x, this.transform.position.y, playerPosition.z);
+        this.transform.LookAt(playerLocation);
+        playerPosition = player.transform.position;
+
+        if (meatballTimer > 0)
         {
+            meatballTimer -= Time.deltaTime;
         }
-        */
+        else if (Vector3.Distance(transform.position, player.transform.position) <= 100)
+        {
+            playerPosition = player.transform.position;
+            ThrowMeatballs();
+        }
     }
-    void OnTriggerEnter(Collider col)
-    {
-        Debug.Log("MEATBALL HIT"); 
-        Destroy(this);
-    }
-    /*
-    private void ThrowMeatballAttack()
-    {
-        
-        // Calculate the direction towards the player
-        Vector3 targetPosition = player.position;
-        Vector3 throwDirection = (targetPosition - transform.position).normalized;
-
-        // Adjust the throwing direction based on the player's position relative to the starting point
-        Vector3 adjustedThrowDirection = Quaternion.AngleAxis(Vector3.Angle(transform.forward, throwDirection), Vector3.up) * transform.forward;
-
-        // Calculate the distance to the player
-        float distanceToPlayer = Vector3.Distance(transform.position, targetPosition);
-
-        // Calculate the initial velocity needed to reach the target position
-        float initialVelocity = Mathf.Sqrt(distanceToPlayer * Physics.gravity.magnitude / Mathf.Sin(2 * Mathf.Deg2Rad * 45));
-
-        // Apply arc height to the throw direction
-        Vector3 throwArc = adjustedThrowDirection + Vector3.up * arcHeight;
-
-        // Instantiate the meatball prefab
-        GameObject meatball = Instantiate(meatballPrefab, transform.position, Quaternion.identity);
-
-        // Get the Rigidbody component of the meatball
-        Rigidbody rb = meatball.GetComponent<Rigidbody>();
-
-        // Set the velocity of the meatball
-        rb.velocity = throwArc * initialVelocity;
-
-        // Apply additional force to account for the initial throw force
-        rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
-    }
-    */
 }
