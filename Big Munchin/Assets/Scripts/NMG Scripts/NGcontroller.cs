@@ -163,7 +163,7 @@ public class NGcontroller : MonoBehaviour
                 if (riceParent.activeInHierarchy == true)
                 {
                     fakeWeightCount += Time.deltaTime * 20;
-                    weightTxt.text = (fakeWeightCount.ToString("F2"));
+                    weightTxt.text = (fakeWeightCount.ToString("F2") + "g");
                 }
             }
 
@@ -243,7 +243,7 @@ public class NGcontroller : MonoBehaviour
         carbWeight = fakeWeightCount;
         carbCal = fakeWeightCount * 1.3f;
         currentScreen = 2;
-        mostPlateWeightTxt.text = "Current Weight: " + (meatWeight + carbWeight);
+        mostPlateWeightTxt.text = ("Current Weight: " + (meatWeight + carbWeight) + "g");
         bowl.SetActive(true);
         bowlOnScale.SetActive(true);
         bowlForRice.SetActive(false);
@@ -321,7 +321,7 @@ public class NGcontroller : MonoBehaviour
     public void getVegWeight(float w)
     {
         vegWeight = w;
-        vegWeightTxt.text = vegWeight.ToString("F2");
+        vegWeightTxt.text = vegWeight.ToString("F2") + "g";
     }
 
     public float setVegWeight()

@@ -119,12 +119,18 @@ public class missionController : MonoBehaviour
                 //sets the next few lines of dialogue
                 detectiveControl = detective.GetComponent<Dialogue>();
                 detectiveControl.currentIndex = 10;
-                detectiveControl.endIndex = 15;
+                detectiveControl.endIndex = 27;
                 break;
             case 6:
                 missionTXT.text = "Current Mission: Investigate the Chicken Farm";
                 break;
             case 7:
+                missionTXT.text = "Current Mission: Return To The Detective";
+
+                //sets the next few lines of dialogue
+                detectiveControl = detective.GetComponent<Dialogue>();
+                detectiveControl.currentIndex = 28;
+                detectiveControl.endIndex = 35;
                 break;
         }
     }

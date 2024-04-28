@@ -1537,11 +1537,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1602554845974886681, guid: 91d96d28d4aa50744ad7d08372ac8d77, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000001075221
+      value: 0.000000001075221
       objectReference: {fileID: 0}
     - target: {fileID: 1602554845974886681, guid: 91d96d28d4aa50744ad7d08372ac8d77, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.9560957e-11
+      value: 1.9560957e-11
       objectReference: {fileID: 0}
     - target: {fileID: 3126216596849975875, guid: 91d96d28d4aa50744ad7d08372ac8d77, type: 3}
       propertyPath: mc
@@ -1577,7 +1577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8303089557790612021, guid: 91d96d28d4aa50744ad7d08372ac8d77, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1e-45
+      value: -3e-45
       objectReference: {fileID: 0}
     - target: {fileID: 8757753496485449558, guid: 91d96d28d4aa50744ad7d08372ac8d77, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8436,6 +8436,47 @@ MonoBehaviour:
   - 'Well thank you for picking these up!  '
   - "We\u2019ll run some tests so see if they can lead us anywhere. "
   - " Come back when you\u2019re ready for another mission. "
+  - "Alright rookie here\u2019s what we got!"
+  - "Y\u2019know those birds you got for us?  "
+  - 'Well we found that they have the same composition as a fried potato while still
+    having the meat of a bird.  '
+  - 'You know what this means?  '
+  - 'These birds must have been mashed together and battered until they were something
+    completely new! '
+  - "It\u2019s a tragedy what happened to them\u2026 "
+  - 'But for some good news, they all had these small trackers on their legs!  '
+  - "Crazy how you didn\u2019t find them. Maybe you should workout your eyes sometime! "
+  - " Ahhh I\u2019m joking I\u2019m joking!  "
+  - "Anyway, these trackers are property of Tony\u2019s chicken farm just outside
+    of town. "
+  - "If they really are Tony\u2019s birds, this could be a major breakthrough in
+    the case.  "
+  - "We can\u2019t exactly bust down the door yet, so you\u2019re gonna go in alone
+    and cause some mayhem. Good luck out there rookie! "
+  - "I see you made it back in one piece! So tell me. How\u2019d it go?"
+  - "You\u2026 destroyed the whole place? "
+  - 'By yourself?  '
+  - "I\u2019d be inclined not to believe you if I didn\u2019t hear a giant explosion
+    and a bunch of birds quacking like little chicks. Unless those were Tony\u2019s
+    boys I heard? Hahahaha!  "
+  - "This is great news! With that farm gone, he can\u2019t produce anymore of those
+    little avian spuds. This is a huge deal for Tony that he can\u2019t ignore.  "
+  - "It\u2019s reeeeally gonna suck for your next mission though."
+  - "Huh? Did I say something? Oh no no I was just muttering to myself! Just come
+    on back when you\u2019re ready for another mission. "
+  - "Welcome back! Get ready because this time you\u2019re going for the gold. You\u2019re
+    at the last sprint of the race. "
+  - "You\u2019re gunning it towards the finish line.  "
+  - "You\u2019re infiltrating the heart of Tony\u2019s lair with all of his top security
+    personnel and finding evidence against him! You\u2019re hearing the crowds cheer
+    your name!  "
+  - 'Well, you get the idea. '
+  - " You\u2019re going inside Tony\u2019s lair and finding everything you can about
+    his fowl play. Anything about the birds and any other illegitimate business.  "
+  - 'Take anything you can find.  '
+  - ' Short and sweet. Well, the briefing is at least.  '
+  - 'From everything I''ve seen of you, this will be a piece of cake. Stay frosted
+    and good luck out there rookie!  '
   textSpeed: 0
   currentIndex: 0
   endIndex: 0
