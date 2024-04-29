@@ -68,6 +68,9 @@ public class NGcontroller : MonoBehaviour
     public GameObject star2;
     public TextMeshProUGUI cityHealthTXT;
     int cityHealth = 0;
+    bool meatMet;
+    bool carbMet;
+    bool vegMet;
 
     public GameObject startCanvas;
     public GameObject NMGCanvas;
@@ -275,16 +278,24 @@ public class NGcontroller : MonoBehaviour
         {
             star.SetActive(true);
             cityHealth += 10;
+            meatMet = true;
         }
         if (Math.Abs((130 - carbCal)) <= 10)
         {
             star1.SetActive(true);
             cityHealth += 10;
+            carbMet = true;
         }
         if (Math.Abs(((meatWeight + carbWeight) - vegWeight)) <= 10)
         {
             star2.SetActive(true);
             cityHealth += 10;
+            vegMet = true;
+        }
+
+        if(meatMet == true && carbMet == true && vegMet == true)
+        {
+
         }
 
         cityHealthTXT.text = "City Health Increased by " + cityHealth;
