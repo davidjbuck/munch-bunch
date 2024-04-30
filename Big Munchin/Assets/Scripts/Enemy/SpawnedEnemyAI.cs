@@ -179,7 +179,7 @@ public class SpawnedEnemyAI : MonoBehaviour
                     if (!punching)
                     {
                         animator.SetTrigger("Punch");
-                        Debug.Log("PUNCH");
+                        //Debug.Log("PUNCH");
                         punching = true;
                     }
 
@@ -194,7 +194,7 @@ public class SpawnedEnemyAI : MonoBehaviour
                     if (!punching)
                     {
                         animator.SetTrigger("Punch");
-                        Debug.Log("PUNCH");
+                        //Debug.Log("PUNCH");
                         punching = true;
                     }
                     //  Destination = this.transform.position;
@@ -337,7 +337,7 @@ public void Flee()
         if (dead == false)
         {
             Destination = GameObject.FindGameObjectWithTag("restaurantsidedoor").transform.position;
-            Debug.Log(Destination);
+            //Debug.Log(Destination);
             navAgent.SetDestination(Destination);
             Distance = Vector3.Distance(transform.position, Destination);
             movingToRestaurant = true;
@@ -380,7 +380,7 @@ public void Flee()
                         }
                         else
                         {
-                            Debug.Log("ATTACK");
+                            //Debug.Log("ATTACK");
                             // Destination = player.transform.position;
                             Combat();
                             if (Distance < 2)

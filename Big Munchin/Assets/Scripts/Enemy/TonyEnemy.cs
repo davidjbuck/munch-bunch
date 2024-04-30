@@ -37,6 +37,8 @@ public class TonyEnemy : MonoBehaviour
     private bool dead;
     public float punchCooldown = 1f;
     private float punchTimer = 0f;
+    public GameObject tonyElevator;
+    public GameObject elevatorObj;
     void Start()
     {
         // Initialize components and variables
@@ -317,6 +319,8 @@ public class TonyEnemy : MonoBehaviour
         navAgent.SetDestination(elevator.position);
         if (Vector3.Distance(transform.position, navAgent.destination) <= 2f)
         {
+            tonyElevator.SetActive(true);  
+            elevatorObj.GetComponent<ElevatorMoveUp>().startElevator();
             Destroy(gameObject);
         }
     }
