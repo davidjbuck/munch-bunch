@@ -273,6 +273,11 @@ public class NGcontroller : MonoBehaviour
         vegSumTXT.text = "Vegetable Weight: " + vegWeight + "      Desired Weight: " + (meatWeight + carbWeight).ToString("F2");
         calSumTXT.text = "Total Calories: " + (meatCal + carbCal + vegCal).ToString("F2");
 
+        //arrays for completed meal buffs
+        int[] buffsForMeal = { 1, 2, 3 };
+        float[] buffsDuration = { 1, 2, 3 };
+        float[] buffsValue = { 1, 2, 3 };
+
         //activates stars depending how well the numbers are balanced
         if (Math.Abs((85 - meatCal)) <= 10)
         {
@@ -293,16 +298,14 @@ public class NGcontroller : MonoBehaviour
             vegMet = true;
         }
 
-        if(meatMet == true && carbMet == true && vegMet == true)
+        if (meatMet == true && carbMet == true && vegMet == true)
         {
-
+            
         }
 
         cityHealthTXT.text = "City Health Increased by " + cityHealth;
 
-        int[] buffsForMeal = {1, 2, 3};
-        float[] buffsDuration = {1, 2, 3};
-        float[] buffsValue = {1, 2, 3};
+        
 
         Item completeMeal = new Item();
         completeMeal.itemName = "Chicken, Rice, and Broccoli Meal";
