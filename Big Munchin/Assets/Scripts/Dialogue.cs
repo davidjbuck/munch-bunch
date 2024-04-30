@@ -22,6 +22,7 @@ public class Dialogue : MonoBehaviour
     {
         textComponent.text = string.Empty;
         character.text = characterName;
+        endIndex = 4;
         StartDialogue();
 
         vl = GetComponent<VoiceLines>();
