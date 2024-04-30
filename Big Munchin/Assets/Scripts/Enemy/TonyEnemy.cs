@@ -2,7 +2,7 @@ using UnityEngine;
 public class TonyEnemy : MonoBehaviour
 {
     // Enum for different behaviors
-    public enum Behaviors { Idle, MoveAway, Stunned, Chase, Attack, ThrowMeatball, Charge, MeleeAttack, Punch }
+    public enum Behaviors { Idle, MoveAway, Stunned, Chase, Attack, ThrowMeatball, Charge, MeleeAttack, Punch, RunAway }
 
     // Public variables
     public Behaviors aiBehavior = Behaviors.Idle;
@@ -32,7 +32,11 @@ public class TonyEnemy : MonoBehaviour
     private Vector3 playerLocation;
     public MovesetHolder[] enemyMovesets;
     MovesetHolder enemyActiveMoveset;
-
+    public EnemyHealth eHealth;
+    public Transform elevator;
+    private bool dead;
+    public float punchCooldown = 1f;
+    private float punchTimer = 0f;
     void Start()
     {
         // Initialize components and variables
@@ -49,11 +53,20 @@ public class TonyEnemy : MonoBehaviour
 
     void Update()
     {
+        if (!eHealth.enemyAlive)
+        {
+            death();
+            dead = true;
+        }
         // Update player position
         playerPosition = playerTransform.position;
 
         // Perform behavior based on current state
-        if (!throwingMeatballs)
+        if (punchTimer > 0)
+        {
+            punchTimer -= Time.deltaTime;
+        }
+        if (!dead)
         {
             switch (aiBehavior)
             {
@@ -72,9 +85,6 @@ public class TonyEnemy : MonoBehaviour
                 case Behaviors.Attack:
                     Attack();
                     break;
-                case Behaviors.ThrowMeatball:
-                    ThrowMeatball();
-                    break;
                 case Behaviors.Charge:
                     Charge();
                     break;
@@ -84,13 +94,17 @@ public class TonyEnemy : MonoBehaviour
                 case Behaviors.Punch:
                     Punch();
                     break;
+                case Behaviors.RunAway:
+                    RunAway();
+                    break;
             }
-        }
-        else
+        } else
         {
-            // If throwing meatballs, always execute the ThrowMeatball behavior
-            ThrowMeatball();
+        
+                    RunAway();
+
         }
+        
 
         // Update timers
         if (attackTimer > 0)
@@ -127,7 +141,9 @@ public class TonyEnemy : MonoBehaviour
         animator.SetBool("ThrowMeatball", aiBehavior == Behaviors.ThrowMeatball);
         animator.SetBool("Charge", aiBehavior == Behaviors.Charge);
         animator.SetBool("MeleeAttack", aiBehavior == Behaviors.MeleeAttack);
-       // animator.SetBool("Punch", aiBehavior == Behaviors.Punch);
+        animator.SetBool("RunAway", aiBehavior == Behaviors.RunAway);
+
+         animator.SetBool("Punch", aiBehavior == Behaviors.Punch);
 
         hitCounter = 0;
         stunTimer = stunDuration;
@@ -263,6 +279,8 @@ public class TonyEnemy : MonoBehaviour
     {
         Debug.Log("PUNCH");
         //attacks here
+        enemyActiveMoveset.LightAttackCombo();
+
         playerLocation = new Vector3(playerPosition.x, this.transform.position.y, playerPosition.z);
         this.transform.LookAt(playerLocation);
         aiBehavior = Behaviors.Attack;
@@ -275,46 +293,39 @@ public class TonyEnemy : MonoBehaviour
         {
             navAgent.SetDestination(this.transform.position);
 
-            aiBehavior = Behaviors.Punch;
+            // Check if punch is off cooldown
+            if (punchTimer <= 0)
+            {
+                // If punch is off cooldown, execute punch
+                aiBehavior = Behaviors.Punch;
+                SetAnimatorBools();
 
-            SetAnimatorBools();
-        } else if (Vector3.Distance(transform.position, playerPosition) > 2f)
+                // Reset punch cooldown timer
+                punchTimer = punchCooldown;
+            }
+        }
+        else if (Vector3.Distance(transform.position, playerPosition) >= 2f)
         {
             navAgent.SetDestination(playerPosition);
         }
-        /*
-        if (Vector3.Distance(transform.position, tempPlayerPosition) > 6f)
-        {
-            aiBehavior = Behaviors.Chase;
-            SetAnimatorBools();
-        }
-        */
     }
-
-    void ThrowMeatball()
+    void RunAway()
     {
-        // Calculate throw direction towards the player
-        Vector3 throwDirection = (playerPosition - transform.position).normalized;
-
-        // Add a random offset within the 10-degree window in each direction
-        float randomAngle = Random.Range(-10f, 10f);
-        throwDirection = Quaternion.Euler(0f, randomAngle, 0f) * throwDirection;
-
-        // Calculate the initial velocity for the meatball (horizontal and vertical)
-        Vector3 initialVelocity = throwDirection * meatballSpeed;
-
-        // Set the initial velocity of the meatball
-        GameObject meatball = Instantiate(meatballPrefab, attackSpawn.position, Quaternion.identity);
-        Rigidbody meatballRb = meatball.GetComponent<Rigidbody>();
-        meatballRb.velocity = initialVelocity;
-
-        // Reset the meatball throw cooldown timer
-        meatballTimer = meatballCooldown;
-
-        // Switch back to Chase behavior after throwing the meatball
-        aiBehavior = Behaviors.Chase;
+        navAgent.speed = 10f;
+        
+        this.transform.LookAt(new Vector3(elevator.position.x, this.transform.position.y, elevator.position.z));
+        navAgent.SetDestination(elevator.position);
+        if (Vector3.Distance(transform.position, navAgent.destination) <= 2f)
+        {
+            Destroy(gameObject);
+        }
+    }
+    void death()
+    {
+        aiBehavior = Behaviors.RunAway;
         SetAnimatorBools();
     }
+
     void Charge()
     {
         stunTimer = stunDuration;

@@ -3805,11 +3805,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8507971810989730406, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000042878736
+      value: -0.0000000042878745
       objectReference: {fileID: 0}
     - target: {fileID: 8507971810989730406, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -3.4330871e-10
+      value: 3.4330874e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8916013663398742498, guid: 3d7be07221be34147bb2757bab5ffc66, type: 3}
       propertyPath: anchorObject
@@ -4806,7 +4806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5180635828905637662, guid: d9fdfe49ed8deda4fa8434fa49efe653, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7327287364247663421, guid: d9fdfe49ed8deda4fa8434fa49efe653, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5173,33 +5173,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6187415718389322637, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6187415718389322637, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6187415718389322637, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6555778528666915480, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
-      propertyPath: aiBehavior
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6555778528666915480, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1955167177}
     - target: {fileID: 7748859328547014452, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7748859328547014452, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7840218173860117735, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
       propertyPath: anchorObject
@@ -5208,10 +5192,6 @@ PrefabInstance:
     - target: {fileID: 8246031586234868957, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
       propertyPath: m_Name
       value: TonyBoss
-      objectReference: {fileID: 0}
-    - target: {fileID: 8246031586234868957, guid: 0f3aa35231dcfa949a327d9ee189043a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
