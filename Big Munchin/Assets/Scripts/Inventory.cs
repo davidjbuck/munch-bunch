@@ -28,6 +28,9 @@ public class Inventory : MonoBehaviour
 
 
     public missionController mc;
+
+    //goes with the cursed mission function
+    private bool playerCrossed = false;
     private void Start()
     {
         inventoryParent = GameObject.Find("inventoryParent");
@@ -62,6 +65,17 @@ public class Inventory : MonoBehaviour
             inventoryParent.SetActive(inventoryOpen);
         }
     }
+
+    //this is an incredibly cursed way of activating the mission for the goons in the chicken farm
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && !playerCrossed)
+        {
+            playerCrossed = true;
+            mc.setCurrentMission(7);
+        }
+    }
+
 
 
     private void OnCollisionEnter(Collision collision)

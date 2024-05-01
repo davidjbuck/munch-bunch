@@ -125,6 +125,9 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Current Mission: Investigate the Chicken Farm";
                 break;
             case 7:
+                missionTXT.text = "Current Mission: Clear the Chicken Farm";
+                break;
+            case 8:
                 missionTXT.text = "Current Mission: Return To The Detective";
 
                 //sets the next few lines of dialogue
