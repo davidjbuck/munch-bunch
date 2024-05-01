@@ -147,7 +147,6 @@ public class TonyEnemy : MonoBehaviour
 
          animator.SetBool("Punch", aiBehavior == Behaviors.Punch);
 
-        hitCounter = 0;
         stunTimer = stunDuration;
     }
 
@@ -177,6 +176,8 @@ public class TonyEnemy : MonoBehaviour
 
     void MoveAway()
     {
+        hitCounter = 0;
+
         // Move away from the player
         Vector3 Destination = transform.position + (transform.position - playerPosition);
         navAgent.SetDestination(Destination);
@@ -295,20 +296,32 @@ public class TonyEnemy : MonoBehaviour
         {
             navAgent.SetDestination(this.transform.position);
 
-            // Check if punch is off cooldown
-            if (punchTimer <= 0)
+            // Check if punch is off cooldown and hit counter is less than 3
+            if (punchTimer <= 0 && hitCounter < 3)
             {
-                // If punch is off cooldown, execute punch
+                // If punch is off cooldown and hit counter is less than 3, execute punch
                 aiBehavior = Behaviors.Punch;
                 SetAnimatorBools();
 
                 // Reset punch cooldown timer
                 punchTimer = punchCooldown;
+
+                // Increment punch counter
+                hitCounter++;
             }
         }
         else if (Vector3.Distance(transform.position, playerPosition) >= 2f)
         {
             navAgent.SetDestination(playerPosition);
+        }
+
+        // Check if hit counter reaches 3
+        if (hitCounter >= 3)
+        {
+            // If hit counter reaches 3, switch to MoveAway behavior
+            navAgent.speed = normalSpeed;
+            aiBehavior = Behaviors.MoveAway;
+            SetAnimatorBools();
         }
     }
     void RunAway()
@@ -317,7 +330,7 @@ public class TonyEnemy : MonoBehaviour
         
         this.transform.LookAt(new Vector3(elevator.position.x, this.transform.position.y, elevator.position.z));
         navAgent.SetDestination(elevator.position);
-        if (Vector3.Distance(transform.position, navAgent.destination) <= 2f)
+        if (Vector3.Distance(transform.position, navAgent.destination) <= 3f)
         {
             tonyElevator.SetActive(true);  
             elevatorObj.GetComponent<ElevatorMoveUp>().startElevator();
@@ -342,6 +355,8 @@ public class TonyEnemy : MonoBehaviour
             Vector3 chargeDirection = (playerPosition - transform.position).normalized;
             Vector3 chargeDestination = transform.position + chargeDirection * (Vector3.Distance(transform.position, playerPosition) + 0.75f);
             navAgent.SetDestination(chargeDestination);
+            playerLocation = new Vector3(playerPosition.x, this.transform.position.y, playerPosition.z);
+            this.transform.LookAt(playerLocation);
             charging = true;
         }
 

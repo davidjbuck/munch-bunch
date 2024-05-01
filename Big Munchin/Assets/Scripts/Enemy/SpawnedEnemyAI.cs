@@ -330,7 +330,7 @@ public void Flee()
             Destination = transform.position + (transform.position - player.transform.position);
             navAgent.SetDestination(Destination);
         }
-    }
+    } 
 
     public void FleeToRestaurant()
     {

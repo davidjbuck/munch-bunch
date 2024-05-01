@@ -20,8 +20,13 @@ public class ChickenEnemyAI : MonoBehaviour
     private float idleTimer = 0f;
     private float idleDuration = 0f;
     public Transform attackSpawn;
-    public GameObject birdAttack;
-    GameObject bAttack;
+    //public GameObject birdAttack;
+    //GameObject bAttack;
+    public MovesetHolder[] enemyMovesets;
+    MovesetHolder enemyActiveMoveset;
+    public EnemyHealth eHealth;
+     
+
 
     void Start()
     {
@@ -32,10 +37,16 @@ public class ChickenEnemyAI : MonoBehaviour
         animator.SetBool("Walk", true);
         animator.SetBool("Chasing", false);
         animator.SetBool("Attack", false);
+        enemyActiveMoveset = enemyMovesets[0];
+
     }
 
     void Update()
     {
+        if (!eHealth.enemyAlive)
+        {
+            death();
+        }
         // Update player position
         playerPosition = player.transform.position;
 
@@ -197,7 +208,6 @@ public class ChickenEnemyAI : MonoBehaviour
 
     void Attack()
     {
-        navAgent.SetDestination(this.transform.position);
         //        startAttack();
         Debug.Log("ATTACKING");
         // If player is out of range, switch to chase behavior
@@ -227,9 +237,16 @@ public class ChickenEnemyAI : MonoBehaviour
     }
     public void startAttack()
     {
-        bAttack = Instantiate(birdAttack, attackSpawn.transform.position, attackSpawn.transform.rotation);
-        Destroy(bAttack, 0.1f);
+        //bAttack = Instantiate(birdAttack, attackSpawn.transform.position, attackSpawn.transform.rotation);
+        //Destroy(bAttack, 0.1f);
+        enemyActiveMoveset.LightAttackCombo();
+
         attackTimer = attackCooldown;
         Debug.Log("Attacking player!");
+    }
+    public void death()
+    {
+        Destroy(this.gameObject);
+         
     }
 }
