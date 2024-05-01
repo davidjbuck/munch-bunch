@@ -69,8 +69,9 @@ public class Inventory : MonoBehaviour
     //this is an incredibly cursed way of activating the mission for the goons in the chicken farm
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !playerCrossed)
+        if (other.tag == "bowlOnScale" && !playerCrossed)
         {
+            Debug.Log("box for trigger entered");
             playerCrossed = true;
             mc.setCurrentMission(7);
         }

@@ -48,6 +48,11 @@ public class NPCInteractable : MonoBehaviour, IInteractable
             //otherwise if its the detective on the return, set mission 4
             missionBoss.GetComponent<missionController>().setCurrentMission(4);
         }
+        else if (tempMissNum == 5 && NPCName == "Detective")
+        {
+            //otherwise if its the detective on the return, set mission 4
+            missionBoss.GetComponent<missionController>().setCurrentMission(6);
+        }
 
         int tempSMNum = missionBoss.GetComponent<missionController>().getCurrentSideMission();
         if (NPCName == "SMHarvestPlants" && tempSMNum != 1)
@@ -98,7 +103,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
         {
             float dist = Vector3.Distance(this.GetTransform().position, Player.transform.position);
             Vector3 playerPosition = new Vector3(Player.transform.position.x, this.transform.position.y, Player.transform.position.z);
-            //this.transform.LookAt(playerPosition);
+            this.transform.LookAt(playerPosition);
             //Debug.Log(dist);
             if (dist > 5.5f)
             {
@@ -114,7 +119,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
         {
             ani.SetBool("Waving", false);
             ani.SetBool("Calling", false);
-            Debug.Log("Returning to idle.");
+            //Debug.Log("Returning to idle.");
         }
     }
 

@@ -135,6 +135,21 @@ public class missionController : MonoBehaviour
                 detectiveControl.currentIndex = 28;
                 detectiveControl.endIndex = 35;
                 break;
+            case 9:
+                missionTXT.text = "Investigate Tony's Lair";
+                break;
+            case 10:
+                missionTXT.text = "Fight Big Tony";
+                break;
+            case 11:
+                missionTXT.text = "Handle Tony's Reinforcements";
+                break;
+            case 12:
+                missionTXT.text = "Find a Way to Tony";
+                break;
+            case 13:
+                missionTXT.text = "Take Out the Trash";
+                break;
         }
     }
 
