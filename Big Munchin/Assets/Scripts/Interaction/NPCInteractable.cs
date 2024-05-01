@@ -17,6 +17,11 @@ public class NPCInteractable : MonoBehaviour, IInteractable
     public GameObject allyText;
     public GameObject Player;
     private bool interacted;
+    private Animator ani;
+    private bool talking = false;
+    private float lastIdleChangeTime;
+    private float idleChangePeriod = 10.0f;
+    private float accentBehaviorPeriod = 3.0f;
     //public GameObject interactUI;
     public void Interact(Transform interactorTransform)
     {
@@ -67,10 +72,25 @@ public class NPCInteractable : MonoBehaviour, IInteractable
     public void showText()
     {
         allyText.SetActive(true);
+        if (NPCName == "Detective")
+        {
+            talking = true;
+            ani.SetBool("Talking", true);
+        }
     }
     public void hideText()
     {
         allyText.SetActive(false);
+        talking = false;
+        ani.SetBool("Talking", false);
+        SetRandomIdle();
+    }
+
+    public void Start()
+    {
+        ani = GetComponent<Animator>();
+        float desyncTime = Random.Range(0.0f, 10.0f);
+        lastIdleChangeTime = Time.time + desyncTime;
     }
     public void Update()
     {
@@ -84,6 +104,39 @@ public class NPCInteractable : MonoBehaviour, IInteractable
             {
                 hideText();
                 interacted = false;
+            }
+        }
+        if(Time.time - lastIdleChangeTime > idleChangePeriod)
+        {
+            SetRandomIdle();
+        }
+        if(Time.time-lastIdleChangeTime > accentBehaviorPeriod)
+        {
+            ani.SetBool("Waving", false);
+            ani.SetBool("Calling", false);
+            Debug.Log("Returning to idle.");
+        }
+    }
+
+    public void SetRandomIdle()
+    {
+        if (!talking)
+        {
+            lastIdleChangeTime = Time.time;
+            int num = Random.Range(0, 2);
+            
+            switch (num)
+            {
+                case 0://wave
+                    ani.SetBool("Waving", true);
+                    ani.SetBool("Calling", false);
+                    Debug.Log("Waving");
+                    break;
+                case 1://call
+                    ani.SetBool("Waving", false);
+                    ani.SetBool("Calling", true);
+                    Debug.Log("Calling");
+                    break;
             }
         }
     }

@@ -130,6 +130,7 @@ public class ThirdPersonController : MonoBehaviour
     public bool onScalableSurface = false;
     private bool scalableSurfaceDetected = false;
     private GameObject targetScalableSurface;
+    private float timeAttached;
     public enum PlayerState
     {//enum to hold player state. Determines which actions can be taken,
      //controls much of the flow between different blocks of code
@@ -372,44 +373,90 @@ public class ThirdPersonController : MonoBehaviour
             
             if((Input.GetKeyDown(KeyCode.E)||Input.GetKey(KeyCode.E)||Input.GetKeyDown(KeyCode.Space)||Input.GetKey(KeyCode.Space))&&!onScalableSurface)
             {
+                if(targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ladder)
+                {
+                    ani.SetBool("OnLadder", true);
+                    playerCollider.transform.rotation = new Quaternion(player.transform.rotation.x, targetScalableSurface.transform.rotation.y, player.transform.rotation.z, player.transform.rotation.w);
+                }
+                else
+                {
+                    ani.SetBool("OnLedge", true);
+                    playerCollider.transform.rotation = new Quaternion(player.transform.rotation.x, targetScalableSurface.transform.rotation.y, player.transform.rotation.z, player.transform.rotation.w);
+                }
                 onScalableSurface = true;
                 targetScalableSurface.GetComponent<ScalableSurfaceScript>().AttachToSurface(player.transform.position);
                 rb.isKinematic = true;
+                timeAttached = Time.time;
             }
             else if((!onScalableSurface)||(onScalableSurface && targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ledge && !(Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Space))))
             {//if the player is not on a scalable surface, or if they are on a ledge and did not press/ hold e or space
                 LeaveScalableSurface();
+                ani.SetBool("OnLedge", false);
+                ani.SetBool("OnLadder", false);
                 //Debug.Log("Leaving scalable surface");
             }
 
             if (onScalableSurface)
             {
-                if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ladder)
-                {
-                    //if the player tries to move up
-                    if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(KeyCode.W))
-                    {
-                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(1);
-                    }
-                    else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.S))
-                    {//if the player tries to move down
-                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(-1);
-                    }
-                }
-                else
-                {
-                    //if the player tries to move right
-                    if (Input.GetKeyDown(KeyCode.D) || Input.GetKey(KeyCode.D))
-                    {
-                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(1);
-                    }
-                    else if (Input.GetKeyDown(KeyCode.A) || Input.GetKey(KeyCode.A))
-                    {//if the player tries to move left
-                        targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(-1);
-                    }
-                }
-                
 
+                ani.SetBool("DoneAttaching", targetScalableSurface.GetComponent<ScalableSurfaceScript>().GetDoneAttaching());
+                if(Time.time - timeAttached > 1.2f)
+                {
+                    if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ladder)
+                    {
+
+                        //if the player tries to move up
+                        if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(KeyCode.W))
+                        {
+                            if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().CanAdvance())
+                            {
+                                ani.SetBool("Climbing", true);
+                                ani.SetBool("PositiveDirectionTraversal", true);
+                                targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(1);
+                            }
+                        }
+                        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.S))
+                        {//if the player tries to move down
+                            if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().CanAdvance())
+                            {
+                                ani.SetBool("Climbing", true);
+                                ani.SetBool("PositiveDirectionTraversal", false);
+                                targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(-1);
+                            }
+                        }
+                        if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().CanAdvance())
+                        {
+                            ani.SetBool("Climbing", false);
+                        }
+                    }
+                    else
+                    {
+                        //if the player tries to move right
+                        if (Input.GetKeyDown(KeyCode.D) || Input.GetKey(KeyCode.D))
+                        {
+                            if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().CanAdvance())
+                            {
+                                ani.SetBool("Shimmying", true);
+                                ani.SetBool("PositiveDirectionTraversal", true);
+                                targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(1);
+                            }
+                        }
+                        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKey(KeyCode.A))
+                        {//if the player tries to move left
+                            if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().CanAdvance())
+                            {
+                                ani.SetBool("Shimmying", true);
+                                ani.SetBool("PositiveDirectionTraversal", false);
+                                targetScalableSurface.GetComponent<ScalableSurfaceScript>().AdvanceStep(-1);
+                            }
+                        }
+                        if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().CanAdvance())
+                        {
+                            ani.SetBool("Shimmying", false);
+                        }
+                    }
+                }
+                                
                 //set the player's position and rotation to the current lerp target
                 player.transform.position = targetScalableSurface.GetComponent<ScalableSurfaceScript>().GetLerpTarget();
                 
@@ -417,6 +464,8 @@ public class ThirdPersonController : MonoBehaviour
                 if (targetScalableSurface.GetComponent<ScalableSurfaceScript>().EndReached())
                 {
                     LeaveScalableSurface();
+                    ani.SetBool("OnLedge", false);
+                    ani.SetBool("OnLadder", false);
                 }
             }
         }
@@ -965,7 +1014,8 @@ public class ThirdPersonController : MonoBehaviour
                     case 6://healing per second
                         playerHealingPerSecond = 0.0f;
                         break;
-
+                    default:
+                        break;
                 }
             }
         }
