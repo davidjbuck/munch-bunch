@@ -371,7 +371,8 @@ public class ThirdPersonController : MonoBehaviour
         if (scalableSurfaceDetected||onScalableSurface)
         {
             
-            if((Input.GetKeyDown(KeyCode.E)||Input.GetKey(KeyCode.E)||Input.GetKeyDown(KeyCode.Space)||Input.GetKey(KeyCode.Space))&&!onScalableSurface)
+            if((Input.GetKeyDown(KeyCode.E)||Input.GetKey(KeyCode.E)||Input.GetKeyDown(KeyCode.Space)||Input.GetKey(KeyCode.Space)) || 
+                targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ledge && !onScalableSurface)/*&&!onScalableSurface*/
             {
                 if(targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ladder)
                 {
@@ -388,7 +389,7 @@ public class ThirdPersonController : MonoBehaviour
                 rb.isKinematic = true;
                 timeAttached = Time.time;
             }
-            else if((!onScalableSurface)||(onScalableSurface && targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ledge && !(Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Space))))
+            else if((!onScalableSurface)) /*||(onScalableSurface && targetScalableSurface.GetComponent<ScalableSurfaceScript>().typeOfSurface == ScalableSurfaceScript.SurfaceType.Ledge && !(Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Space))))*/
             {//if the player is not on a scalable surface, or if they are on a ledge and did not press/ hold e or space
                 LeaveScalableSurface();
                 ani.SetBool("OnLedge", false);
@@ -1014,8 +1015,6 @@ public class ThirdPersonController : MonoBehaviour
                     case 6://healing per second
                         playerHealingPerSecond = 0.0f;
                         break;
-                    default:
-                        break;
                 }
             }
         }
@@ -1051,7 +1050,8 @@ public class ThirdPersonController : MonoBehaviour
                 playerHealingPerSecond = effectValues[buffType];
                 lastTimeHealed = Time.time;
                 break;
-
+            default:
+                break;
         }
     }
 
