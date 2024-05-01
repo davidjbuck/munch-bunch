@@ -162,13 +162,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3471d92b409be644aa869bd10497a513, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.451
+  m_Volume: 0.149
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 86
+  Priority: 25
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   at: 0
   damage: 5
-  stunDuration: 1
+  stunDuration: 0
   knockbackForce: 1
 --- !u!1 &3551502783817832883
 GameObject:

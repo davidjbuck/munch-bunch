@@ -39,6 +39,9 @@ public class TonyEnemy : MonoBehaviour
     private float punchTimer = 0f;
     public GameObject tonyElevator;
     public GameObject elevatorObj;
+    public GameObject postTonyEnemies;
+    public GameObject truckDoor;
+
     void Start()
     {
         // Initialize components and variables
@@ -334,6 +337,8 @@ public class TonyEnemy : MonoBehaviour
         {
             tonyElevator.SetActive(true);  
             elevatorObj.GetComponent<ElevatorMoveUp>().startElevator();
+            postTonyEnemies.SetActive(true);
+            truckDoor.SetActive(false);
             Destroy(gameObject);
         }
     }
