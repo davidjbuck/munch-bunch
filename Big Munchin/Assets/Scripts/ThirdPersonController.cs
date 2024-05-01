@@ -1121,6 +1121,10 @@ public class ThirdPersonController : MonoBehaviour
                 grounded = false;
                 //Debug.Log("Min Airborne time fulfilled, player is no longer grounded.");
             }
+            if(Time.time - lastJumpTime > 3.0f&&rb.velocity.sqrMagnitude<0.1f)
+            {
+                grounded = true;
+            }
         }
         else
         {
