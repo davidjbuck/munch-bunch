@@ -142,12 +142,9 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Fight Big Tony";
                 break;
             case 11:
-                missionTXT.text = "Handle Tony's Reinforcements";
-                break;
-            case 12:
                 missionTXT.text = "Find a Way to Tony";
                 break;
-            case 13:
+            case 12:
                 missionTXT.text = "Take Out the Trash";
                 break;
         }
