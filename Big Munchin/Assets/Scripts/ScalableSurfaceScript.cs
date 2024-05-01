@@ -19,6 +19,8 @@ public class ScalableSurfaceScript : MonoBehaviour
     private Transform lerpTarget;
     private Vector3 currentTarget;
     public float exitTimeLength;
+    private bool goingPositiveDirection;
+    private bool doneAttaching = false;
 
     public void Start()
     {
@@ -68,8 +70,17 @@ public class ScalableSurfaceScript : MonoBehaviour
             currentStep = minIndex;
             lastStepTime = Time.time;
             prevTarget = playerLocation;
-            lerpTarget = steps[currentStep].transform;
+            lerpTarget = steps[currentStep].transform;            
             //Debug.Log("Attaching to surface on step " + currentStep);
+        }
+        doneAttaching = false;
+    }
+
+    public void Update()
+    {
+        if(Time.time - lastStepTime > stepLength)
+        {
+            doneAttaching = true;
         }
     }
 
@@ -77,6 +88,14 @@ public class ScalableSurfaceScript : MonoBehaviour
     {
         if (Time.time - lastStepTime > stepLength && !(currentStep<0||currentStep>steps.Length-1))
         {
+            if(amt>0)
+            {
+                goingPositiveDirection = true;
+            }
+            else
+            {
+                goingPositiveDirection = false;
+            }
             //increment step
             //Debug.Log("Advancing Step to "+currentStep);
             if (positiveTraversalDirection)
@@ -158,5 +177,27 @@ public class ScalableSurfaceScript : MonoBehaviour
         float y = Lerp(startVector.y, endVector.y, startTime, endTime);
         float z = Lerp(startVector.z, endVector.z, startTime, endTime);
         return new Vector3(x, y, z);
+    }
+
+    public bool CanAdvance()
+    {
+        if(Time.time - lastStepTime > stepLength)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool GetGoingPositiveDirection()
+    {
+        return goingPositiveDirection;
+    }
+
+    public bool GetDoneAttaching()
+    {
+        return doneAttaching;
     }
 }
