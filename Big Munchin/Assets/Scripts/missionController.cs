@@ -144,7 +144,7 @@ public class missionController : MonoBehaviour
                 //sets the next few lines of dialogue
                 detectiveControl = detective.GetComponent<Dialogue>();
                 detectiveControl.currentIndex = 28;
-                detectiveControl.endIndex = 35;
+                detectiveControl.endIndex = 42;
                 break;
             case 9:
                 missionTXT.text = "Investigate Tony's Lair";

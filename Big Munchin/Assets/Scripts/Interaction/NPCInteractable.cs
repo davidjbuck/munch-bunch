@@ -31,6 +31,7 @@ public class NPCInteractable : MonoBehaviour, IInteractable
 
 
 
+        //DETECTIVE CONTROLS
         //if you just defeated the goons (mission 1) and interact with the detective, switch it to mission 2
         int tempMissNum = missionBoss.GetComponent<missionController>().getCurrentMission();
         if (tempMissNum == 1 && NPCName == "Detective")
@@ -45,15 +46,23 @@ public class NPCInteractable : MonoBehaviour, IInteractable
         }
         else if (tempMissNum == 3 && NPCName == "Detective")
         {
-            //otherwise if its the detective on the return, set mission 4
+            //otherwise if its the detective on the return, set mission 4 (fried animals)
             missionBoss.GetComponent<missionController>().setCurrentMission(4);
         }
         else if (tempMissNum == 5 && NPCName == "Detective")
         {
-            //otherwise if its the detective on the return, set mission 4
+            //otherwise if its the detective on the return, set mission 6 (chicken farm)
             missionBoss.GetComponent<missionController>().setCurrentMission(6);
         }
+        else if (tempMissNum == 8 && NPCName == "Detective")
+        {
+            //otherwise if its the detective on the return, set mission 9 (finale)
+            missionBoss.GetComponent<missionController>().setCurrentMission(9);
+        }
 
+
+
+        //for side mission
         int tempSMNum = missionBoss.GetComponent<missionController>().getCurrentSideMission();
         if (NPCName == "SMHarvestPlants" && tempSMNum != 1)
         {
