@@ -83,6 +83,7 @@ public class NGcontroller : MonoBehaviour
 
     public GameObject saveLoad;
 
+    public GameObject missionTXTFORNMG;
 
     private void Start()
     {
@@ -112,6 +113,7 @@ public class NGcontroller : MonoBehaviour
         Cursor.visible = true;
 
         missionCont.GetComponent<missionController>().toggleVisibility(false);
+        missionTXTFORNMG.SetActive(false);
 
         startCanvas.SetActive(false);
         NMGCanvas.SetActive(true);
@@ -131,7 +133,7 @@ public class NGcontroller : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        //playerForInventory.SetActive(false);
+        playerForInventory.SetActive(false);
 
         NMGCanvas.SetActive(false);
         player.SetActive(true);

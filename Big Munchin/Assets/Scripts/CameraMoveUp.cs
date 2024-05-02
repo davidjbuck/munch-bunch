@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraMoveUp : MonoBehaviour
 {
@@ -52,7 +53,8 @@ public class CameraMoveUp : MonoBehaviour
         if (parentObject != null)
         {
             moving = false;
-           // parentObject.SetActive(false);
+            SceneManager.LoadScene(8);
+            // parentObject.SetActive(false);
         }
 
 

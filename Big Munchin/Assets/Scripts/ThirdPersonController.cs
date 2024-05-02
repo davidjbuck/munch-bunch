@@ -176,6 +176,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             fixedCam = false;
             fixedCamera.GetComponent<AudioListener>().enabled = false;
+            Physics.gravity = new Vector3(0, -9.8f, 0);
         }
     }
 
