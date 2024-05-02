@@ -42,6 +42,9 @@ public class TonyEnemy : MonoBehaviour
     public GameObject postTonyEnemies;
     public GameObject truckDoor;
 
+
+    public GameObject mc;
+
     void Start()
     {
         // Initialize components and variables
@@ -329,6 +332,10 @@ public class TonyEnemy : MonoBehaviour
     }
     void RunAway()
     {
+        mc.GetComponent<missionController>().setCurrentMission(11);
+
+
+
         navAgent.speed = 10f;
         
         this.transform.LookAt(new Vector3(elevator.position.x, this.transform.position.y, elevator.position.z));

@@ -5,17 +5,9 @@ using UnityEngine;
 public class SpawnTony : MonoBehaviour
 { 
     public GameObject Tony;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
+    public GameObject mc;
 
-    // Update is called once per frame
-    void Update()
-    {
-         
-    }
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
@@ -23,6 +15,7 @@ public class SpawnTony : MonoBehaviour
             Debug.Log("SPAWN TONY");
             Tony.SetActive(true);
 
+            mc.GetComponent<missionController>().setCurrentMission(10);
         }
     }
 }

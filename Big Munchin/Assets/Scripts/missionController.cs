@@ -16,6 +16,7 @@ public class missionController : MonoBehaviour
     //mission variables
     private int mTwoCounter = 0;
     private int mFourCounter = 0;
+    private int mSevenCounter = 0;
     
     
     //side mission variables
@@ -82,6 +83,16 @@ public class missionController : MonoBehaviour
             setCurrentMission(5);
         }
     }
+    
+    //controller for mission four (collect fried food animals)
+    public void missionSevenFunction()
+    {
+        mSevenCounter++;
+        if (mSevenCounter >= 7)
+        {
+            setCurrentMission(8);
+        }
+    }
 
     //controls which mission text is currently displayed
     public void missionControl(int m)
@@ -142,12 +153,9 @@ public class missionController : MonoBehaviour
                 missionTXT.text = "Fight Big Tony";
                 break;
             case 11:
-                missionTXT.text = "Handle Tony's Reinforcements";
-                break;
-            case 12:
                 missionTXT.text = "Find a Way to Tony";
                 break;
-            case 13:
+            case 12:
                 missionTXT.text = "Take Out the Trash";
                 break;
         }
