@@ -77,12 +77,17 @@ public class EnemyHealth : MonoBehaviour
         }
         */
 
-        //TAB ADDED: drops an object to pick up for the birds
+        //TAB ADDED: drops an object to pick up for the birds, mission implements for chicken farm
         if (enemyName == "bird" && !alreadyDead)
         {
-            //Debug.Log("y is: " + this.transform.position.y + 7);
             Vector3 positionWithOffset = new Vector3(this.transform.position.x, (21), this.transform.position.z);
             Instantiate(Resources.Load(enemyName), positionWithOffset, Quaternion.identity);
+            alreadyDead = true;
+        }
+        else if (enemyName == "chicken" && !alreadyDead)
+        {
+            GameObject mc = GameObject.Find("mission controller");
+            mc.GetComponent<missionController>().missionSevenFunction();
             alreadyDead = true;
         }
 

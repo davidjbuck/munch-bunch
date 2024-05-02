@@ -16,6 +16,7 @@ public class missionController : MonoBehaviour
     //mission variables
     private int mTwoCounter = 0;
     private int mFourCounter = 0;
+    private int mSevenCounter = 0;
     
     
     //side mission variables
@@ -80,6 +81,16 @@ public class missionController : MonoBehaviour
         if (mFourCounter >= 2)
         {
             setCurrentMission(5);
+        }
+    }
+    
+    //controller for mission four (collect fried food animals)
+    public void missionSevenFunction()
+    {
+        mSevenCounter++;
+        if (mSevenCounter >= 7)
+        {
+            setCurrentMission(8);
         }
     }
 
