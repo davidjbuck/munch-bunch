@@ -8363,17 +8363,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1951209955738347083, guid: cac4d8620bd025446808afd9b197e741, type: 3}
-      propertyPath: birdAttack
-      value: 
-      objectReference: {fileID: 688057940}
     - target: {fileID: 3693275314620056661, guid: cac4d8620bd025446808afd9b197e741, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3693275314620056661, guid: cac4d8620bd025446808afd9b197e741, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4673952806925451930, guid: cac4d8620bd025446808afd9b197e741, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8418,22 +8414,6 @@ PrefabInstance:
     - target: {fileID: 6165916443383978686, guid: cac4d8620bd025446808afd9b197e741, type: 3}
       propertyPath: m_Name
       value: ChickenEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165916443383978686, guid: cac4d8620bd025446808afd9b197e741, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7758901724724717032, guid: cac4d8620bd025446808afd9b197e741, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7758901724724717032, guid: cac4d8620bd025446808afd9b197e741, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7758901724724717032, guid: cac4d8620bd025446808afd9b197e741, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
