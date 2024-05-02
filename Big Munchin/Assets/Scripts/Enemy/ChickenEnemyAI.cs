@@ -55,6 +55,10 @@ public class ChickenEnemyAI : MonoBehaviour
         {
             // If player is within chase range, switch to chase behavior
             aiBehavior = Behaviors.Chase;
+            animator.SetBool("Idle", false);
+            animator.SetBool("Walk", false);
+            animator.SetBool("Chasing", true);
+            animator.SetBool("Attack", false);
         }
 
         // Perform behavior based on current state
@@ -249,4 +253,15 @@ public class ChickenEnemyAI : MonoBehaviour
         Destroy(chicken.gameObject);
          
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "ChickenWall"){
+            aiBehavior = Behaviors.Idle;
+            animator.SetBool("Idle", true);
+            animator.SetBool("Walk", false);
+            animator.SetBool("Chasing", false);
+            animator.SetBool("Attack", false);
+        }
+    }
+
 }

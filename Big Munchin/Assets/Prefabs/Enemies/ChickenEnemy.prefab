@@ -2468,7 +2468,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -2517,7 +2517,7 @@ MonoBehaviour:
   enemyHP: 4
   enemyAlive: 0
   hSlider: {fileID: 1336576555911128086}
-  enemyName: 
+  enemyName: chicken
 --- !u!4 &1804212967400871357 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 18e35f8d6a3a53547a7f8a27ab50e9a9, type: 3}
