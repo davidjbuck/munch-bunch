@@ -22,27 +22,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.06435108
+      value: 694.813
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 20.259895
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.4105333
+      value: 531.932
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.0074176053
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.9999725
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalRotation.z
@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -180.85
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -74,6 +74,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4016396915890834298}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5003856052985001086}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7840730743711924059}
   m_SourcePrefab: {fileID: 100100000, guid: dd4184853fd8c4d4fbadbe53cc45ec96, type: 3}
 --- !u!1 &3041231282765680385 stripped
 GameObject:
@@ -123,3 +129,41 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &5003856052985001086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041231282765680385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b893c6c05967bb54090541a6da87a2dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionBoss: {fileID: 0}
+  interactText: Speak With Vendor
+  NPCName: 
+  allyText: {fileID: 0}
+  Player: {fileID: 0}
+--- !u!65 &7840730743711924059
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041231282765680385}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.049762245, y: 0.17187881, z: 0.039827343}
+  m_Center: {x: 0.000472416, y: 0.08582039, z: -0.003776043}
