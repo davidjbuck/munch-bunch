@@ -25,7 +25,7 @@ public class ChickenEnemyAI : MonoBehaviour
     public MovesetHolder[] enemyMovesets;
     MovesetHolder enemyActiveMoveset;
     public EnemyHealth eHealth;
-     
+    public GameObject chicken;
 
 
     void Start()
@@ -246,7 +246,7 @@ public class ChickenEnemyAI : MonoBehaviour
     }
     public void death()
     {
-        Destroy(this.gameObject);
+        Destroy(chicken.gameObject);
          
     }
 }
