@@ -11,7 +11,7 @@ public class TonyInteractable : MonoBehaviour, IInteractable
         Debug.Log("TONY INTERACT");
         this.gameObject.SetActive(false);
         kickScene.SetActive(true);
-        player.SetActive(false);
+        //player.SetActive(false);
     }
     public void Interact(Transform interactorTransform)
     {
