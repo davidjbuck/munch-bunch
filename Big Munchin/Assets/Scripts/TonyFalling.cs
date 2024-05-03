@@ -9,6 +9,7 @@ public class TonyFalling : MonoBehaviour
 
     // Force variable for backward movement
     public float backwardForce = 7f;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class TonyFalling : MonoBehaviour
         if (animator != null)
         {
         }
+        audioSource.Play();
 
         // Apply a backward force to the object
         Rigidbody rb = GetComponent<Rigidbody>();

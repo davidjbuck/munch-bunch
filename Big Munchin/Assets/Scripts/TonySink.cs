@@ -23,6 +23,8 @@ public class TonySink : MonoBehaviour
     public Camera camera1;
     public Camera camera2;
     public GameObject fallingTony;
+    public AudioSource audioSource;
+    public AudioSource audioSource2;
 
     // Start is called before the first frame update
     void Start()
@@ -69,13 +71,16 @@ public class TonySink : MonoBehaviour
         timer = 1f; // Reset timer to start sinking
                     // Switch to camera2
         fallingTony.SetActive(false);
+        audioSource.Play();
+        audioSource2.Play();
 
         camera1.gameObject.SetActive(false);
         camera2.gameObject.SetActive(true);
-    }
 
-    // Calculate the distance the object needs to sink over the specified duration
-    private float CalculateSinkDistance()
+}
+
+// Calculate the distance the object needs to sink over the specified duration
+private float CalculateSinkDistance()
     {
         return Vector3.Distance(startPosition, startPosition - Vector3.up * sinkDuration);
     }
